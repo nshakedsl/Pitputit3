@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".MainActivity"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+         android:background="@drawable/background">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@drawable/wave__2_"
+            >
+
+
+            <ImageView
+                android:id="@+id/imageAdd"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="20dp"
+                app:srcCompat="@drawable/user"
+                />
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/addPhotoButton"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:background="@drawable/button"
+                android:fontFamily="@font/comfortaa"
+                android:text="@string/choosePhotoText"
+                android:textColor="@color/white"
+                android:textSize="11dp" />
+
+
+<!--            <Button-->
+<!--                android:id="@+id/button"-->
+<!--                android:layout_width="190dp"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:layout_margin="10dp"-->
+<!--                android:fontFamily="@font/comfortaa"-->
+<!--                android:text="choose picture 📷"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="15dp" />-->
+
+
+            <EditText
+                android:id="@+id/usernameRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="35dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="35dp"
+                android:background="@drawable/textbox"
+                android:ems="10"
+                android:fontFamily="@font/comfortaa"
+                android:inputType="text"
+                android:hint="Username" />
+
+            <EditText
+                android:id="@+id/editTextNickName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="35dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="35dp"
+                android:background="@drawable/textbox"
+                android:ems="10"
+                android:fontFamily="@font/comfortaa"
+                android:inputType="text"
+                android:hint="Nickname" />
+
+            <EditText
+                android:id="@+id/editTextTextPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="35dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="35dp"
+                android:background="@drawable/textbox"
+                android:ems="10"
+                android:fontFamily="@font/comfortaa"
+                android:inputType="textPassword"
+                android:hint="Password" />
+
+            <EditText
+                android:id="@+id/editTextTextPasswordagain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="35dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="35dp"
+                android:background="@drawable/textbox"
+                android:ems="10"
+                android:fontFamily="@font/comfortaa"
+                android:inputType="textPassword"
+                android:hint="Verify Password" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/registerButton"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="35dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="35dp"
+                android:background="@drawable/button"
+                android:fontFamily="@font/comfortaa"
+                android:text="@string/registerText"
+                android:textColor="@color/white"
+
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/alreadyRegistered"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textAlignment="center"
+                android:fontFamily="@font/comfortaa"
+                android:text="Already registered? Click here to login"
+                android:textColor="#003066"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                />
+
+
+
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+
+
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
