@@ -3,6 +3,7 @@ package com.example.pitputitandroid;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -42,14 +43,16 @@ public class RegisterActivity extends Activity {
     }
     //sends to register/signup page
 
-    private void attemptRegister(EditText username, EditText nickname,
-                                 EditText password, EditText verifyPassword) {
-
+    private void attemptRegister(EditText usernameE, EditText nicknameE,
+                                 EditText passwordE, EditText verifyPasswordE) {
+        Editable username = usernameE.getText();
+        Editable nickname = nicknameE.getText();
+        Editable password = passwordE.getText();
+        Editable verifyPassword = verifyPasswordE.getText();
         String result;
         String resUsername = isValidUsername(username.toString());
         String resPassword = isValidUsername(password.toString());
         String resNickname = isValidNickname(nickname.toString());
-        //String resVerifyPassword = verifyPassword.toString();
         if (username.toString().equals("") || password.toString().equals("") || nickname.toString().equals("")
                 || verifyPassword.toString().equals("")) {
             result = "all fields are mandatory";
