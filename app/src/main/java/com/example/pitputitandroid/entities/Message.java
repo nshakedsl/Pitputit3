@@ -25,7 +25,7 @@ private int id;
          }
 
          public String getTime() {
-         return time;
+         return created;
          }
 
          public String getImgProfile() {
@@ -37,28 +37,28 @@ private int id;
     }
 
          public String getUserName() {
-  return userName;
+  return sender.getUsername();
  }
 
          public String getDisplayName() {
-  return displayName;
+  return sender.getDisplayName();
  }
 
          public void setUserName(String userName) {
-  this.userName = userName;
+  sender.setUsername(userName);
  }
 
          public void setDisplayName(String displayName) {
-  this.displayName = displayName;
+             sender.setDisplayName(displayName);
  }
 
-        public void setImgProfile(int imgProfile) {
-        this.imgProfile = imgProfile;
+        public void setImgProfile(String profilePic) {
+            sender.setProfilePic(profilePic);
     }
 
 
          public void setTime(String time) {
-         this.time = time;
+         this.created = time;
          }
 
          public void setContent(String content) {

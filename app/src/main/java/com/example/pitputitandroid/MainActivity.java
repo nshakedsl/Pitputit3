@@ -6,10 +6,11 @@ import android.text.Editable;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import com.example.pitputitandroid.api.UserAPI;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.navigation.ui.AppBarConfiguration;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         loginButton.setOnClickListener(v ->
-                loginClick(editText.getText(),passText.getText()));
+                loginClick(editText.getText(), passText.getText()));
         TextView registerText = findViewById(R.id.registerText);
         //sends to register/signup page
         registerText.setOnClickListener(v -> {
@@ -45,21 +46,28 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    void loginClick(Editable username, Editable password){
+
+    void loginClick(Editable username, Editable password) {
         String result;
         //if( username.toString(), password.toString())
         String resUsername = isValidUsername(username.toString());
         String resPassword = isValidPassword(password.toString());
+        Intent I = new Intent(this, ChatsActivity.class);
+//        I.putExtra("username",resUsername);
+//        I.putExtra("password",resPassword);
 
-        startActivity(new Intent(this, ChatsActivity.class));
+        UserAPI userAPI=new UserAPI();
+        userAPI.login(username.toString(),password.toString());
+
+        startActivity(I);
     }
 
-    private static String isValidUsername(String username){
+    private static String isValidUsername(String username) {
 
         return "valid";
     }
 
-    private static String isValidPassword(String password){
+    private static String isValidPassword(String password) {
 
         return "valid";
     }

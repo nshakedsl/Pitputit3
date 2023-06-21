@@ -36,16 +36,16 @@
           app:layout_constraintEnd_toEndOf="parent"
           app:srcCompat="@drawable/ic_add" />
 
-     <com.google.android.material.floatingactionbutton.FloatingActionButton
-         android:id="@+id/btnClose"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_marginStart="16dp"
-         android:layout_marginBottom="16dp"
-         android:clickable="true"
-         app:layout_constraintBottom_toBottomOf="parent"
-         app:layout_constraintStrat_toStartOf="parent"
-         app:srcCompat="@android:drawable/ic_close" />
+<!--     <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--         android:id="@+id/btnClose"-->
+<!--         android:layout_width="wrap_content"-->
+<!--         android:layout_height="wrap_content"-->
+<!--         android:layout_marginStart="16dp"-->
+<!--         android:layout_marginBottom="16dp"-->
+<!--         android:clickable="true"-->
+<!--         app:layout_constraintBottom_toBottomOf="parent"-->
+<!--         app:layout_constraintStrat_toStartOf="parent"-->
+<!--         app:srcCompat="@android:drawable/ic_close" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
