@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.pitputitandroid.R;
 import com.example.pitputitandroid.entities.Messege;
 import com.example.pitputitandroid.viewmodels.MessegesViewModel;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.List;
 
@@ -18,16 +19,17 @@ public class MessegesListAdapter extends RecyclerView.Adapter<MessegesListAdapte
 
          class MessegeViewHolder extends RecyclerView.ViewHolder {
              private final TextView messegeContent;
-             private final TextView messegeDisplayName;
-             private final TextView messegeUserName;
+//             private final TextView messegeDisplayName;
+//             private final TextView messegeUserName;
              private final TextView messegeTime;
+
+             private final RoundedImageView imgProfile;
 
              private MessegeViewHolder(View itemView){
                  super(itemView);
-                 messegeContent = itemView.findViewById(R.id.messegeContent);
-                 messegeDisplayName = itemView.findViewById(R.id.messegeDisplayName);
-                 messegeUserName = itemView.findViewById(R.id.messegeUserName);
-                 messegeTime = itemView.findViewById(R.id.messegeTime);
+                 messegeContent = itemView.findViewById(R.id.ContentTextView);
+                 messegeTime = itemView.findViewById(R.id.DateTextView);
+                 imgProfile = itemView.findViewById(R.id.imageUser);
              }
          }
          private final LayoutInflater mInFlater;
@@ -38,7 +40,7 @@ public class MessegesListAdapter extends RecyclerView.Adapter<MessegesListAdapte
 
          @Override
         public MessegeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-             View itemView = mInFlater.inflate(R.layout.messege_item, parent, false);
+             View itemView = mInFlater.inflate(R.layout.messege_layout, parent, false);
              return new MessegeViewHolder(itemView);
          }
 
@@ -49,7 +51,8 @@ public class MessegesListAdapter extends RecyclerView.Adapter<MessegesListAdapte
                 final Messege current = messeges.get(position);
                 holder.messegeContent.setText(current.getContent());
                 holder.messegeTime.setText(current.getTime());
-                holder.messegeUserName.setText(current.getUserName());
+                holder.imgProfile.setImageResource(current.getImgProfile());
+                //holder.messegeUserName.setText(current.getUserName());
 
             }
          }

@@ -23,8 +23,9 @@ private int id;
         private String content;
         private String userName;
         private String displayName;
+        private int imgProfile;
 
-         public Messege(String content) {
+         public Messege(String content,String userName,String displayName,int imgProfile, String time ) {
          this.content = content;
          }
 
@@ -32,9 +33,13 @@ private int id;
          return time;
          }
 
-         public String getContent() {
-         return content;
+         public int getImgProfile() {
+         return imgProfile;
          }
+
+        public String getContent() {
+        return content;
+    }
 
          public String getUserName() {
   return userName;
@@ -51,6 +56,10 @@ private int id;
          public void setDisplayName(String displayName) {
   this.displayName = displayName;
  }
+
+        public void setImgProfile(int imgProfile) {
+        this.imgProfile = imgProfile;
+    }
 
 
          public void setTime(String time) {
