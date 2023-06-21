@@ -9,7 +9,7 @@
     tools:context=".ChatsActivity"
     >
 
-     <View
+     <ImageView
          android:id="@+id/viewBackground"
          android:layout_width="match_parent"
          android:layout_height="0dp"
@@ -19,7 +19,20 @@
          app:layout_constraintTop_toTopOf="parent"
          >
 
-     </View>
+     </ImageView>
+
+     <ImageView
+         android:id="@+id/HeadBackground"
+         android:layout_width="match_parent"
+         android:layout_height="0dp"
+         android:background="#A3A6B4"
+         app:layout_constraintBottom_toTopOf="@id/viewSupport"
+         app:layout_constraintTop_toTopOf="parent"
+
+
+          >
+
+     </ImageView>
 
 
      <androidx.appcompat.widget.AppCompatImageView
@@ -33,7 +46,7 @@
           android:src="@drawable/ic_back"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent"
-         android:tint="#A3A6B4">
+         android:tint="#DADBE1">
 
      </androidx.appcompat.widget.AppCompatImageView>
 
@@ -48,7 +61,7 @@
          android:src="@drawable/ic_back"
          app:layout_constraintEnd_toEndOf="parent"
          app:layout_constraintTop_toTopOf="parent"
-         android:tint="#A3A6B4">
+         android:tint="#DADBE1">
 
      </androidx.appcompat.widget.AppCompatImageView>
 
@@ -61,7 +74,7 @@
          android:ellipsize="end"
          android:gravity="center"
          android:maxLength="1"
-         android:textColor="#A3A6B4"
+         android:textColor="#DADBE1"
          android:textSize="14dp"
          android:textStyle="bold"
          app:layout_constraintBottom_toBottomOf="@id/imageBack"
@@ -129,6 +142,14 @@
          app:layout_constraintStart_toStartOf="parent"
          />
 
+
+     <View
+         android:id="@+id/viewSupport"
+         android:layout_width="match_parent"
+         android:layout_height="1dp"
+         android:layout_marginTop="12dp"
+         app:layout_constraintTop_toBottomOf="@id/imageBack"
+         />
 
      <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
          android:id="@+id/refreshLayout"
