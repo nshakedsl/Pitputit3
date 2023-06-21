@@ -19,8 +19,6 @@ public class MessegesListAdapter extends RecyclerView.Adapter<MessegesListAdapte
 
          class MessegeViewHolder extends RecyclerView.ViewHolder {
              private final TextView messegeContent;
-//             private final TextView messegeDisplayName;
-//             private final TextView messegeUserName;
              private final TextView messegeTime;
 
              private final RoundedImageView imgProfile;
@@ -40,7 +38,7 @@ public class MessegesListAdapter extends RecyclerView.Adapter<MessegesListAdapte
 
          @Override
         public MessegeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-             View itemView = mInFlater.inflate(R.layout.messege_layout, parent, false);
+             View itemView = mInFlater.inflate(R.layout.messege_other_layout, parent, false);
              return new MessegeViewHolder(itemView);
          }
 
@@ -52,7 +50,7 @@ public class MessegesListAdapter extends RecyclerView.Adapter<MessegesListAdapte
                 holder.messegeContent.setText(current.getContent());
                 holder.messegeTime.setText(current.getTime());
                 holder.imgProfile.setImageResource(current.getImgProfile());
-                //holder.messegeUserName.setText(current.getUserName());
+
 
             }
          }

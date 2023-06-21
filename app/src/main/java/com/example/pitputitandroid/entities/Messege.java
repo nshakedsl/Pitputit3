@@ -11,6 +11,11 @@ public class Messege {
 @PrimaryKey(autoGenerate = true)
 private int id;
 
+    private String time;
+    private String content;
+    private String userName;
+    private String displayName;
+    private int imgProfile;
  public int getId() {
   return id;
  }
@@ -19,14 +24,13 @@ private int id;
   this.id = id;
  }
 
-        private String time;
-        private String content;
-        private String userName;
-        private String displayName;
-        private int imgProfile;
+
 
          public Messege(String content,String userName,String displayName,int imgProfile, String time ) {
          this.content = content;
+         this.userName=userName;
+         this.displayName=displayName;
+         this.time=time;
          }
 
          public String getTime() {

@@ -28,5 +28,9 @@ public class ChatsActivity extends AppCompatActivity {
         messages.add(new Messege("hello", "moshe", "mosh_nick", R.drawable.user, "12:00" ));
         messages.add(new Messege("hello", "moshe", "mosh_nick", R.drawable.user, "12:00" ));
         messages.add(new Messege("hello", "moshe", "mosh_nick", R.drawable.user, "12:00" ));
+
+        adapter.setMesseges(messages);
+
+
     }
 }

@@ -51,8 +51,8 @@
         android:layout_marginTop="4.00dp"
         android:textColor="@color/white"
         android:textSize="10.00sp"
-        app:layout_constraintStart_toStartOf="@id/DisplayNameTextView"
-        app:layout_constraintTop_toBottomOf="@id/DisplayNameTextView"
+        app:layout_constraintStart_toStartOf="@id/ContentTextView"
+        app:layout_constraintTop_toBottomOf="@id/ContentTextView"
         />
 
 
