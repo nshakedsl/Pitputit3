@@ -50,8 +50,8 @@ public class MainActivity extends AppCompatActivity {
         //if( username.toString(), password.toString())
         String resUsername = isValidUsername(username.toString());
         String resPassword = isValidPassword(password.toString());
-
-        startActivity(new Intent(this, ChatsActivity.class));
+        Intent chatActivity = new Intent(this, ChatsActivity.class);
+        startActivity(chatActivity);
     }
 
     private static String isValidUsername(String username){

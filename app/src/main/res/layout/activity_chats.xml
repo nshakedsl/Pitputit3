@@ -9,6 +9,126 @@
     tools:context=".ChatsActivity"
     >
 
+     <View
+         android:id="@+id/viewBackground"
+         android:layout_width="match_parent"
+         android:layout_height="0dp"
+         android:layout_marginBottom="16dp"
+         android:background="@drawable/background_top_content"
+         app:layout_constraintBottom_toTopOf="@id/layoutSend"
+         app:layout_constraintTop_toTopOf="parent"
+         >
+
+     </View>
+
+
+     <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/imageBack"
+          android:layout_height="30dp"
+         android:layout_width="40dp"
+          android:layout_marginStart="16dp"
+          android:layout_marginLeft="16dp"
+          android:layout_marginTop="12dp"
+          android:padding="5dp"
+          android:src="@drawable/ic_back"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+         android:tint="#A3A6B4">
+
+     </androidx.appcompat.widget.AppCompatImageView>
+
+     <androidx.appcompat.widget.AppCompatImageView
+         android:id="@+id/imageInfo"
+         android:layout_height="30dp"
+         android:layout_width="30dp"
+         android:layout_marginEnd="16dp"
+         android:layout_marginRight="16dp"
+         android:layout_marginTop="12dp"
+         android:padding="5dp"
+         android:src="@drawable/ic_back"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintTop_toTopOf="parent"
+         android:tint="#A3A6B4">
+
+     </androidx.appcompat.widget.AppCompatImageView>
+
+     <TextView
+         android:id="@+id/textUserName"
+         android:layout_width="0dp"
+         android:layout_height="wrap_content"
+         android:layout_marginStart="8dp"
+         android:layout_marginEnd="8dp"
+         android:ellipsize="end"
+         android:gravity="center"
+         android:maxLength="1"
+         android:textColor="#A3A6B4"
+         android:textSize="14dp"
+         android:textStyle="bold"
+         app:layout_constraintBottom_toBottomOf="@id/imageBack"
+         app:layout_constraintEnd_toStartOf="@id/imageInfo"
+         app:layout_constraintTop_toTopOf="@id/imageBack"
+
+
+          >
+
+     </TextView>
+
+
+
+     <FrameLayout
+         android:id="@+id/layoutSend"
+         android:layout_width="40dp"
+         android:layout_height="40dp"
+         android:layout_marginEnd="16dp"
+         android:layout_marginRight="16dp"
+         android:layout_marginBottom="12dp"
+         android:background="@drawable/background_input_chat"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="parent">
+
+          <androidx.appcompat.widget.AppCompatImageView
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_marginStart="4dp"
+              android:layout_marginLeft="4dp"
+              android:padding="8dp"
+              android:src="@drawable/ic_send"
+              android:tint="#A3A6B4">
+
+          </androidx.appcompat.widget.AppCompatImageView>
+
+
+     </FrameLayout>
+
+
+
+
+     <EditText
+         android:id="@+id/inputMessage"
+         android:layout_width="0dp"
+         android:layout_height="40dp"
+         android:layout_marginStart="16dp"
+         android:layout_marginLeft="16dp"
+         android:layout_marginEnd="8dp"
+         android:layout_marginTop="8dp"
+         android:layout_marginRight="8dp"
+         android:layout_marginBottom="12dp"
+         android:background="@drawable/textbox"
+         android:ems="10"
+         android:fontFamily="@font/comfortaa"
+         android:inputType="text"
+         android:hint="Type a message"
+         android:imeOptions="actionDone"
+         android:importantForAutofill="no"
+         android:paddingStart="16dp"
+         android:paddingEnd="16dp"
+         android:textColor="@color/white"
+
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toStartOf="@id/layoutSend"
+         app:layout_constraintStart_toStartOf="parent"
+         />
+
 
      <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
          android:id="@+id/refreshLayout"
@@ -20,32 +140,42 @@
           <androidx.recyclerview.widget.RecyclerView
               android:id="@+id/lstMesseges"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:layout_height="0dp"
+              android:clipToPadding="false"
+              android:orientation="vertical"
+              android:overScrollMode="never"
+              android:padding="20dp"
+              app:layout_constraintBottom_toBottomOf="@id/viewBackground"
+              app:layout_constraintTop_toBottomOf="@id/imageBack"
+
+
+
+
                />
      </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
-     <com.google.android.material.floatingactionbutton.FloatingActionButton
-          android:id="@+id/btnAdd"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginBottom="16dp"
-          android:layout_marginEnd="16dp"
-          android:clickable="true"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:srcCompat="@drawable/ic_add" />
+<!--     <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--          android:id="@+id/btnAdd"-->
+<!--          android:layout_width="wrap_content"-->
+<!--          android:layout_height="wrap_content"-->
+<!--          android:layout_marginBottom="16dp"-->
+<!--          android:layout_marginEnd="16dp"-->
+<!--          android:clickable="true"-->
+<!--          app:layout_constraintBottom_toBottomOf="parent"-->
+<!--          app:layout_constraintEnd_toEndOf="parent"-->
+<!--          app:srcCompat="@drawable/ic_add" />-->
 
-     <com.google.android.material.floatingactionbutton.FloatingActionButton
-         android:id="@+id/btnClose"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_marginStart="16dp"
-         android:layout_marginBottom="16dp"
-         android:clickable="true"
-         app:layout_constraintBottom_toBottomOf="parent"
-         app:layout_constraintStrat_toStartOf="parent"
-         app:srcCompat="@android:drawable/ic_close" />
+<!--     <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--         android:id="@+id/btnClose"-->
+<!--         android:layout_width="wrap_content"-->
+<!--         android:layout_height="wrap_content"-->
+<!--         android:layout_marginStart="16dp"-->
+<!--         android:layout_marginBottom="16dp"-->
+<!--         android:clickable="true"-->
+<!--         app:layout_constraintBottom_toBottomOf="parent"-->
+<!--         app:layout_constraintStrat_toStartOf="parent"-->
+<!--         app:srcCompat="@android:drawable/ic_close" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
