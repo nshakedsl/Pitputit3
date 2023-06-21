@@ -28,8 +28,8 @@ private int id;
          return time;
          }
 
-         public int getImgProfile() {
-         return imgProfile;
+         public String getImgProfile() {
+         return sender.getProfilePic();
          }
 
         public String getContent() {
