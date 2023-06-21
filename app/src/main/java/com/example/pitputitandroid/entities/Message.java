@@ -6,7 +6,7 @@ import androidx.room.Entity;
 
 
 @Entity
-public class Messege {
+public class Message extends LastMessage{
 
 @PrimaryKey(autoGenerate = true)
 private int id;
@@ -18,14 +18,9 @@ private int id;
  public void setId(int id) {
   this.id = id;
  }
+        private User sender;
 
-        private String time;
-        private String content;
-        private String userName;
-        private String displayName;
-        private int imgProfile;
-
-         public Messege(String content,String userName,String displayName,int imgProfile, String time ) {
+         public Message(String content, String userName, String displayName, int imgProfile, String time ) {
          this.content = content;
          }
 

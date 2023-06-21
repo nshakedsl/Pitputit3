@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pitputitandroid.adapters.MessegesListAdapter;
-import com.example.pitputitandroid.entities.Messege;
+import com.example.pitputitandroid.entities.Message;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +23,8 @@ public class ChatsActivity extends Activity {
         lstMesseges.setAdapter(adapter);
         lstMesseges.setLayoutManager( new LinearLayoutManager(this));
 
-        List < Messege> messeges = new ArrayList<>();
-        messeges.add(new Messege("hello", "moshe", "mosh_nick", R.drawable.user, "12:00" ));
+        List <Message> messeges = new ArrayList<>();
+        messeges.add(new Message("hello", "moshe", "mosh_nick", R.drawable.user, "12:00" ));
 
     }
 }
