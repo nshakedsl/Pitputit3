@@ -1,5 +1,7 @@
 package com.example.pitputitandroid.entities;
 
+import android.graphics.Bitmap;
+
 import androidx.room.PrimaryKey;
 
 import androidx.room.Entity;
@@ -15,7 +17,7 @@ private int id;
     private String content;
     private String userName;
     private String displayName;
-    private int imgProfile;
+    private Bitmap imgProfile;
  public int getId() {
   return id;
  }
@@ -26,18 +28,19 @@ private int id;
 
 
 
-         public Messege(String content,String userName,String displayName,int imgProfile, String time ) {
+         public Messege(String content,String userName,String displayName,Bitmap imgProfile, String time ) {
          this.content = content;
          this.userName=userName;
          this.displayName=displayName;
          this.time=time;
+         this.imgProfile=imgProfile;
          }
 
          public String getTime() {
          return time;
          }
 
-         public int getImgProfile() {
+         public Bitmap getImgProfile() {
          return imgProfile;
          }
 
@@ -61,7 +64,7 @@ private int id;
   this.displayName = displayName;
  }
 
-        public void setImgProfile(int imgProfile) {
+        public void setImgProfile(Bitmap imgProfile) {
         this.imgProfile = imgProfile;
     }
 

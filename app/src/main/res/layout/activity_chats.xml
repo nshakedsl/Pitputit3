@@ -127,12 +127,13 @@
          android:layout_marginRight="8dp"
          android:layout_marginBottom="12dp"
          android:background="@drawable/textbox"
-         android:ems="10"
+
          android:fontFamily="@font/comfortaa"
          android:inputType="text"
          android:hint="Type a message"
+         android:ems="10"
+         android:focusableInTouchMode="true"
          android:imeOptions="actionDone"
-         android:importantForAutofill="no"
          android:paddingStart="16dp"
          android:paddingEnd="16dp"
          android:textColor="@color/white"
@@ -155,8 +156,10 @@
          android:id="@+id/refreshLayout"
          android:layout_width="match_parent"
          android:layout_height="match_parent"
-         tools:layout_editor_absoluteX="-202dp"
-         tools:layout_editor_absoluteY="0dp">
+         app:layout_constraintBottom_toBottomOf="@id/viewSupport"
+         app:layout_constraintTop_toBottomOf="@id/viewSupport"
+         app:layout_constraintVertical_bias="0.083"
+         tools:layout_editor_absoluteX="0dp">
 
           <androidx.recyclerview.widget.RecyclerView
               android:id="@+id/lstMesseges"
@@ -167,16 +170,14 @@
               android:overScrollMode="never"
               android:padding="20dp"
               app:layout_constraintBottom_toBottomOf="@id/viewBackground"
-              app:layout_constraintTop_toBottomOf="@id/imageBack"
+              app:layout_constraintTop_toBottomOf="@id/HeadBackground"
 
 
-
-
-               />
+              />
      </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
-<!--     <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+     <!--     <com.google.android.material.floatingactionbutton.FloatingActionButton-->
 <!--          android:id="@+id/btnAdd"-->
 <!--          android:layout_width="wrap_content"-->
 <!--          android:layout_height="wrap_content"-->
