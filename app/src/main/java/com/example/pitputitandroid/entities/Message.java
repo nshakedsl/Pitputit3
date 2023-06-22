@@ -8,7 +8,7 @@ import androidx.room.Entity;
 
 
 @Entity
-public class Messege {
+public class Message extends LastMessage{
 
 @PrimaryKey(autoGenerate = true)
 private int id;
@@ -18,6 +18,7 @@ private int id;
     private String userName;
     private String displayName;
     private Bitmap imgProfile;
+
  public int getId() {
   return id;
  }
@@ -25,10 +26,11 @@ private int id;
  public void setId(int id) {
   this.id = id;
  }
+        private User sender;
 
 
 
-         public Messege(String content,String userName,String displayName,Bitmap imgProfile, String time ) {
+         public Message(String content,String userName,String displayName,Bitmap imgProfile, String time ) {
          this.content = content;
          this.userName=userName;
          this.displayName=displayName;
@@ -37,7 +39,7 @@ private int id;
          }
 
          public String getTime() {
-         return time;
+         return created;
          }
 
          public Bitmap getImgProfile() {
@@ -49,19 +51,19 @@ private int id;
     }
 
          public String getUserName() {
-  return userName;
+  return sender.getUsername();
  }
 
          public String getDisplayName() {
-  return displayName;
+  return sender.getDisplayName();
  }
 
          public void setUserName(String userName) {
-  this.userName = userName;
+  sender.setUsername(userName);
  }
 
          public void setDisplayName(String displayName) {
-  this.displayName = displayName;
+             sender.setDisplayName(displayName);
  }
 
         public void setImgProfile(Bitmap imgProfile) {
@@ -70,7 +72,7 @@ private int id;
 
 
          public void setTime(String time) {
-         this.time = time;
+         this.created = time;
          }
 
          public void setContent(String content) {

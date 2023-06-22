@@ -10,8 +10,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pitputitandroid.R;
-import com.example.pitputitandroid.entities.Messege;
-import com.example.pitputitandroid.viewmodels.MessegesViewModel;
+import com.example.pitputitandroid.entities.Message;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.List;
@@ -33,7 +32,7 @@ public class MessegesListAdapter extends RecyclerView.Adapter<MessegesListAdapte
          }
          private final LayoutInflater mInFlater;
 
-        private List<Messege> messeges;
+        private List<Message> messeges;
 
         public MessegesListAdapter(Context context){ mInFlater = LayoutInflater.from(context);}
 
@@ -47,7 +46,7 @@ public class MessegesListAdapter extends RecyclerView.Adapter<MessegesListAdapte
          public void onBindViewHolder(MessegeViewHolder holder, int position) {
             if(messeges != null)
             {
-                final Messege current = messeges.get(position);
+                final Message current = messeges.get(position);
                 holder.messegeContent.setText(current.getContent());
                 holder.messegeTime.setText(current.getTime());
                // holder.imgProfile.setImageBitmap(current.getImgProfile());
@@ -58,7 +57,7 @@ public class MessegesListAdapter extends RecyclerView.Adapter<MessegesListAdapte
             }
          }
 
-         public void setMesseges(List<Messege> m){
+         public void setMesseges(List<Message> m){
             messeges = m;
             notifyDataSetChanged();
          }
@@ -70,7 +69,7 @@ public class MessegesListAdapter extends RecyclerView.Adapter<MessegesListAdapte
             else return 0;
          }
 
-         public List<Messege> getMesseges(){ return messeges; }
+         public List<Message> getMesseges(){ return messeges; }
 
 }
 
