@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
         imglogo.animate().translationY(50).setDuration(700).setStartDelay(0);
         loginButton.animate().translationY(50).setDuration(700).setStartDelay(0);
 
-
     }
 
     void loginClick(Editable username, Editable password) {
@@ -55,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         Intent I = new Intent(this, ChatsActivity.class);
 
 
-        UserAPI userAPI=new UserAPI();
+        UserAPI userAPI=new UserAPI(getApplicationContext());
         userAPI.login(username.toString(),password.toString());
         // Observe the login result using the MutableLiveData returned by getLoginResult()
         userAPI.getLoginResult().observe(this, new Observer<Boolean>() {
@@ -64,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 if (isSuccess) {
                     int x=1;
                     // Login successful, proceed to ChatsActivity
+                    String token = userAPI.getToken();
                     startActivity(I);
                 } else {
                     String result= "incorrect password or/and username❗";
