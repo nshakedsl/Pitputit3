@@ -1,6 +1,7 @@
 package com.example.pitputitandroid.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +19,6 @@ public class MessegesListAdapter extends RecyclerView.Adapter<MessegesListAdapte
 
          class MessegeViewHolder extends RecyclerView.ViewHolder {
              private final TextView messegeContent;
-//             private final TextView messegeDisplayName;
-//             private final TextView messegeUserName;
              private final TextView messegeTime;
 
              private final RoundedImageView imgProfile;
@@ -39,7 +38,7 @@ public class MessegesListAdapter extends RecyclerView.Adapter<MessegesListAdapte
 
          @Override
         public MessegeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-             View itemView = mInFlater.inflate(R.layout.messege_layout, parent, false);
+             View itemView = mInFlater.inflate(R.layout.messege_other_layout, parent, false);
              return new MessegeViewHolder(itemView);
          }
 
@@ -50,8 +49,10 @@ public class MessegesListAdapter extends RecyclerView.Adapter<MessegesListAdapte
                 final Message current = messeges.get(position);
                 holder.messegeContent.setText(current.getContent());
                 holder.messegeTime.setText(current.getTime());
-//                holder.imgProfile.setImageResource(current.getImgProfile());
-                //holder.messegeUserName.setText(current.getUserName());
+               // holder.imgProfile.setImageBitmap(current.getImgProfile());
+                Bitmap bitmap = current.getImgProfile(); // Assuming current.getImgProfile() returns a Bitmap object
+                holder.imgProfile.setImageBitmap(bitmap);
+
 
             }
          }
