@@ -1,5 +1,8 @@
 package com.example.pitputitandroid.api;
 
+import static com.example.pitputitandroid.PitputitAndroid.context;
+
+import android.content.Context;
 import android.util.Log;
 
 import com.example.pitputitandroid.PitputitAndroid;
@@ -10,6 +13,7 @@ import com.google.gson.GsonBuilder;
 
 import androidx.lifecycle.MutableLiveData;
 
+import android.content.SharedPreferences;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -23,10 +27,13 @@ public class UserAPI {
 
     // Declare MutableLiveData to hold the login result
     private MutableLiveData<Boolean> loginResult;
+
+    private static final String PREF_TOKEN = "token";
+    private SharedPreferences sharedPreferences;
     Retrofit retrofit;
     WebServiceAPI webServiceAPI;
 
-    public UserAPI() {
+    public UserAPI(Context context) {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder()
@@ -37,18 +44,23 @@ public class UserAPI {
                 .create();
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(PitputitAndroid.context.getString(R.string.BaseUrl))
+                .baseUrl(context.getString(R.string.BaseUrl))
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
                 .build();
         webServiceAPI = retrofit.create(WebServiceAPI.class);
         loginResult = new MutableLiveData<>();
+        sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+
     }
 
     public MutableLiveData<Boolean> getLoginResult() {
         return loginResult;
     }
 
+    public String getToken() {
+        return sharedPreferences.getString(PREF_TOKEN, null);
+    }
 
     public void login(String username, String password) {
         UserLogin userLogin = new UserLogin(username, password);
@@ -59,9 +71,18 @@ public class UserAPI {
                 String token = response.body();
                 String finalToken = "Bearer " + token;
 
-                // Check if the token is null and set the login result accordingly
-                boolean isSuccess = (token != null);
-                loginResult.postValue(isSuccess);
+                if (token != null) {
+                    // Save the token to SharedPreferences
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(PREF_TOKEN, finalToken);
+                    editor.apply();
+
+                    // Set the login result as true
+                    loginResult.postValue(true);
+                } else {
+                    // Set the login result as false
+                    loginResult.postValue(false);
+                }
             }
 
             @Override
