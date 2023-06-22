@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.example.pitputitandroid.api.UserAPI;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.lifecycle.Observer;
 import androidx.navigation.ui.AppBarConfiguration;
 
 
@@ -48,18 +49,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void loginClick(Editable username, Editable password) {
-        String result;
-        //if( username.toString(), password.toString())
+
         String resUsername = isValidUsername(username.toString());
         String resPassword = isValidPassword(password.toString());
         Intent I = new Intent(this, ChatsActivity.class);
-//        I.putExtra("username",resUsername);
-//        I.putExtra("password",resPassword);
+
 
         UserAPI userAPI=new UserAPI();
         userAPI.login(username.toString(),password.toString());
+        // Observe the login result using the MutableLiveData returned by getLoginResult()
+        userAPI.getLoginResult().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isSuccess) {
+                if (isSuccess) {
+                    int x=1;
+                    // Login successful, proceed to ChatsActivity
+                    startActivity(I);
+                } else {
+                    String result= "incorrect password or/and username❗";
+                    // Login failed, handle the error
+                    // TODO: Display an error message to the user
+                }
+            }
+        });
 
-        startActivity(I);
     }
 
     private static String isValidUsername(String username) {

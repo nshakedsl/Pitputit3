@@ -8,6 +8,8 @@ import com.example.pitputitandroid.entities.UserLogin;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import androidx.lifecycle.MutableLiveData;
+
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -19,7 +21,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UserAPI {
 
-
+    // Declare MutableLiveData to hold the login result
+    private MutableLiveData<Boolean> loginResult;
     Retrofit retrofit;
     WebServiceAPI webServiceAPI;
 
@@ -39,6 +42,11 @@ public class UserAPI {
                 .client(client)
                 .build();
         webServiceAPI = retrofit.create(WebServiceAPI.class);
+        loginResult = new MutableLiveData<>();
+    }
+
+    public MutableLiveData<Boolean> getLoginResult() {
+        return loginResult;
     }
 
 
@@ -48,20 +56,22 @@ public class UserAPI {
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-
                 String token = response.body();
-
                 String finalToken = "Bearer " + token;
-                Log.d("TAG", "Message to log hiiii");
-                Log.d("TAG",finalToken);
 
+                // Check if the token is null and set the login result accordingly
+                boolean isSuccess = (token != null);
+                loginResult.postValue(isSuccess);
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-
                 Log.d("TAG", "Message to log");
+
+                // Set the login result as false on failure
+                loginResult.postValue(false);
             }
         });
     }
 }
+
