@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatButton;
 
+import com.example.pitputitandroid.api.UserAPI;
+
 public class RegisterActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,11 @@ public class RegisterActivity extends Activity {
         } else if (!password.toString().equals(verifyPassword.toString())) {
             result = "The passwords are not equals";
         } else {
+
+
+            UserAPI userAPI=new UserAPI(getApplicationContext());
+            userAPI.register(usernameE.toString(),passwordE.toString(),nicknameE.toString(),"image");
+
             result = "valid";
         }
 

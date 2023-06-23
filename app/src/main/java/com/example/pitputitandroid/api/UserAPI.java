@@ -7,6 +7,8 @@ import android.util.Log;
 
 import com.example.pitputitandroid.PitputitAndroid;
 import com.example.pitputitandroid.R;
+import com.example.pitputitandroid.entities.User;
+import com.example.pitputitandroid.entities.UserFull;
 import com.example.pitputitandroid.entities.UserLogin;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -93,6 +95,26 @@ public class UserAPI {
                 loginResult.postValue(false);
             }
         });
+    }
+
+    public void register(String username, String password, String nickname, String profilePic) {
+        UserFull userFull = new UserFull(password, profilePic, username, nickname);
+
+
+        Call<Void> call = webServiceAPI.register(userFull);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                int x=5;
+
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                int x=5;
+            }
+        });
+
     }
 }
 
