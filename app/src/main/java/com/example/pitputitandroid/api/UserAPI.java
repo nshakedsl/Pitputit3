@@ -7,6 +7,8 @@ import android.util.Log;
 
 import com.example.pitputitandroid.PitputitAndroid;
 import com.example.pitputitandroid.R;
+import com.example.pitputitandroid.entities.User;
+import com.example.pitputitandroid.entities.UserFull;
 import com.example.pitputitandroid.entities.UserLogin;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -26,10 +28,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class UserAPI {
 
     // Declare MutableLiveData to hold the login result
-    private MutableLiveData<Boolean> loginResult;
-
+    private final MutableLiveData<Boolean> loginResult;
+    private final MutableLiveData<Boolean> registerResult;
     private static final String PREF_TOKEN = "token";
-    private SharedPreferences sharedPreferences;
+    private final SharedPreferences sharedPreferences;
     Retrofit retrofit;
     WebServiceAPI webServiceAPI;
 
@@ -50,12 +52,17 @@ public class UserAPI {
                 .build();
         webServiceAPI = retrofit.create(WebServiceAPI.class);
         loginResult = new MutableLiveData<>();
+        registerResult = new MutableLiveData<>();
         sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
 
     }
 
     public MutableLiveData<Boolean> getLoginResult() {
         return loginResult;
+    }
+
+    public MutableLiveData<Boolean> getRegisterResult() {
+        return registerResult;
     }
 
     public String getToken() {
@@ -87,12 +94,38 @@ public class UserAPI {
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                Log.d("TAG", "Message to log");
+                Log.d("TAG", "login failure");
 
                 // Set the login result as false on failure
                 loginResult.postValue(false);
             }
         });
+    }
+
+    public void register(String username, String password, String nickname, String profilePic) {
+        UserFull userFull = new UserFull(password, profilePic, username, nickname);
+
+
+        Call<Void> call = webServiceAPI.register(userFull);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.code() == 409)
+                    registerResult.postValue(false);
+                else if (response.code() == 200) {
+                    registerResult.postValue(true);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+
+                // Set the register result as false on failure
+                registerResult.postValue(false);
+            }
+        });
+
     }
 }
 
