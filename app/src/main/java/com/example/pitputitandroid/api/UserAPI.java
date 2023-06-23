@@ -28,10 +28,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class UserAPI {
 
     // Declare MutableLiveData to hold the login result
-    private MutableLiveData<Boolean> loginResult;
-
+    private final MutableLiveData<Boolean> loginResult;
+    private final MutableLiveData<Boolean> registerResult;
     private static final String PREF_TOKEN = "token";
-    private SharedPreferences sharedPreferences;
+    private final SharedPreferences sharedPreferences;
     Retrofit retrofit;
     WebServiceAPI webServiceAPI;
 
@@ -52,12 +52,17 @@ public class UserAPI {
                 .build();
         webServiceAPI = retrofit.create(WebServiceAPI.class);
         loginResult = new MutableLiveData<>();
+        registerResult = new MutableLiveData<>();
         sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
 
     }
 
     public MutableLiveData<Boolean> getLoginResult() {
         return loginResult;
+    }
+
+    public MutableLiveData<Boolean> getRegisterResult() {
+        return registerResult;
     }
 
     public String getToken() {
@@ -89,7 +94,7 @@ public class UserAPI {
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                Log.d("TAG", "Message to log");
+                Log.d("TAG", "login failure");
 
                 // Set the login result as false on failure
                 loginResult.postValue(false);
@@ -105,13 +110,19 @@ public class UserAPI {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                int x=5;
+                if (response.code() == 409)
+                    registerResult.postValue(false);
+                else if (response.code() == 200) {
+                    registerResult.postValue(true);
+                }
 
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                int x=5;
+
+                // Set the register result as false on failure
+                registerResult.postValue(false);
             }
         });
 
