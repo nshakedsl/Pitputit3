@@ -1,37 +1,128 @@
 package com.example.pitputitandroid;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Shader;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import android.net.Uri;
+import android.widget.Button;
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 
 public class RegisterActivity extends Activity {
+    private static final int REQUEST_IMAGE_PICK = 1;
+    private Bitmap uploadedBitmap;
+
+    //private final int GALLERY_REQ_CODE = 1000;
+    ImageView addPhoto;
+
+    private AppCompatButton buttonUpload;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup_activity);
         //todo: send new user to dataBase
+
+        //find all the elements:
         AppCompatButton registerButton = findViewById(R.id.registerButton);
         TextView alreadyRegistered = findViewById(R.id.alreadyRegistered);
-        alreadyRegistered.setOnClickListener(v -> this.finish());
-
-        ImageView addPhoto = (ImageView) findViewById(R.id.imageAdd);
-        addPhoto.setImageResource(R.drawable.user);
+        addPhoto = (ImageView) findViewById(R.id.imageAdd);
+        buttonUpload = findViewById(R.id.button_upload);
         EditText nickEdit = findViewById(R.id.editTextNickName);
         EditText userEdit = findViewById(R.id.usernameRegister);
         EditText passEdit = findViewById(R.id.editTextTextPassword);
         EditText verifyPassEdit = findViewById(R.id.editTextTextPasswordagain);
-        AppCompatButton addPhotoButton = findViewById(R.id.addPhotoButton);
+
+        addPhoto.setImageResource(R.drawable.user);
+
+        alreadyRegistered.setOnClickListener(v -> this.finish());
+
+
+
+        buttonUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGallery();
+            }
+        });
+
+
         registerButton.setOnClickListener(v -> attemptRegister(userEdit, nickEdit,
                 nickEdit, verifyPassEdit));
 
 
+        animationMove(addPhoto, buttonUpload, registerButton, alreadyRegistered, userEdit,
+                nickEdit, passEdit, verifyPassEdit);
+
+
+
+    }
+
+    private void openGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, REQUEST_IMAGE_PICK);
+    }
+
+//
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
+//     super.onActivityResult(requestCode, resultCode, data);
+//
+//     if(resultCode==RESULT_OK){
+//         if(requestCode==GALLERY_REQ_CODE){
+//             //the gallery
+//             addPhoto.setImageURI(data.getData());
+//
+//         }
+//     }
+//    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_IMAGE_PICK && resultCode == RESULT_OK && data != null) {
+            Uri imageUri = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
+                addPhoto.setImageBitmap(bitmap);
+
+                // After setting the bitmap to the ImageView
+                Bitmap circularBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+                Canvas canvas = new Canvas(circularBitmap);
+                Paint paint = new Paint();
+                paint.setShader(new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
+                paint.setAntiAlias(true);
+                float radius = bitmap.getWidth() > bitmap.getHeight() ? bitmap.getHeight() / 2f : bitmap.getWidth() / 2f;
+                canvas.drawCircle(bitmap.getWidth() / 2f, bitmap.getHeight() / 2f, radius, paint);
+
+
+                uploadedBitmap = circularBitmap;
+                addPhoto.setImageBitmap(circularBitmap);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void animationMove(ImageView addPhoto, AppCompatButton addPhotoButton, AppCompatButton registerButton,
+                               TextView alreadyRegistered, EditText userEdit, EditText nickEdit,
+                               EditText passEdit, EditText verifyPassEdit) {
         addPhoto.animate().translationY(50).setDuration(700).setStartDelay(0);
         addPhotoButton.animate().translationY(50).setDuration(700).setStartDelay(0);
         registerButton.animate().translationY(50).setDuration(700).setStartDelay(0);
@@ -40,7 +131,9 @@ public class RegisterActivity extends Activity {
         nickEdit.animate().translationY(50).setDuration(700).setStartDelay(0);
         passEdit.animate().translationY(50).setDuration(700).setStartDelay(0);
         verifyPassEdit.animate().translationY(50).setDuration(700).setStartDelay(0);
+
     }
+
     //sends to register/signup page
 
     private void attemptRegister(EditText usernameE, EditText nicknameE,
@@ -56,6 +149,8 @@ public class RegisterActivity extends Activity {
         if (username.toString().equals("") || password.toString().equals("") || nickname.toString().equals("")
                 || verifyPassword.toString().equals("")) {
             result = "all fields are mandatory";
+        } else if(uploadedBitmap == null){
+            result = "Image is a mandatory field";
         } else if (!isValidUsername(resUsername).equals("valid")) {
             result = isValidUsername(resUsername);
         } else if (!isValidPassword(resPassword).equals("valid")) {
