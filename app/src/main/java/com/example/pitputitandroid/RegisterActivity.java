@@ -21,21 +21,26 @@ import android.net.Uri;
 import android.widget.Button;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.lifecycle.Observer;
 
-public class RegisterActivity extends Activity {
+
+import com.example.pitputitandroid.api.UserAPI;
+
+public class RegisterActivity extends AppCompatActivity {
+
+
+    
     private static final int REQUEST_IMAGE_PICK = 1;
     private Bitmap uploadedBitmap;
-
-    //private final int GALLERY_REQ_CODE = 1000;
     ImageView addPhoto;
-
     private AppCompatButton buttonUpload;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup_activity);
-        //todo: send new user to dataBase
 
         //find all the elements:
         AppCompatButton registerButton = findViewById(R.id.registerButton);
@@ -62,7 +67,7 @@ public class RegisterActivity extends Activity {
 
 
         registerButton.setOnClickListener(v -> attemptRegister(userEdit, nickEdit,
-                nickEdit, verifyPassEdit));
+                passEdit, verifyPassEdit));
 
 
         animationMove(addPhoto, buttonUpload, registerButton, alreadyRegistered, userEdit,
@@ -144,22 +149,45 @@ public class RegisterActivity extends Activity {
         Editable verifyPassword = verifyPasswordE.getText();
         String result;
         String resUsername = isValidUsername(username.toString());
-        String resPassword = isValidUsername(password.toString());
+        String resPassword = isValidPassword(password.toString());
         String resNickname = isValidNickname(nickname.toString());
         if (username.toString().equals("") || password.toString().equals("") || nickname.toString().equals("")
                 || verifyPassword.toString().equals("")) {
             result = "all fields are mandatory";
         } else if(uploadedBitmap == null){
             result = "Image is a mandatory field";
-        } else if (!isValidUsername(resUsername).equals("valid")) {
+        } else if (!resUsername.equals("valid")) {
             result = isValidUsername(resUsername);
-        } else if (!isValidPassword(resPassword).equals("valid")) {
+        } else if (!resPassword.equals("valid")) {
             result = isValidPassword(resPassword);
-        } else if (!isValidNickname(resNickname).equals("valid")) {
+    } else if (!resNickname.equals("valid")) {
             result = isValidNickname(resNickname);
         } else if (!password.toString().equals(verifyPassword.toString())) {
             result = "The passwords are not equals";
         } else {
+
+
+            UserAPI userAPI=new UserAPI(getApplicationContext());
+            userAPI.register(username.toString(),password.toString(),nickname.toString(),"image");
+
+
+            userAPI.getRegisterResult().observe(this, new Observer<Boolean>() {
+                @Override
+                public void onChanged(Boolean isSuccess) {
+                    if (isSuccess) {
+                        Log.d("TAG","register success");
+                        // Register successful
+                        // TODO Ofir! proceed to LoginActivity
+
+                    } else {
+                        String result= "This user name is already exist❗";
+                        Log.d("TAG","register failed");
+                        // Register failed, handle the error
+                        // TODO Ofir! Display an error message to the user
+                    }
+                }
+            });
+
             result = "valid";
         }
 
@@ -169,6 +197,7 @@ public class RegisterActivity extends Activity {
         }
         registerUser();
     }
+
 
     private static String isValidUsername(String username) {
         if (!username.matches("^[a-zA-Z0-9\\._:\\-\\?!]+$")) {

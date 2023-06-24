@@ -61,14 +61,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(Boolean isSuccess) {
                 if (isSuccess) {
-                    int x=1;
                     // Login successful, proceed to ChatsActivity
-                    String token = userAPI.getToken();
+                    //String token = userAPI.getToken();
                     startActivity(I);
                 } else {
                     String result= "incorrect password or/and username❗";
                     // Login failed, handle the error
-                    // TODO: Display an error message to the user
+                    // TODO Ofir! Display an error message to the user
                 }
             }
         });
