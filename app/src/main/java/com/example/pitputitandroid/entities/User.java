@@ -5,6 +5,12 @@ public class User {
     private String username;
     private String displayName;
 
+    public User(String profilePic, String username, String displayName) {
+        this.profilePic = profilePic;
+        this.username = username;
+        this.displayName = displayName;
+    }
+
     public String getProfilePic() {
         return profilePic;
     }
@@ -25,7 +31,4 @@ public class User {
         this.username = username;
     }
 
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
 }

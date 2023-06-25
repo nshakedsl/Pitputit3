@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pitputitandroid.adapters.MessegesListAdapter;
 import com.example.pitputitandroid.entities.Message;
+import com.example.pitputitandroid.entities.User;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -50,9 +51,10 @@ public class ChatsActivity extends AppCompatActivity {
 
 
         List <Message> messages = new ArrayList<>();
-        messages.add(new Message("hello everyone!!", "moshe", "mosh_nick", bitmap, "12:00" ));
-        messages.add(new Message("hello this is ", "moshe", "mosh_nick", bitmap, "12:00" ));
-        messages.add(new Message("hello world", "moshe", "mosh_nick", bitmap, "12:00" ));
+        User moshe = new User("pic","moshe","mosh_nick");
+        messages.add(new Message("hello everyone!!",moshe , "12:00" ));
+        messages.add(new Message("hello this is ", moshe, "12:00" ));
+        messages.add(new Message("hello world", moshe, "12:00" ));
 
         adapter.setMesseges(messages);
 
