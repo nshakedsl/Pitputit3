@@ -30,6 +30,7 @@ public class UserAPI {
     // Declare MutableLiveData to hold the login result
     private final MutableLiveData<Boolean> loginResult;
     private final MutableLiveData<Boolean> registerResult;
+    private final MutableLiveData<Boolean> userDetailsResult;
     private static final String PREF_TOKEN = "token";
     private final SharedPreferences sharedPreferences;
     Retrofit retrofit;
@@ -53,6 +54,7 @@ public class UserAPI {
         webServiceAPI = retrofit.create(WebServiceAPI.class);
         loginResult = new MutableLiveData<>();
         registerResult = new MutableLiveData<>();
+        userDetailsResult = new MutableLiveData<>();
         sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
 
     }
@@ -65,8 +67,24 @@ public class UserAPI {
         return registerResult;
     }
 
+    public MutableLiveData<Boolean> getUserDetailsResult() {
+        return userDetailsResult;
+    }
+
     public String getToken() {
         return sharedPreferences.getString(PREF_TOKEN, null);
+    }
+
+    public String getDisplayName() {
+        return sharedPreferences.getString("displayName", null);
+    }
+
+    public String getProfilePic() {
+        return sharedPreferences.getString("profilePic", null);
+    }
+
+    public String getUsername() {
+        return sharedPreferences.getString("username", null);
     }
 
     public void login(String username, String password) {
@@ -125,6 +143,38 @@ public class UserAPI {
                 registerResult.postValue(false);
             }
         });
+
+    }
+
+    public void getUserDetails(String userName) {
+
+        Call<User> call = webServiceAPI.getUserDetails(getToken(),userName);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.code() == 401){
+                    userDetailsResult.postValue(false);
+                } else if (response.code() == 200) {
+                    User user = response.body();
+                    if (user != null) {
+                        // Save user details in SharedPreferences
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("displayName", user.getDisplayName());
+                        editor.putString("profilePic", user.getProfilePic());
+                        editor.putString("username", user.getUsername());
+                        editor.apply();
+                    }
+
+                    userDetailsResult.postValue(true);
+
+                }
+            }
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                userDetailsResult.postValue(false);
+            }
+        });
+
 
     }
 }
