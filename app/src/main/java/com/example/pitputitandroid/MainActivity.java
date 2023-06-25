@@ -13,6 +13,7 @@ import com.example.pitputitandroid.api.UserAPI;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.lifecycle.Observer;
 import androidx.navigation.ui.AppBarConfiguration;
 
@@ -25,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         AppCompatButton loginButton = findViewById(R.id.loginButton);
+        AppCompatImageView settingButton = findViewById(R.id.imageSettings);
+        //todo: check with database Before sending
         EditText editText = findViewById(R.id.usernameInput);
         EditText passText = findViewById(R.id.passwordInput);
         ImageView imglogo = findViewById(R.id.imageView2);
@@ -33,10 +36,18 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(v ->
                 loginClick(editText.getText(), passText.getText()));
         TextView registerText = findViewById(R.id.registerText);
+
         //sends to register/signup page
         registerText.setOnClickListener(v -> {
             startActivity(new Intent(this, RegisterActivity.class));
         });
+
+        settingButton.setOnClickListener(v -> {
+            startActivity(new Intent(this, SettingsActivity.class));
+        });
+
+
+
 
 
         TextView welcomeText = findViewById(R.id.textView);

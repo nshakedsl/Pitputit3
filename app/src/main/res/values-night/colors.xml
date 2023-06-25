@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!--    background-->
+    <color name="background">#140E20</color>
+    <color name="background_wave">#30233C</color>
+
+    <!--    text-->
+    <color name="title">#DADBE1</color>
+    <color name="regular_text">#FFFFFF</color>
+
+    <!--    input-->
+    <color name="input_back">#56565A</color>
+    <color name="input_text">#000</color>
+    <color name="input_limit">#A3A6B4</color>
+
+    <!--    button-->
+    <color name="button_back">#0dcaf0</color>
+    <color name="button_text">#FFFFFF</color>
+
+    <!--    messeges-->
+    <color name="message_me_back">#2B642E</color>
+    <color name="message_other_back">#333131</color>
+    <color name="message_text">#FFFFFF</color>
+    <color name="message_text_date">#FFFFFF</color>
+
+    <!--    chats-->
+    <color name="background_chat">#0B1119</color>
+    <color name="background_chat_page">#0B0A0A</color>
+
+
+    <!--    elements-->
+    <color name="elements">#A3A6B4</color>
+
+
+</resources>
