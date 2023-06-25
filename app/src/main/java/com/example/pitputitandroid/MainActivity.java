@@ -6,6 +6,8 @@ import android.text.Editable;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.pitputitandroid.api.UserAPI;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -48,9 +50,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void loginClick(Editable username, Editable password) {
-
-        String resUsername = isValidUsername(username.toString());
-        String resPassword = isValidPassword(password.toString());
         Intent I = new Intent(this, ChatsActivity.class);
 
 
@@ -67,21 +66,11 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     String result= "incorrect password or/and username❗";
                     // Login failed, handle the error
-                    // TODO Ofir! Display an error message to the user
+                    Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-    }
-
-    private static String isValidUsername(String username) {
-
-        return "valid";
-    }
-
-    private static String isValidPassword(String password) {
-
-        return "valid";
     }
 //    public static String isValidNickname(String password){
 //
