@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-         android:background="@drawable/background">
+         android:background="@color/background">
 
 
         <LinearLayout
@@ -27,7 +27,7 @@
                 <ImageView
                     android:id="@+id/imageAdd"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="150dp"
                     android:layout_marginTop="20dp"
                     app:srcCompat="@drawable/user"
                     />
@@ -66,20 +66,10 @@
                 android:background="@drawable/button"
                 android:fontFamily="@font/comfortaa"
                 android:text="@string/choosePhotoText"
-                android:textColor="@color/white"
+                android:textColor="@color/button_text"
                 android:textSize="14dp" />
 
 
-<!--            <Button-->
-<!--                android:id="@+id/button"-->
-<!--                android:layout_width="190dp"-->
-<!--                android:layout_height="50dp"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:layout_margin="10dp"-->
-<!--                android:fontFamily="@font/comfortaa"-->
-<!--                android:text="choose picture 📷"-->
-<!--                android:textColor="@color/white"-->
-<!--                android:textSize="15dp" />-->
 
 
             <EditText
@@ -144,7 +134,7 @@
                 android:background="@drawable/button"
                 android:fontFamily="@font/comfortaa"
                 android:text="@string/registerText"
-                android:textColor="@color/white"
+                android:textColor="@color/button_text"
 
                 android:textSize="18dp" />
 
@@ -156,7 +146,7 @@
                 android:textAlignment="center"
                 android:fontFamily="@font/comfortaa"
                 android:text="Already registered? Click here to login"
-                android:textColor="#003066"
+                android:textColor="@color/regular_text"
                 android:textSize="16dp"
                 android:textStyle="bold"
                 android:gravity="center"
