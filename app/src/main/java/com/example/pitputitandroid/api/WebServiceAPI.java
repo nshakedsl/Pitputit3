@@ -33,7 +33,7 @@ public interface WebServiceAPI {
     Call<List<Message>> addChatMessage(@Header("Authorization") String token, @Body Message message, @Path("id") String id);
 
     @GET("Users/{username}")
-    Call<User> addChatMessage(@Header("Authorization") String token, @Path("username") String username);
+    Call<User> getUserDetails(@Header("Authorization") String token, @Path("username") String username);
 
     @POST("Users")
     Call<Void> register(@Body UserFull userFull);
