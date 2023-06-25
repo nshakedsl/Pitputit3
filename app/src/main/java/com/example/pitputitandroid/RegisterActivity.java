@@ -170,20 +170,20 @@ public class RegisterActivity extends AppCompatActivity {
             UserAPI userAPI=new UserAPI(getApplicationContext());
             userAPI.register(username.toString(),password.toString(),nickname.toString(),"image");
 
-
+            Activity context = this;
             userAPI.getRegisterResult().observe(this, new Observer<Boolean>() {
                 @Override
                 public void onChanged(Boolean isSuccess) {
                     if (isSuccess) {
                         Log.d("TAG","register success");
                         // Register successful
-                        // TODO Ofir! proceed to LoginActivity
+                        context.finish();
 
                     } else {
                         String result= "This user name is already exist❗";
                         Log.d("TAG","register failed");
                         // Register failed, handle the error
-                        // TODO Ofir! Display an error message to the user
+                        invalidResult(result);
                     }
                 }
             });
