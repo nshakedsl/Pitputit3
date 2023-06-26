@@ -3,91 +3,69 @@ package com.example.pitputitandroid.entities;
 import android.graphics.Bitmap;
 import android.util.Base64;
 
+import androidx.annotation.NonNull;
 import androidx.room.PrimaryKey;
 
 import androidx.room.Entity;
 
 import java.io.ByteArrayOutputStream;
+import com.example.pitputitandroid.Utils;
 
 
 @Entity
-public class Message extends LastMessage{
+public class Message {
+    @PrimaryKey
+    @NonNull
+    private String id;
+    private final User sender;
+    private final String created;
+    private final String content;
 
-@PrimaryKey(autoGenerate = true)
-private int id;
+    public Message(String content, User sender, String created) {
+        this.created = created;
+        this.content = content;
+        this.sender = sender;
+        this.id = Utils.uniqueIdGenerator();
+    }
 
-    private String time;
-    private String content;
-    private String userName;
-    private String displayName;
-    private Bitmap imgProfile;
+    public Message(String content,String userName, String displayName, Bitmap bitmap, String created) {
+        this.created = created;
+        this.content = content;
+        this.sender = new User(bitmap, userName, displayName);
+        this.id = Utils.uniqueIdGenerator();
+    }
 
- public int getId() {
-  return id;
- }
+    public void setId(@NonNull String id) {
+        this.id = id;
+    }
 
- public void setId(int id) {
-  this.id = id;
- }
-        private User sender;
+    @NonNull
+    public String getId() {
+        return id;
+    }
 
+    public String getCreated() {
+        return created;
+    }
 
+    public User getSender() {
+        return sender;
+    }
 
-         public Message(String content,String userName,String displayName,Bitmap imgProfile, String time ) {
-         this.content = content;
-         this.userName=userName;
-         this.displayName=displayName;
-         this.time=time;
-         this.imgProfile=imgProfile;
-         }
+    public String getTime() {
+        return created;
+    }
 
-
-         public String CastToString(Bitmap bitmapPic){
-             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-             bitmapPic.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-             byte[] byteArray = byteArrayOutputStream.toByteArray();
-             String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
-             return encodedImage;
-         }
-
-         public String getTime() {
-         return created;
-         }
-
-         public Bitmap getImgProfile() {
-         return imgProfile;
-         }
-
-        public String getContent() {
+    public String getContent() {
         return content;
     }
 
-         public String getUserName() {
-  return userName;
- }
-
-         public String getDisplayName() {
-  return sender.getDisplayName();
- }
-
-         public void setUserName(String userName) {
-  sender.setUsername(userName);
- }
-
-         public void setDisplayName(String displayName) {
-             sender.setDisplayName(displayName);
- }
-
-        public void setImgProfile(Bitmap imgProfile) {
-        this.imgProfile = imgProfile;
+    public String getUserName() {
+        return sender.getUsername();
     }
 
+    public String getDisplayName() {
+        return sender.getDisplayName();
+    }
 
-         public void setTime(String time) {
-         this.created = time;
-         }
-
-         public void setContent(String content) {
-         this.content = content;
-         }
 }

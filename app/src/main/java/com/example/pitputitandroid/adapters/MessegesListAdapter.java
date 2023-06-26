@@ -117,8 +117,9 @@ public class MessegesListAdapter extends RecyclerView.Adapter<MessegesListAdapte
                 holder.messegeContent.setText(current.getContent());
                 holder.messegeTime.setText(current.getTime());
                // holder.imgProfile.setImageBitmap(current.getImgProfile());
-                Bitmap bitmap = current.getImgProfile(); // Assuming current.getImgProfile() returns a Bitmap object
-                holder.imgProfile.setImageBitmap(bitmap);
+                holder.imgProfile.setImageBitmap(current.getSender().getProfilePicBitmap());
+                // Bitmap bitmap = current.getImgProfile(); // Assuming current.getImgProfile() returns a Bitmap object
+                // holder.imgProfile.setImageBitmap(bitmap);
                 holder.messegeContent1.setText(current.getContent());
                 holder.messegeTime1.setText(current.getTime());
 
@@ -145,6 +146,7 @@ public class MessegesListAdapter extends RecyclerView.Adapter<MessegesListAdapte
                     count = 0;
                 }
                 else count++;
+
 
 
             }
