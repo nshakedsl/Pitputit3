@@ -46,9 +46,6 @@ public class ChatsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chats);
         RecyclerView lstMesseges = findViewById(R.id.lstMesseges);
-        db = Room.databaseBuilder(getApplicationContext(), AppDB.class,"PitputitDB").build();
-        //chatDao = db.chatDao();
-        messageDao = db.messageDao();
         AppCompatImageView sendButton = findViewById(R.id.sendMessageButton);
         EditText editText = findViewById(R.id.inputMessage);
         sendButton.setOnLongClickListener(v -> sendMessage(editText.getText()));
@@ -56,19 +53,26 @@ public class ChatsActivity extends AppCompatActivity {
         lstMesseges.setAdapter(adapter);
         lstMesseges.setLayoutManager( new LinearLayoutManager(this));
 
-// Get the resource ID of the drawable
+        // Get the resource ID of the drawable
         int resourceId = R.drawable.user;
 
-// Convert the drawable resource to a Bitmap
+        // Convert the drawable resource to a Bitmap
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resourceId);
 
         List <Message> messages = new ArrayList<>();
+
+        db = AppDB.getInstance(this);
+        messageDao = db.messageDao();
         User moshe = new User(bitmap,"moshe","mosh_nick");
         //todo: kill hardcoded user
         this.me=moshe;
         messages.add(new Message("hello everyone!!",moshe , "12:00" ));
         messages.add(new Message("hello this is ", moshe, "12:00" ));
         messages.add(new Message("hello world", moshe, "12:00" ));
+        //messageDao.insertMessage(new Message("hello everyone!!",moshe , "12:00" ));
+        //messageDao.insertMessage(new Message("hello this is ", moshe, "12:00" ));
+        //messageDao.insertMessage(new Message("hello world", moshe, "12:00" ));
+        //messages.addAll(messageDao.indexMessage());
 
         adapter.setMesseges(messages);
         ImageView viewBackground = findViewById(R.id.viewBackground);
