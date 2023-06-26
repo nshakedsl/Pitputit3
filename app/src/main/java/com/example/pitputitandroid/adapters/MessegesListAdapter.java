@@ -50,8 +50,6 @@ public class MessegesListAdapter extends RecyclerView.Adapter<MessegesListAdapte
                 holder.messegeContent.setText(current.getContent());
                 holder.messegeTime.setText(current.getTime());
                // holder.imgProfile.setImageBitmap(current.getImgProfile());
-                Bitmap bitmap = current.getImgProfile(); // Assuming current.getImgProfile() returns a Bitmap object
-                holder.imgProfile.setImageBitmap(bitmap);
 
 
             }
