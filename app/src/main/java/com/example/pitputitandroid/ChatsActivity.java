@@ -20,7 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
+
 
 import com.example.pitputitandroid.Daos.ChatDao;
 import com.example.pitputitandroid.Daos.MessageDao;
@@ -75,6 +75,19 @@ public class ChatsActivity extends AppCompatActivity {
         messages.add(new Message("hello this is ", moshe, "12:00"));
         messages.add(new Message("hello world", moshe, "12:00"));
 
+
+        messages.add(new Message("hello everyone!!", "aa", "mosh_nick", bitmap, "12:00" ));
+        messages.add(new Message("hello this is ", "aa1", "mosh_nick", bitmap, "12:00" ));
+        messages.add(new Message("hello world", "moshe2", "mosh_nick", bitmap, "12:00" ));
+        messages.add(new Message("hello everyone!!", "moshe3", "mosh_nick", bitmap, "12:00" ));
+        messages.add(new Message("hello this is ", "aa4", "mosh_nick", bitmap, "12:00" ));
+        messages.add(new Message("hello world", "moshe", "mosh_nick", bitmap, "12:00" ));
+        messages.add(new Message("hello everyone!!", "moshe", "mosh_nick", bitmap, "12:00" ));
+        messages.add(new Message("hello this is ", "aa", "mosh_nick", bitmap, "12:00" ));
+        messages.add(new Message("hello world", "moshe", "mosh_nick", bitmap, "12:00" ));
+        messages.add(new Message("hello everyone!!", "moshe", "mosh_nick", bitmap, "12:00" ));
+        messages.add(new Message("hello this is ", "aa", "mosh_nick", bitmap, "12:00" ));
+        messages.add(new Message("hello world", "moshe", "mosh_nick", bitmap, "12:00" ));
         Message msg = new Message("hello everyone!!", moshe, "12:00");
         //addMsgToLocal(msg);
 

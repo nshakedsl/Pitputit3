@@ -1,12 +1,14 @@
 package com.example.pitputitandroid.entities;
 
 import android.graphics.Bitmap;
+import android.util.Base64;
 
 import androidx.annotation.NonNull;
 import androidx.room.PrimaryKey;
 
 import androidx.room.Entity;
 
+import java.io.ByteArrayOutputStream;
 import com.example.pitputitandroid.Utils;
 
 
@@ -23,6 +25,13 @@ public class Message {
         this.created = created;
         this.content = content;
         this.sender = sender;
+        this.id = Utils.uniqueIdGenerator();
+    }
+
+    public Message(String content,String userName, String displayName, Bitmap bitmap, String created) {
+        this.created = created;
+        this.content = content;
+        this.sender = new User(bitmap, userName, displayName);
         this.id = Utils.uniqueIdGenerator();
     }
 

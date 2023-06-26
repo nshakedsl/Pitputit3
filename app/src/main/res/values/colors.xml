@@ -24,8 +24,8 @@
 <!--    messeges-->
 <color name="message_me_back">#d9fdd3</color>
 <color name="message_other_back">#FFFFFF</color>
-<color name="message_text">#FFFFFF</color>
-<color name="message_text_date">#FFFFFF</color>
+<color name="message_text">#000000</color>
+<color name="message_text_date">#000000</color>
 
 <!--    chats-->
 <color name="background_chat">#F4D2B3</color>
