@@ -10,6 +10,7 @@ import android.graphics.Shader;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -27,6 +28,8 @@ import androidx.lifecycle.Observer;
 
 
 import com.example.pitputitandroid.api.UserAPI;
+
+import java.io.ByteArrayOutputStream;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -76,7 +79,13 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     }
-
+    public String castToString(Bitmap bitmapPic){
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmapPic.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byte[] byteArray = byteArrayOutputStream.toByteArray();
+        String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+        return encodedImage;
+    }
     private void openGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, REQUEST_IMAGE_PICK);
@@ -168,7 +177,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
             UserAPI userAPI=new UserAPI(getApplicationContext());
-            userAPI.register(username.toString(),password.toString(),nickname.toString(),"image");
+            userAPI.register(username.toString(),password.toString(),nickname.toString(),castToString(uploadedBitmap));
 
             Activity context = this;
             userAPI.getRegisterResult().observe(this, new Observer<Boolean>() {
