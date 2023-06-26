@@ -49,7 +49,7 @@ public class MessegesListAdapter extends RecyclerView.Adapter<MessegesListAdapte
                 final Message current = messeges.get(position);
                 holder.messegeContent.setText(current.getContent());
                 holder.messegeTime.setText(current.getTime());
-               // holder.imgProfile.setImageBitmap(current.getImgProfile());
+                holder.imgProfile.setImageBitmap(current.getSender().getProfilePicBitmap());
 
 
             }
