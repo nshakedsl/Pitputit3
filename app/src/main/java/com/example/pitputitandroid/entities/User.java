@@ -2,20 +2,28 @@ package com.example.pitputitandroid.entities;
 
 import android.graphics.Bitmap;
 
+import com.example.pitputitandroid.Utils;
+
 public class User {
-    private Bitmap profilePic;
+    private String profilePic;
     private String username;
     private final String displayName;
 
-    public User(Bitmap profilePic, String username, String displayName) {
+    public User(String profilePic, String username, String displayName) {
         this.profilePic = profilePic;
         this.username = username;
         this.displayName = displayName;
     }
+    public User(Bitmap profilePic, String username, String displayName) {
+        this.profilePic = Utils.encodeBitmapToString(profilePic);
+        this.username = username;
+        this.displayName = displayName;
+    }
 
-    public Bitmap getProfilePic() {
+    public String getProfilePic() {
         return profilePic;
     }
+    public Bitmap getProfilePicBitmap(){ return Utils.decodeStringToBitmap(profilePic); }
 
     public String getUsername() {
         return username;
@@ -25,8 +33,11 @@ public class User {
         return displayName;
     }
 
-    public void setProfilePic(Bitmap profilePic) {
+    public void setProfilePic(String profilePic) {
         this.profilePic = profilePic;
+    }
+    public void setProfilePic(Bitmap profilePic) {
+        this.profilePic = Utils.encodeBitmapToString(profilePic);
     }
 
     public void setUsername(String username) {
