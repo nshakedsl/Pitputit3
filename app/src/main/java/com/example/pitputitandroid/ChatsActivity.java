@@ -69,6 +69,8 @@ public class ChatsActivity extends AppCompatActivity {
         messages.add(new Message("hello everyone!!",moshe , "12:00" ));
         messages.add(new Message("hello this is ", moshe, "12:00" ));
         messages.add(new Message("hello world", moshe, "12:00" ));
+        Message msg = new Message("hello everyone!!",moshe , "12:00" );
+        messageDao.insertMessage(msg);
         //messageDao.insertMessage(new Message("hello everyone!!",moshe , "12:00" ));
         //messageDao.insertMessage(new Message("hello this is ", moshe, "12:00" ));
         //messageDao.insertMessage(new Message("hello world", moshe, "12:00" ));

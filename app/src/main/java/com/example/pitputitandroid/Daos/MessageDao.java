@@ -17,14 +17,14 @@ public interface MessageDao {
     @Query("SELECT * FROM message")
     List<Message> indexMessage();
 
-    //@Query("SELECT * FROM message WHERE sender= :sender")
-    //List<Chat> ofSender(String sender);
+    @Query("SELECT * FROM message WHERE sender= :sender")
+    List<Chat> ofSender(String sender);
 
     @Query("SELECT * FROM message WHERE id = :id")
     Message getMessage(String id);
 
     @Insert
-    void insertMessage(Message... messages);
+    void insertMessage(Message message);
 
     @Update
     void updateMessage(Message... messages);
