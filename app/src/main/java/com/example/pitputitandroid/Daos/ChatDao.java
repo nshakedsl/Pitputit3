@@ -13,16 +13,16 @@ import java.util.List;
 @Dao
 public interface ChatDao {
     @Query("SELECT * FROM chat")
-    List<Chat> index();
+    List<Chat> indexChat();
 
     @Query("SELECT * FROM chat WHERE id = :id")
-    Chat get(String id);
+    Chat getChat(String id);
 
     @Insert
-    void insert(Chat... chats);
+    void insertChat(Chat... chats);
 
     @Update
-    void update(Chat... chats);
+    void updateChat(Chat... chats);
     @Delete
     void delete(Chat... chats);
 }

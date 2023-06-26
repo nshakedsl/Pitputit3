@@ -19,6 +19,12 @@ public class LastMessage {
         this.content = content;
         this.id = id;
     }
+
+    @NonNull
+    public String getId() {
+        return id;
+    }
+
     @PrimaryKey
     @NonNull
     protected String id;
