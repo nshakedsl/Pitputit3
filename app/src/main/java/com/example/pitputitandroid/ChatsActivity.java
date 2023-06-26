@@ -51,7 +51,7 @@ public class ChatsActivity extends AppCompatActivity {
 
 
         List <Message> messages = new ArrayList<>();
-        User moshe = new User("pic","moshe","mosh_nick");
+        User moshe = new User(bitmap,"moshe","mosh_nick");
         messages.add(new Message("hello everyone!!",moshe , "12:00" ));
         messages.add(new Message("hello this is ", moshe, "12:00" ));
         messages.add(new Message("hello world", moshe, "12:00" ));

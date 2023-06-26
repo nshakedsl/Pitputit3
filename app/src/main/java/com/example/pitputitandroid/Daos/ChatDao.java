@@ -23,5 +23,6 @@ public interface ChatDao {
 
     @Update
     void update(Chat... chats);
-
+    @Delete
+    void delete(Chat... chats);
 }

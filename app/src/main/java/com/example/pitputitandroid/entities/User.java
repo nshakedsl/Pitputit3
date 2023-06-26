@@ -1,17 +1,19 @@
 package com.example.pitputitandroid.entities;
 
-public class User {
-    private String profilePic;
-    private String username;
-    private String displayName;
+import android.graphics.Bitmap;
 
-    public User(String profilePic, String username, String displayName) {
+public class User {
+    private Bitmap profilePic;
+    private String username;
+    private final String displayName;
+
+    public User(Bitmap profilePic, String username, String displayName) {
         this.profilePic = profilePic;
         this.username = username;
         this.displayName = displayName;
     }
 
-    public String getProfilePic() {
+    public Bitmap getProfilePic() {
         return profilePic;
     }
 
@@ -23,7 +25,7 @@ public class User {
         return displayName;
     }
 
-    public void setProfilePic(String profilePic) {
+    public void setProfilePic(Bitmap profilePic) {
         this.profilePic = profilePic;
     }
 
