@@ -33,6 +33,8 @@ import com.example.pitputitandroid.entities.User;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class ChatsActivity extends AppCompatActivity {
     private AppDB db;
@@ -69,8 +71,10 @@ public class ChatsActivity extends AppCompatActivity {
         messages.add(new Message("hello everyone!!",moshe , "12:00" ));
         messages.add(new Message("hello this is ", moshe, "12:00" ));
         messages.add(new Message("hello world", moshe, "12:00" ));
+
         Message msg = new Message("hello everyone!!",moshe , "12:00" );
-        messageDao.insertMessage(msg);
+        addMsgToLocal(msg);
+
         //messageDao.insertMessage(new Message("hello everyone!!",moshe , "12:00" ));
         //messageDao.insertMessage(new Message("hello this is ", moshe, "12:00" ));
         //messageDao.insertMessage(new Message("hello world", moshe, "12:00" ));
@@ -97,5 +101,13 @@ public class ChatsActivity extends AppCompatActivity {
         //todo: talk with server shaked
         return success;
     }
-
+    private void addMsgToLocal(Message msg){
+        Executor executor = Executors.newSingleThreadExecutor();
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                messageDao.insertMessage(msg);
+            }
+        });
+    }
 }
