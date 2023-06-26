@@ -50,8 +50,17 @@ public class ChatsActivity extends AppCompatActivity {
 
 
         List <Message> messages = new ArrayList<>();
+        messages.add(new Message("hello everyone!!", "aa", "mosh_nick", bitmap, "12:00" ));
+        messages.add(new Message("hello this is ", "aa1", "mosh_nick", bitmap, "12:00" ));
+        messages.add(new Message("hello world", "moshe2", "mosh_nick", bitmap, "12:00" ));
+        messages.add(new Message("hello everyone!!", "moshe3", "mosh_nick", bitmap, "12:00" ));
+        messages.add(new Message("hello this is ", "aa4", "mosh_nick", bitmap, "12:00" ));
+        messages.add(new Message("hello world", "moshe", "mosh_nick", bitmap, "12:00" ));
         messages.add(new Message("hello everyone!!", "moshe", "mosh_nick", bitmap, "12:00" ));
-        messages.add(new Message("hello this is ", "moshe", "mosh_nick", bitmap, "12:00" ));
+        messages.add(new Message("hello this is ", "aa", "mosh_nick", bitmap, "12:00" ));
+        messages.add(new Message("hello world", "moshe", "mosh_nick", bitmap, "12:00" ));
+        messages.add(new Message("hello everyone!!", "moshe", "mosh_nick", bitmap, "12:00" ));
+        messages.add(new Message("hello this is ", "aa", "mosh_nick", bitmap, "12:00" ));
         messages.add(new Message("hello world", "moshe", "mosh_nick", bitmap, "12:00" ));
 
         adapter.setMesseges(messages);

@@ -1,10 +1,13 @@
 package com.example.pitputitandroid.entities;
 
 import android.graphics.Bitmap;
+import android.util.Base64;
 
 import androidx.room.PrimaryKey;
 
 import androidx.room.Entity;
+
+import java.io.ByteArrayOutputStream;
 
 
 @Entity
@@ -38,6 +41,15 @@ private int id;
          this.imgProfile=imgProfile;
          }
 
+
+         public String CastToString(Bitmap bitmapPic){
+             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+             bitmapPic.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+             byte[] byteArray = byteArrayOutputStream.toByteArray();
+             String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+             return encodedImage;
+         }
+
          public String getTime() {
          return created;
          }
@@ -51,7 +63,7 @@ private int id;
     }
 
          public String getUserName() {
-  return sender.getUsername();
+  return userName;
  }
 
          public String getDisplayName() {
