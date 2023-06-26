@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pitputitandroid.R;
@@ -15,45 +16,100 @@ import com.example.pitputitandroid.entities.User;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.List;
+import java.util.Objects;
 
 public class MessegesListAdapter extends RecyclerView.Adapter<MessegesListAdapter.MessegeViewHolder> {
 
-         class MessegeViewHolder extends RecyclerView.ViewHolder {
-             private final TextView messegeContent;
-             private final TextView messegeTime;
+    class MessegeViewHolder extends RecyclerView.ViewHolder {
+        private final TextView messegeContent;
+        private final TextView messegeTime;
+        private final TextView messegeContent1;
+        private final TextView messegeTime1;
+        private final RoundedImageView imgProfile;
 
-             private final TextView messegeContent1;
-             private final TextView messegeTime1;
+        private MessegeViewHolder(View itemView, int meOther) {
+            super(itemView);
+            messegeContent = itemView.findViewById(R.id.ContentTextView);
+            messegeTime = itemView.findViewById(R.id.DateTextView);
+            messegeContent1 = itemView.findViewById(R.id.ContentTextView1);
+            messegeTime1 = itemView.findViewById(R.id.DateTextView1);
+            imgProfile = itemView.findViewById(R.id.imageUser1);
+        }
+    }
 
-//             private final User user;
-             private final RoundedImageView imgProfile;
+    private final LayoutInflater mInFlater;
+    private int count = 0;
+    private List<Message> messeges;
 
-             private MessegeViewHolder(View itemView, int meOther){
-                 super(itemView);
+    public MessegesListAdapter(Context context) {
+        mInFlater = LayoutInflater.from(context);
+    }
 
-                     messegeContent = itemView.findViewById(R.id.ContentTextView);
-                     messegeTime = itemView.findViewById(R.id.DateTextView);
-                    messegeContent1 = itemView.findViewById(R.id.ContentTextView1);
-                     messegeTime1 = itemView.findViewById(R.id.DateTextView1);
-                     imgProfile = itemView.findViewById(R.id.imageUser1);
+    @NonNull
+    @Override
+    public MessegeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+        View itemView;
+
+        itemView = mInFlater.inflate(R.layout.messege_shared_layout, parent, false);
+        return new MessegeViewHolder(itemView, 0);
 
 
+    }
 
-             }
-         }
-         private final LayoutInflater mInFlater;
-         private int count = 0;
-        private List<Message> messeges;
+    @Override
+    public void onBindViewHolder(@NonNull MessegeViewHolder holder, int position) {
+        if (messeges != null) {
+            final Message current = messeges.get(position);
+            holder.messegeContent.setText(current.getContent());
+            holder.messegeTime.setText(current.getTime());
+            // holder.imgProfile.setImageBitmap(current.getImgProfile());
+            holder.imgProfile.setImageBitmap(current.getSender().getProfilePicBitmap());
+            // Bitmap bitmap = current.getImgProfile(); // Assuming current.getImgProfile() returns a Bitmap object
+            // holder.imgProfile.setImageBitmap(bitmap);
+            holder.messegeContent1.setText(current.getContent());
+            holder.messegeTime1.setText(current.getTime());
+            if (current.getUserName().equals("aa")) {
+                holder.messegeContent.setVisibility(View.GONE);
+                holder.messegeTime.setVisibility(View.GONE);
+                holder.imgProfile.setVisibility(View.GONE);
+                holder.messegeTime1.setVisibility(View.VISIBLE);
+                holder.messegeContent1.setVisibility(View.VISIBLE);
+            } else {
+                holder.messegeContent.setVisibility(View.VISIBLE);
+                holder.messegeTime.setVisibility(View.VISIBLE);
+                holder.imgProfile.setVisibility(View.VISIBLE);
+                holder.messegeTime1.setVisibility(View.GONE);
+                holder.messegeContent1.setVisibility(View.GONE);
+            }
+            if (Objects.equals(current.getContent(), "aa")) {
+                count = 0;
+            } else count++;
+        }
+    }
 
-        public MessegesListAdapter(Context context){ mInFlater = LayoutInflater.from(context);}
+    public void setMesseges(List<Message> m) {
+        messeges = m;
+        notifyDataSetChanged();
+    }
 
-         @Override
-        public MessegeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public void AddMessage(Message m) {
+        messeges.add(m);
+        notifyDataSetChanged();
+    }
 
-             View itemView;
+    @Override
+    public int getItemCount() {
+        if (messeges != null)
+            return messeges.size();
+        else return 0;
+    }
 
-                itemView = mInFlater.inflate(R.layout.messege_shared_layout, parent, false);
-                return new MessegeViewHolder(itemView, 0);
+    public List<Message> getMesseges() {
+        return messeges;
+    }
+}
+/*
 //
 //             int position = -1; // Initialize position as -1 (invalid value)
 //
@@ -105,70 +161,4 @@ public class MessegesListAdapter extends RecyclerView.Adapter<MessegesListAdapte
 
 //             itemView = mInFlater.inflate(R.layout.messege_other_layout, parent, false);
 //             return new MessegeViewHolder(itemView, 0);
-
-
-         }
-
-         @Override
-         public void onBindViewHolder(MessegeViewHolder holder, int position) {
-            if(messeges != null)
-            {
-                final Message current = messeges.get(position);
-                holder.messegeContent.setText(current.getContent());
-                holder.messegeTime.setText(current.getTime());
-               // holder.imgProfile.setImageBitmap(current.getImgProfile());
-                holder.imgProfile.setImageBitmap(current.getSender().getProfilePicBitmap());
-                // Bitmap bitmap = current.getImgProfile(); // Assuming current.getImgProfile() returns a Bitmap object
-                // holder.imgProfile.setImageBitmap(bitmap);
-                holder.messegeContent1.setText(current.getContent());
-                holder.messegeTime1.setText(current.getTime());
-
-                if(current.getUserName().equals("aa")){
-                    holder.messegeContent.setVisibility(View.GONE);
-                    holder.messegeTime.setVisibility(View.GONE);
-                    holder.imgProfile.setVisibility(View.GONE);
-                    holder.messegeTime1.setVisibility(View.VISIBLE);
-                    holder.messegeContent1.setVisibility(View.VISIBLE);
-
-                }
-                else {
-                    holder.messegeContent.setVisibility(View.VISIBLE);
-                    holder.messegeTime.setVisibility(View.VISIBLE);
-                    holder.imgProfile.setVisibility(View.VISIBLE);
-                    holder.messegeTime1.setVisibility(View.GONE);
-                    holder.messegeContent1.setVisibility(View.GONE);
-
-                }
-
-
-
-                if(current.getContent()=="aa"){
-                    count = 0;
-                }
-                else count++;
-
-
-
-            }
-         }
-
-         public void setMesseges(List<Message> m){
-            messeges = m;
-            notifyDataSetChanged();
-         }
-
-         @Override
-        public int getItemCount(){
-            if (messeges!=null)
-                return messeges.size();
-            else return 0;
-         }
-
-         public List<Message> getMesseges(){ return messeges; }
-
-
-
-}
-
-
-
+ */

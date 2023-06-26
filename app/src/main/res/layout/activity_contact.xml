@@ -21,4 +21,24 @@
      android:layout_margin="10pt"
      android:src="@drawable/ic_add"/>
 
+    <EditText
+        android:id="@+id/inputNickname"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/textbox"
+        android:ems="10"
+        android:focusableInTouchMode="true"
+        android:fontFamily="@font/comfortaa"
+        android:hint="enter the name of the contact"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:textColor="@color/input_text"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnAdd"
+        app:layout_constraintStart_toStartOf="parent" />
      </androidx.constraintlayout.widget.ConstraintLayout>

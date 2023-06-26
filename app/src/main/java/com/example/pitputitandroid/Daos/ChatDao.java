@@ -17,7 +17,6 @@ public interface ChatDao {
 
     @Query("SELECT * FROM chat WHERE id = :id")
     Chat getChat(String id);
-
     @Insert
     void insertChat(Chat... chats);
 
