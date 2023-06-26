@@ -41,6 +41,8 @@ public class ChatsActivity extends AppCompatActivity {
     private MessageDao messageDao;
     //todo: get the current user/ delete
     private User me;
+    private MessegesListAdapter adapter;
+    private List<Message> messageList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -51,7 +53,7 @@ public class ChatsActivity extends AppCompatActivity {
         AppCompatImageView sendButton = findViewById(R.id.sendMessageButton);
         EditText editText = findViewById(R.id.inputMessage);
         sendButton.setOnLongClickListener(v -> sendMessage(editText.getText()));
-        final MessegesListAdapter adapter = new MessegesListAdapter(this);
+        this.adapter = new MessegesListAdapter(this);
         lstMesseges.setAdapter(adapter);
         lstMesseges.setLayoutManager( new LinearLayoutManager(this));
 
@@ -97,8 +99,10 @@ public class ChatsActivity extends AppCompatActivity {
         User me = this.me;
         Message createdMessage = new Message(message.toString(),me,Utils.getTime());
         //messageDao.insert(createdMessage);
+        addMsgToLocal(createdMessage);
         boolean success = true;
         //todo: talk with server shaked
+        message.clear();
         return success;
     }
     private void addMsgToLocal(Message msg){
@@ -109,5 +113,23 @@ public class ChatsActivity extends AppCompatActivity {
                 messageDao.insertMessage(msg);
             }
         });
+    }
+    private void getMegssagesLocal(){
+        // Inside your activity or fragment
+        Executor executor = Executors.newSingleThreadExecutor();
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+            }
+        });
+
+    }
+
+    @Override
+    protected void onResume() {
+        //todo: maybe update dataset from server
+        super.onResume();
+        //todo: maybe change?
+        adapter.notifyDataSetChanged();
     }
 }
