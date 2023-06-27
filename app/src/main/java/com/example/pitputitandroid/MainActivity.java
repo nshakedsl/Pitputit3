@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Editable;
 
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         EditText editText = findViewById(R.id.usernameInput);
         EditText passText = findViewById(R.id.passwordInput);
         ImageView imglogo = findViewById(R.id.imageView2);
+
 
 
         loginButton.setOnClickListener(v ->

@@ -5,20 +5,92 @@
      xmlns:tools="http://schemas.android.com/tools"
      android:layout_width="match_parent"
      android:layout_height="match_parent"
+
 >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+
+    <LinearLayout
+        android:id="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="1dp"
+        android:background="@color/background_wave">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageBackPage"
+            android:layout_height="40dp"
+            android:layout_width="40dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="12dp"
+            android:padding="5dp"
+            android:src="@drawable/ic_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:tint="@color/title"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewContactName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/comfortaa"
+                android:textColor="@color/title"
+                android:text="Contacts Page:"
+                android:textSize="25dp"
+                android:textStyle="bold"/>
+
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textViewDate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            android:layout_weight="1"
+            android:text="TextView" />
+
+
+    </LinearLayout>
 
     <ListView
-     android:id="@+id/lvPosts"
+     android:id="@+id/lvContacts"
      android:layout_width="match_parent"
-     android:layout_height="match_parent" />
+     android:layout_height="match_parent"
+     tools:listitem="@layout/list_item_contact"
+        />
 
-     <com.google.android.material.floatingactionbutton.FloatingActionButton
-     android:id="@+id/btnAdd"
-     android:layout_width="wrap_content"
-     android:layout_height="wrap_content"
-     app:layout_constraintBottom_toBottomOf="parent"
-     app:layout_constraintEnd_toEndOf="parent"
-     android:layout_margin="10pt"
-     android:src="@drawable/ic_add"/>
+
+
+
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="10pt"
+        android:src="@drawable/ic_add"
+        android:contentDescription="Add Button"
+        android:labelFor="@+id/btnAdd" />
+
 
      </androidx.constraintlayout.widget.ConstraintLayout>
