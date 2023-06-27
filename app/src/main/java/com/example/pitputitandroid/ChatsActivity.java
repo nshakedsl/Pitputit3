@@ -34,6 +34,7 @@ import com.example.pitputitandroid.api.ChatAPI;
 import com.example.pitputitandroid.api.UserAPI;
 import com.example.pitputitandroid.entities.Chat;
 import com.example.pitputitandroid.entities.Message;
+import com.example.pitputitandroid.entities.Msg;
 import com.example.pitputitandroid.entities.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -84,7 +85,8 @@ public class ChatsActivity extends AppCompatActivity {
 
         db = AppDB.getInstance(this);
         messageDao = db.messageDao();
-        User moshe = new User(bitmap, "moshe", "mosh_nick");
+        UserAPI userAPI = new UserAPI(getApplicationContext());
+        User moshe = new User(userAPI.getProfilePic(),userAPI.getUsername(),userAPI.getDisplayName());
         //todo: kill hardcoded user
         this.me = moshe;
         messages.add(new Message("hello everyone!!", moshe, "12:00"));
@@ -106,18 +108,19 @@ public class ChatsActivity extends AppCompatActivity {
     private boolean sendMessage(Editable message) {
         User me = this.me;
         Message createdMessage = new Message(message.toString(), me, Utils.getTime());
+        Msg msg=new Msg(message.toString());
         //messageDao.insert(createdMessage);
         addMsgToLocal(createdMessage);
         boolean success = true;
         ChatAPI chatAPI = new ChatAPI(getApplicationContext());
         UserAPI userAPI = new UserAPI(getApplicationContext());
         //TODO: change the hard_coded id
-        chatAPI.sendMessage(userAPI.getToken(),createdMessage,"hard_coded");
+        chatAPI.sendMessage(userAPI.getToken(),msg,"647e463f8a642addfacd205b");
 
         Activity context = this;
-        chatAPI.getSendMessageResult().observe(this, new Observer<List<Message>>() {
+        chatAPI.getSendMessageResult().observe(this, new Observer<Message>() {
             @Override
-            public void onChanged(List<Message> messages) {
+            public void onChanged(Message messages) {
                 if (messages != null) {
                     Log.d("TAG", "messages success");
                     // TODO: Ofir do something with messages

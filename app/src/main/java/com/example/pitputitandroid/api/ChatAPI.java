@@ -6,11 +6,11 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.pitputitandroid.R;
 import com.example.pitputitandroid.entities.Message;
+import com.example.pitputitandroid.entities.Msg;
 import com.example.pitputitandroid.entities.UserFull;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -46,17 +46,17 @@ public class ChatAPI {
 
     }
 
+    private final MutableLiveData<Message> sendMessageResult;
 
-    public MutableLiveData<List<Message>> getSendMessageResult() {
+    public MutableLiveData<Message> getSendMessageResult() {
         return sendMessageResult;
     }
-    private final MutableLiveData<List<Message>> sendMessageResult;
-    public void sendMessage(String token,Message message,String id) {
+    public void sendMessage(String token, Msg message, String id) {
 
-        Call<List<Message>> call = webServiceAPI.addChatMessage(token,message,id);
-        call.enqueue(new Callback<List<Message>>() {
+        Call<Message> call = webServiceAPI.addChatMessage(token,message,id);
+        call.enqueue(new Callback<Message>() {
             @Override
-            public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
+            public void onResponse(Call<Message> call, Response<Message> response) {
                 if (response.code() == 401)
                     sendMessageResult.postValue(null);
                 else if (response.code() == 200) {
@@ -66,7 +66,7 @@ public class ChatAPI {
             }
 
             @Override
-            public void onFailure(Call<List<Message>> call, Throwable t) {
+            public void onFailure(Call<Message> call, Throwable t) {
 
                 // Set the register result as false on failure
                 sendMessageResult.postValue(null);
