@@ -2,15 +2,23 @@ package com.example.pitputitandroid;
 
 import android.os.Bundle;
 import android.text.Editable;
+import android.util.Log;
+import android.util.Pair;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 
 import com.example.pitputitandroid.Daos.ChatDao;
 import com.example.pitputitandroid.DataBase.AppDB;
+import com.example.pitputitandroid.api.ChatAPI;
+import com.example.pitputitandroid.api.UserAPI;
 import com.example.pitputitandroid.entities.Chat;
+import com.example.pitputitandroid.entities.Contact;
+import com.example.pitputitandroid.entities.Message;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -27,12 +35,45 @@ public class ContactActivity extends AppCompatActivity {
         FloatingActionButton addBtn = findViewById(R.id.btnAdd);
         addBtn.setOnClickListener(v -> addMsg(editText.getText()));
     }
-    private void addMsg(Editable nicknameFiled){
-        //todo: find the relevant chat
+    private void addMsg(Editable usernameField){
         //somehow define chat
-        Chat chat = new Chat();
-        addMsgToLocal(chat);
-        // TODO: Shaked 26/06/2023 add the created chat to server
+
+        Contact contact=new Contact(usernameField.toString());
+        ChatAPI chatAPI = new ChatAPI(getApplicationContext());
+        UserAPI userAPI = new UserAPI(getApplicationContext());
+        chatAPI.addChat(userAPI.getToken(),contact);
+
+        chatAPI.getAddChatResult().observe(this, new Observer<Map<Integer, Chat>>() {
+            @Override
+            public void onChanged(Map<Integer, Chat> res) {
+                int status=res.keySet().iterator().next();
+                switch (status) {
+                    case 401:
+                        Log.d("TAG", "401");
+                        //TODO: Ofir error with token go to login
+                        break;
+                    case 400:
+                        //TODO: Ofir display error to user : User does not exist❗
+                        Log.d("TAG", "400");
+                        break;
+                    case 200:
+                        //TODO: Ofir everything is OK, take chat
+                        addMsgToLocal(res.values().iterator().next());
+                        Log.d("TAG", "200");
+                        break;
+                }
+
+            }
+        });
+
+
+
+
+
+
+
+
+
     }
     private void addMsgToLocal(Chat chat) {
         Executor executor = Executors.newSingleThreadExecutor();

@@ -54,9 +54,9 @@ public ContactListAdapter (Context context, ArrayList<Contact> contactList){
         //int resourceId = R.drawable.user;
 
         imageUser.setImageResource(R.drawable.user);
-        textViewContactName.setText(contact.getUsername());
-        textViewLastMessage.setText(contact.getLastMessageContent());
-        textViewDate.setText(contact.getCreatedLastMessage());
+//        textViewContactName.setText(contact.getUsername());
+//        textViewLastMessage.setText(contact.getLastMessageContent());
+//        textViewDate.setText(contact.getCreatedLastMessage());
 
 
         return super.getView(position, convertView, parent);
