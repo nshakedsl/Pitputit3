@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +18,11 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,8 +31,11 @@ import com.example.pitputitandroid.Daos.ChatDao;
 import com.example.pitputitandroid.Daos.MessageDao;
 import com.example.pitputitandroid.DataBase.AppDB;
 import com.example.pitputitandroid.adapters.MessegesListAdapter;
+import com.example.pitputitandroid.api.ChatAPI;
+import com.example.pitputitandroid.api.UserAPI;
 import com.example.pitputitandroid.entities.Chat;
 import com.example.pitputitandroid.entities.Message;
+import com.example.pitputitandroid.entities.Msg;
 import com.example.pitputitandroid.entities.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -83,7 +89,8 @@ public class ChatsActivity extends AppCompatActivity {
 
         db = AppDB.getInstance(this);
         messageDao = db.messageDao();
-        User moshe = new User(bitmap, "moshe", "mosh_nick");
+        UserAPI userAPI = new UserAPI(getApplicationContext());
+        User moshe = new User(userAPI.getProfilePic(),userAPI.getUsername(),userAPI.getDisplayName());
         //todo: kill hardcoded user
         this.me = moshe;
         messages.add(new Message("hello everyone!!", moshe, "12:00"));
@@ -105,9 +112,28 @@ public class ChatsActivity extends AppCompatActivity {
     private boolean sendMessage(Editable message) {
         User me = this.me;
         Message createdMessage = new Message(message.toString(), me, Utils.getTime());
+        Msg msg=new Msg(message.toString());
+        //messageDao.insert(createdMessage);
         addMsgToLocal(createdMessage);
         boolean success = true;
-        //todo: talk with server shaked
+        ChatAPI chatAPI = new ChatAPI(getApplicationContext());
+        UserAPI userAPI = new UserAPI(getApplicationContext());
+        //TODO: change the hard_coded id
+        chatAPI.sendMessage(userAPI.getToken(),msg,"647e463f8a642addfacd205b");
+
+        Activity context = this;
+        chatAPI.getSendMessageResult().observe(this, new Observer<Message>() {
+            @Override
+            public void onChanged(Message sentMessage) {
+                if (sentMessage != null) {
+                    Log.d("TAG", "messages success");
+                        addMsgToLocal(sentMessage);
+                } else {
+                    Toast.makeText(getApplicationContext(), "error sending message",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         message.clear();
         return success;
     }
