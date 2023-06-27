@@ -93,14 +93,6 @@ public class ChatsActivity extends AppCompatActivity {
         messages.add(new Message("hello world", "moshe2", "mosh_nick", bitmap, "12:00" ));
         messages.add(new Message("hello everyone!!", "moshe3", "mosh_nick", bitmap, "12:00" ));
         messages.add(new Message("hello this is ", "aa4", "mosh_nick", bitmap, "12:00" ));
-        messages.add(new Message("hello world", "moshe", "mosh_nick", bitmap, "12:00" ));
-        messages.add(new Message("hello everyone!!", "moshe", "mosh_nick", bitmap, "12:00" ));
-        messages.add(new Message("hello this is ", "aa", "mosh_nick", bitmap, "12:00" ));
-        messages.add(new Message("hello world", "moshe", "mosh_nick", bitmap, "12:00" ));
-        messages.add(new Message("hello everyone!!", "moshe", "mosh_nick", bitmap, "12:00" ));
-        messages.add(new Message("hello this is ", "aa", "mosh_nick", bitmap, "12:00" ));
-        messages.add(new Message("hello world", "moshe", "mosh_nick", bitmap, "12:00" ));
-        Message msg = new Message("hello everyone!!", moshe, "12:00");
         //addMsgToLocal(msg);
 
         adapter.setMesseges(messages);

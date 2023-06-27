@@ -21,7 +21,6 @@ import androidx.navigation.ui.AppBarConfiguration;
 
 public class MainActivity extends AppCompatActivity {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,9 +46,6 @@ public class MainActivity extends AppCompatActivity {
         settingButton.setOnClickListener(v -> {
             startActivity(new Intent(this, SettingsActivity.class));
         });
-
-
-
 
 
         TextView welcomeText = findViewById(R.id.textView);
