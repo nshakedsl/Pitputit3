@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Editable;
 
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         ImageView imglogo = findViewById(R.id.imageView2);
 
 
+
         loginButton.setOnClickListener(v ->
                 loginClick(editText.getText(), passText.getText()));
         TextView registerText = findViewById(R.id.registerText);
@@ -57,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void loginClick(Editable username, Editable password) {
-        Intent I = new Intent(this, ContactActivity.class);
+        Intent I = new Intent(this, ChatsActivity.class);
 
 
         UserAPI userAPI = new UserAPI(getApplicationContext());

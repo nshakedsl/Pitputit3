@@ -1,6 +1,7 @@
 package com.example.pitputitandroid;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -13,6 +14,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -48,8 +50,18 @@ public class ChatsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
 
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chats);
+
+
+        FrameLayout buttonFrame=findViewById(R.id.layoutSend);
+        buttonFrame.setOnClickListener(v -> {
+            startActivity(new Intent(this, RegisterActivity.class));
+        });
+
+
         RecyclerView lstMesseges = findViewById(R.id.lstMesseges);
         AppCompatImageView sendButton = findViewById(R.id.sendMessageButton);
         EditText editText = findViewById(R.id.inputMessage);
@@ -84,12 +96,12 @@ public class ChatsActivity extends AppCompatActivity {
         //addMsgToLocal(msg);
 
         adapter.setMesseges(messages);
-        ImageView viewBackground = findViewById(R.id.viewBackground);
+//        ImageView viewBackground = findViewById(R.id.viewBackground);
 //        ImageView viewBackground = findViewById(R.id.viewBackground);
 //        viewBackground.setImageBitmap(bitmap);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        viewBackground.setImageResource(R.drawable.chatbackground);
-        viewBackground.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//        viewBackground.setImageResource(R.drawable.chatbackground);
+//        viewBackground.setScaleType(ImageView.ScaleType.CENTER_CROP);
 //        ImageView viewBackground = findViewById(R.id.viewBackground);
 //        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 //        viewBackground.setLayoutParams(layoutParams);
