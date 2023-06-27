@@ -14,7 +14,7 @@
 
 <!--    input-->
     <color name="input_back">#DADBE1</color>
-    <color name="input_text">#DADBE1</color>
+    <color name="input_text">#343435</color>
     <color name="input_limit">#A3A6B4</color>
 
 <!--    button-->

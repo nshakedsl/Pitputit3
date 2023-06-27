@@ -146,7 +146,11 @@ public class ChatsActivity extends AppCompatActivity {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                adapter.getMesseges().addAll(messageDao.indexMessage());
+                List<Message> curMsgs = messageDao.indexMessage();
+                for (Message msg : curMsgs) {
+                    if(!curMsgs.contains(msg))
+                        adapter.getMesseges().add(msg);
+                }
             }
         });
 
