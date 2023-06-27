@@ -94,15 +94,6 @@ public class ChatsActivity extends AppCompatActivity {
         //todo: kill hardcoded user
         this.me = moshe;
         messages.add(new Message("hello everyone!!", moshe, "12:00"));
-        messages.add(new Message("hello this is ", moshe, "12:00"));
-        messages.add(new Message("hello world", moshe, "12:00"));
-
-
-        messages.add(new Message("hello everyone!!", "aa", "mosh_nick", bitmap, "12:00"));
-        messages.add(new Message("hello this is ", "aa1", "mosh_nick", bitmap, "12:00"));
-        messages.add(new Message("hello world", "moshe2", "mosh_nick", bitmap, "12:00"));
-        messages.add(new Message("hello everyone!!", "moshe3", "mosh_nick", bitmap, "12:00"));
-        messages.add(new Message("hello this is ", "aa4", "mosh_nick", bitmap, "12:00"));
         //addMsgToLocal(msg);
 
         adapter.setMesseges(messages);
@@ -154,7 +145,7 @@ public class ChatsActivity extends AppCompatActivity {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                adapter.setMesseges(messageDao.indexMessage());
+                adapter.getMesseges().addAll(messageDao.indexMessage());
             }
         });
 
