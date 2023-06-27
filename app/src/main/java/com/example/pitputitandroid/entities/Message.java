@@ -7,11 +7,14 @@ import androidx.annotation.NonNull;
 import androidx.room.PrimaryKey;
 
 import androidx.room.Entity;
+import androidx.room.TypeConverters;
 
 import java.io.ByteArrayOutputStream;
+
+import com.example.pitputitandroid.Converters.UserConverter;
 import com.example.pitputitandroid.Utils;
 
-
+@TypeConverters(UserConverter.class)
 @Entity
 public class Message {
     @PrimaryKey

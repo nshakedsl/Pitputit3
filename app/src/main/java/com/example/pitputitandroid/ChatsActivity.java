@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
@@ -55,13 +56,11 @@ public class ChatsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
 
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chats);
 
 
-        FrameLayout buttonFrame=findViewById(R.id.layoutSend);
+        FrameLayout buttonFrame = findViewById(R.id.layoutSend);
         buttonFrame.setOnClickListener(v -> {
             startActivity(new Intent(this, RegisterActivity.class));
         });
@@ -95,15 +94,6 @@ public class ChatsActivity extends AppCompatActivity {
         //todo: kill hardcoded user
         this.me = moshe;
         messages.add(new Message("hello everyone!!", moshe, "12:00"));
-        messages.add(new Message("hello this is ", moshe, "12:00"));
-        messages.add(new Message("hello world", moshe, "12:00"));
-
-
-        messages.add(new Message("hello everyone!!", "aa", "mosh_nick", bitmap, "12:00" ));
-        messages.add(new Message("hello this is ", "aa1", "mosh_nick", bitmap, "12:00" ));
-        messages.add(new Message("hello world", "moshe2", "mosh_nick", bitmap, "12:00" ));
-        messages.add(new Message("hello everyone!!", "moshe3", "mosh_nick", bitmap, "12:00" ));
-        messages.add(new Message("hello this is ", "aa4", "mosh_nick", bitmap, "12:00" ));
         //addMsgToLocal(msg);
 
         adapter.setMesseges(messages);
@@ -124,12 +114,14 @@ public class ChatsActivity extends AppCompatActivity {
 
         chatAPI.getSendMessageResult().observe(this, new Observer<Message>() {
             @Override
-            public void onChanged(Message messages) {
-                if (messages != null) {
+            public void onChanged(Message sentMessage) {
+                if (sentMessage != null) {
                     Log.d("TAG", "messages success");
-                    // TODO: Ofir do something with messages
+                        addMsgToLocal(sentMessage);
                 } else {
-                    // TODO: Ofir send message failed go back to login
+                    Toast.makeText(getApplicationContext(), "error sending message",
+                            Toast.LENGTH_SHORT).show();
+                    context.finish();
                 }
             }
         });
@@ -143,7 +135,7 @@ public class ChatsActivity extends AppCompatActivity {
             @Override
             public void run() {
                 messageDao.insertMessage(msg);
-            }
+                getMegssagesLocal();}
         });
     }
 
@@ -153,7 +145,11 @@ public class ChatsActivity extends AppCompatActivity {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                adapter.setMesseges(messageDao.indexMessage());
+                List<Message> curMsgs = messageDao.indexMessage();
+                for (Message msg : curMsgs) {
+                    if(!curMsgs.contains(msg))
+                        adapter.getMesseges().add(msg);
+                }
             }
         });
 
@@ -164,7 +160,7 @@ public class ChatsActivity extends AppCompatActivity {
         //todo: maybe update dataset from server
         super.onResume();
         //todo: maybe change?
-        //getMegssagesLocal();
+        getMegssagesLocal();
         adapter.notifyDataSetChanged();
     }
 }
