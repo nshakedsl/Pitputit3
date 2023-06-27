@@ -1,10 +1,12 @@
 package com.example.pitputitandroid;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
 import android.util.Pair;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -61,7 +63,7 @@ public class ContactActivity extends AppCompatActivity {
         ChatAPI chatAPI = new ChatAPI(getApplicationContext());
         UserAPI userAPI = new UserAPI(getApplicationContext());
         chatAPI.addChat(userAPI.getToken(),contact);
-
+        Activity context = this;
         chatAPI.getAddChatResult().observe(this, new Observer<Map<Integer, Chat>>() {
             @Override
             public void onChanged(Map<Integer, Chat> res) {
@@ -69,15 +71,16 @@ public class ContactActivity extends AppCompatActivity {
                 switch (status) {
                     case 401:
                         Log.d("TAG", "401");
-                        //TODO: Ofir error with token go to login
+                        context.finish();
                         break;
                     case 400:
-                        //TODO: Ofir display error to user : User does not exist❗
+                        Toast.makeText(getApplicationContext(), "User does not exist❗",
+                                Toast.LENGTH_SHORT).show();
                         Log.d("TAG", "400");
                         break;
                     case 200:
                         //TODO: Ofir everything is OK, take chat
-                        addMsgToLocal(res.values().iterator().next());
+                        addChatToLocal(res.values().iterator().next());
                         Log.d("TAG", "200");
                         break;
                 }
@@ -85,7 +88,7 @@ public class ContactActivity extends AppCompatActivity {
             }
         });
     }
-    private void addMsgToLocal(Chat chat) {
+    private void addChatToLocal(Chat chat) {
         Executor executor = Executors.newSingleThreadExecutor();
         executor.execute(new Runnable() {
             @Override
