@@ -40,6 +40,7 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".ChatsActivity" />
         <activity android:name=".SettingsActivity" />
+        <activity android:name=".ContactActivity" />
     </application>
 
 </manifest>

@@ -20,7 +20,6 @@ import androidx.navigation.ui.AppBarConfiguration;
 
 public class MainActivity extends AppCompatActivity {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,9 +46,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
-
-
         TextView welcomeText = findViewById(R.id.textView);
         welcomeText.animate().translationY(50).setDuration(700).setStartDelay(0);
         passText.animate().translationY(50).setDuration(700).setStartDelay(0);
@@ -61,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void loginClick(Editable username, Editable password) {
-        Intent I = new Intent(this, ChatsActivity.class);
+        Intent I = new Intent(this, ContactActivity.class);
 
 
         UserAPI userAPI = new UserAPI(getApplicationContext());
