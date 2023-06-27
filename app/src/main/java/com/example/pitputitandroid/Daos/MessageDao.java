@@ -1,5 +1,6 @@
 package com.example.pitputitandroid.Daos;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -15,10 +16,10 @@ import java.util.List;
 public interface MessageDao {
 
     @Query("SELECT * FROM message")
-    List<Message> indexMessage();
+    LiveData<List<Message>> indexMessage();
 
     @Query("SELECT * FROM message WHERE sender= :sender")
-    List<Chat> ofSender(String sender);
+    LiveData<List<Message>> ofSender(String sender);
 
     @Query("SELECT * FROM message WHERE id = :id")
     Message getMessage(String id);

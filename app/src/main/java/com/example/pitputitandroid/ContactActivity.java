@@ -84,15 +84,6 @@ public class ContactActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-
-
-
-
-
-
     }
     private void addMsgToLocal(Chat chat) {
         Executor executor = Executors.newSingleThreadExecutor();

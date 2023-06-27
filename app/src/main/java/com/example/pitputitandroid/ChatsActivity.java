@@ -40,7 +40,9 @@ import com.example.pitputitandroid.entities.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -51,6 +53,8 @@ public class ChatsActivity extends AppCompatActivity {
     private User me;
     private MessegesListAdapter adapter;
     private List<Message> messageList;
+    Queue<Message> insertQueue = new LinkedList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,24 +97,20 @@ public class ChatsActivity extends AppCompatActivity {
         User moshe = new User(userAPI.getProfilePic(),userAPI.getUsername(),userAPI.getDisplayName());
         //todo: kill hardcoded user
         this.me = moshe;
-        messages.add(new Message("hello everyone!!", moshe, "12:00"));
-        //addMsgToLocal(msg);
+        Message msg = new Message("hello everyone!!", moshe, "12:00");
 
         adapter.setMesseges(messages);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
     }
 
     private boolean sendMessage(Editable message) {
-        User me = this.me;
-        Message createdMessage = new Message(message.toString(), me, Utils.getTime());
         Msg msg=new Msg(message.toString());
-        //messageDao.insert(createdMessage);
-        addMsgToLocal(createdMessage);
+        //addMsgToLocal(createdMessage);
         boolean success = true;
         ChatAPI chatAPI = new ChatAPI(getApplicationContext());
         UserAPI userAPI = new UserAPI(getApplicationContext());
         //TODO: change the hard_coded id
-        chatAPI.sendMessage(userAPI.getToken(),msg,"647e463f8a642addfacd205b");
+        chatAPI.sendMessage(userAPI.getToken(),msg,"649affa8d0dd5fa489ff6e35");
         Activity context = this;
         chatAPI.getSendMessageResult().observe(this, new Observer<Message>() {
             @Override
@@ -135,7 +135,9 @@ public class ChatsActivity extends AppCompatActivity {
             @Override
             public void run() {
                 messageDao.insertMessage(msg);
-                getMegssagesLocal();}
+                insertQueue.add(msg);
+                getMegssagesLocal();
+            }
         });
     }
 
@@ -145,10 +147,8 @@ public class ChatsActivity extends AppCompatActivity {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                List<Message> curMsgs = messageDao.indexMessage();
-                for (Message msg : curMsgs) {
-                    if(!curMsgs.contains(msg))
-                        adapter.getMesseges().add(msg);
+                while (!insertQueue.isEmpty()){
+                    adapter.getMesseges().add(insertQueue.remove());
                 }
             }
         });
@@ -157,9 +157,7 @@ public class ChatsActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        //todo: maybe update dataset from server
         super.onResume();
-        //todo: maybe change?
         getMegssagesLocal();
         adapter.notifyDataSetChanged();
     }
