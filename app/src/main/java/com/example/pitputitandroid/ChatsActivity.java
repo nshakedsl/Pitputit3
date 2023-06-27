@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,11 +30,14 @@ import com.example.pitputitandroid.Daos.ChatDao;
 import com.example.pitputitandroid.Daos.MessageDao;
 import com.example.pitputitandroid.DataBase.AppDB;
 import com.example.pitputitandroid.adapters.MessegesListAdapter;
+import com.example.pitputitandroid.api.ChatAPI;
+import com.example.pitputitandroid.api.UserAPI;
 import com.example.pitputitandroid.entities.Chat;
 import com.example.pitputitandroid.entities.Message;
+import com.example.pitputitandroid.entities.Msg;
 import com.example.pitputitandroid.entities.User;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -68,9 +73,9 @@ public class ChatsActivity extends AppCompatActivity {
 
 
         RecyclerView lstMesseges = findViewById(R.id.lstMesseges);
-        AppCompatImageView sendButton = findViewById(R.id.sendMessageButton);
+        FloatingActionButton sendButton = findViewById(R.id.btnSend);
         EditText editText = findViewById(R.id.inputMessage);
-        sendButton.setOnLongClickListener(v -> sendMessage(editText.getText()));
+        sendButton.setOnClickListener(v -> sendMessage(editText.getText()));
         this.adapter = new MessegesListAdapter(this);
         lstMesseges.setAdapter(adapter);
         lstMesseges.setLayoutManager(new LinearLayoutManager(this));
@@ -85,7 +90,8 @@ public class ChatsActivity extends AppCompatActivity {
 
         db = AppDB.getInstance(this);
         messageDao = db.messageDao();
-        User moshe = new User(bitmap, "moshe", "mosh_nick");
+        UserAPI userAPI = new UserAPI(getApplicationContext());
+        User moshe = new User(userAPI.getProfilePic(),userAPI.getUsername(),userAPI.getDisplayName());
         //todo: kill hardcoded user
         this.me = moshe;
         messages.add(new Message("hello everyone!!", moshe, "12:00"));
@@ -101,26 +107,33 @@ public class ChatsActivity extends AppCompatActivity {
         //addMsgToLocal(msg);
 
         adapter.setMesseges(messages);
-//        ImageView viewBackground = findViewById(R.id.viewBackground);
-//        ImageView viewBackground = findViewById(R.id.viewBackground);
-//        viewBackground.setImageBitmap(bitmap);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-//        viewBackground.setImageResource(R.drawable.chatbackground);
-//        viewBackground.setScaleType(ImageView.ScaleType.CENTER_CROP);
-//        ImageView viewBackground = findViewById(R.id.viewBackground);
-//        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-//        viewBackground.setLayoutParams(layoutParams);
-//        viewBackground.setImageResource(R.drawable.background);
-//        viewBackground.setScaleType(ImageView.ScaleType.CENTER_CROP);
     }
 
     private boolean sendMessage(Editable message) {
         User me = this.me;
         Message createdMessage = new Message(message.toString(), me, Utils.getTime());
+        Msg msg=new Msg(message.toString());
         //messageDao.insert(createdMessage);
         addMsgToLocal(createdMessage);
         boolean success = true;
-        //todo: talk with server shaked
+        ChatAPI chatAPI = new ChatAPI(getApplicationContext());
+        UserAPI userAPI = new UserAPI(getApplicationContext());
+        //TODO: change the hard_coded id
+        chatAPI.sendMessage(userAPI.getToken(),msg,"647e463f8a642addfacd205b");
+
+        Activity context = this;
+        chatAPI.getSendMessageResult().observe(this, new Observer<Message>() {
+            @Override
+            public void onChanged(Message messages) {
+                if (messages != null) {
+                    Log.d("TAG", "messages success");
+                    // TODO: Ofir do something with messages
+                } else {
+                    // TODO: Ofir send message failed go back to login
+                }
+            }
+        });
         message.clear();
         return success;
     }
@@ -141,6 +154,7 @@ public class ChatsActivity extends AppCompatActivity {
         executor.execute(new Runnable() {
             @Override
             public void run() {
+                adapter.setMesseges(messageDao.indexMessage());
             }
         });
 
@@ -151,6 +165,7 @@ public class ChatsActivity extends AppCompatActivity {
         //todo: maybe update dataset from server
         super.onResume();
         //todo: maybe change?
+        //getMegssagesLocal();
         adapter.notifyDataSetChanged();
     }
 }

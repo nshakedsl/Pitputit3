@@ -3,6 +3,7 @@ package com.example.pitputitandroid.api;
 import com.example.pitputitandroid.entities.Chat;
 import com.example.pitputitandroid.entities.Contact;
 import com.example.pitputitandroid.entities.Message;
+import com.example.pitputitandroid.entities.Msg;
 import com.example.pitputitandroid.entities.User;
 import com.example.pitputitandroid.entities.UserFull;
 import com.example.pitputitandroid.entities.UserLogin;
@@ -30,7 +31,7 @@ public interface WebServiceAPI {
     Call<List<Message>> getChatMessages(@Header("Authorization") String token, @Path("id") String id);
 
     @POST("Chats/{id}/Messages")
-    Call<List<Message>> addChatMessage(@Header("Authorization") String token, @Body Message message, @Path("id") String id);
+    Call<Message> addChatMessage(@Header("Authorization") String token, @Body Msg msg, @Path("id") String id);
 
     @GET("Users/{username}")
     Call<User> getUserDetails(@Header("Authorization") String token, @Path("username") String username);

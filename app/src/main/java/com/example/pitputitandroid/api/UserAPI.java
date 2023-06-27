@@ -1,11 +1,9 @@
 package com.example.pitputitandroid.api;
 
-import static com.example.pitputitandroid.PitputitAndroid.context;
 
 import android.content.Context;
 import android.util.Log;
 
-import com.example.pitputitandroid.PitputitAndroid;
 import com.example.pitputitandroid.R;
 import com.example.pitputitandroid.entities.User;
 import com.example.pitputitandroid.entities.UserFull;
