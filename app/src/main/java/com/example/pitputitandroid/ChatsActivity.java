@@ -60,8 +60,10 @@ public class ChatsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chats);
-
-
+        AppCompatImageView goBack = findViewById(R.id.btnBack);
+        goBack.setOnClickListener(v -> {
+            this.finish();
+        });
         FrameLayout buttonFrame = findViewById(R.id.layoutSend);
         buttonFrame.setOnClickListener(v -> {
             startActivity(new Intent(this, RegisterActivity.class));
@@ -92,7 +94,7 @@ public class ChatsActivity extends AppCompatActivity {
         db = AppDB.getInstance(this);
         messageDao = db.messageDao();
         UserAPI userAPI = new UserAPI(getApplicationContext());
-        User moshe = new User(userAPI.getProfilePic(),userAPI.getUsername(),userAPI.getDisplayName());
+        User moshe = new User(userAPI.getProfilePic(), userAPI.getUsername(), userAPI.getDisplayName());
         //todo: kill hardcoded user
         this.me = moshe;
         Message msg = new Message("hello everyone!!", moshe, "12:00");
@@ -102,20 +104,20 @@ public class ChatsActivity extends AppCompatActivity {
     }
 
     private boolean sendMessage(Editable message) {
-        Msg msg=new Msg(message.toString());
+        Msg msg = new Msg(message.toString());
         //addMsgToLocal(createdMessage);
         boolean success = true;
         ChatAPI chatAPI = new ChatAPI(getApplicationContext());
         UserAPI userAPI = new UserAPI(getApplicationContext());
         //TODO: change the hard_coded id
-        chatAPI.sendMessage(userAPI.getToken(),msg,"649affa8d0dd5fa489ff6e35");
+        chatAPI.sendMessage(userAPI.getToken(), msg, "649affa8d0dd5fa489ff6e35");
         Activity context = this;
         chatAPI.getSendMessageResult().observe(this, new Observer<Message>() {
             @Override
             public void onChanged(Message sentMessage) {
                 if (sentMessage != null) {
                     Log.d("TAG", "messages success");
-                        addMsgToLocal(sentMessage);
+                    addMsgToLocal(sentMessage);
                 } else {
                     Toast.makeText(getApplicationContext(), "error sending message",
                             Toast.LENGTH_SHORT).show();
@@ -145,7 +147,7 @@ public class ChatsActivity extends AppCompatActivity {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                while (!insertQueue.isEmpty()){
+                while (!insertQueue.isEmpty()) {
                     adapter.getMesseges().add(insertQueue.remove());
                 }
             }
