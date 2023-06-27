@@ -7,6 +7,10 @@
     <color name="background">#defaff</color>
     <color name="background_wave">#6600CC</color>
 
+    <!--    backgroundContact-->
+    <color name="backgroundContact">#FFFFFF</color>
+
+
 
 <!--    text-->
     <color name="title">#DADBE1</color>

@@ -1,6 +1,7 @@
 package com.example.pitputitandroid.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +12,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pitputitandroid.ChatsActivity;
 import com.example.pitputitandroid.R;
 import com.example.pitputitandroid.entities.Chat;
+import com.example.pitputitandroid.entities.Contact;
 import com.example.pitputitandroid.entities.Message;
 import com.makeramen.roundedimageview.RoundedImageView;
 
@@ -75,11 +78,6 @@ public class ContactAdapterRV extends RecyclerView.Adapter<ContactAdapterRV.Cont
             if (contacts != null) {
 
 
-//        nameTextView.setText(currentContact.getUsername());
-//        lastMessageTextView.setText(currentContact.getLastMessageContent());
-//        dateTextView.setText(currentContact.getCreatedLastMessage());
-
-
                 final Chat current = contacts.get(position);
                 holder.nameTextView.setText(current.getUser().getUsername());
                 holder.lastMessageTextView.setText(current.getLastMessage().getContent());
@@ -88,6 +86,25 @@ public class ContactAdapterRV extends RecyclerView.Adapter<ContactAdapterRV.Cont
                  Bitmap bitmap = current.getUser().getProfilePicBitmap(); // Assuming current.getImgProfile() returns a Bitmap object
                  holder.imageView.setImageBitmap(bitmap);
                 holder.dateTextView.setText(current.getLastMessage().getCreated());
+
+
+
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Get the clicked item position
+                        int clickedPosition = holder.getAdapterPosition();
+
+                        // Get the chat associated with the clicked item
+                        Chat clickedContact = contacts.get(clickedPosition);
+                        Chat clickedChat = clickedContact;
+
+                        // Start the ChatActivity with the clicked chat
+                        Intent intent = new Intent(v.getContext(), ChatsActivity.class);
+//                        intent.putExtra("chatId", clickedChat.getId()); // Pass any necessary data to the ChatActivity
+                        v.getContext().startActivity(intent);
+                    }
+                });
 
             }
         }

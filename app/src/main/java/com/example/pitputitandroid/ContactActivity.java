@@ -1,4 +1,5 @@
 package com.example.pitputitandroid;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.util.Pair;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -75,6 +77,11 @@ public class ContactActivity extends AppCompatActivity {
         FloatingActionButton addBtn = findViewById(R.id.btnAdd);
         addBtn.setOnClickListener(v -> addMsg(editText.getText()));
 
+        AppCompatImageView settingButton = findViewById(R.id.imageSettings);
+        settingButton.setOnClickListener(v -> {
+            startActivity(new Intent(this, SettingsActivity.class));
+        });
+
 
 
         RecyclerView rvContacts = findViewById(R.id.rvContacts);
@@ -115,6 +122,10 @@ public class ContactActivity extends AppCompatActivity {
         contacts.add(c4);
         contacts.add(c5);
         adapter.setContacts(contacts);
+
+
+
+
     }
     private void addMsg(Editable usernameField){
         //somehow define chat
