@@ -10,7 +10,7 @@
 
     >
 
-     <ImageView
+     <FrameLayout
          android:id="@+id/viewBackground"
          android:layout_width="match_parent"
          android:layout_height="0dp"
@@ -20,7 +20,39 @@
          app:layout_constraintTop_toTopOf="parent"
          >
 
-     </ImageView>
+          <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+              android:id="@+id/refreshLayout"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              app:layout_constraintBottom_toBottomOf="@id/viewSupport"
+              app:layout_constraintTop_toBottomOf="@+id/HeadBackground"
+              app:layout_constraintVertical_bias="0.083"
+              tools:layout_editor_absoluteX="0dp">
+
+               <androidx.recyclerview.widget.RecyclerView
+                   android:id="@+id/lstMesseges"
+                   android:layout_width="match_parent"
+                   android:layout_height="0dp"
+                   android:clipToPadding="false"
+                   android:orientation="vertical"
+                   android:overScrollMode="never"
+                   android:paddingLeft="20dp"
+                   android:paddingTop="70dp"
+                   app:layout_constraintBottom_toBottomOf="@id/viewBackground"
+                   app:layout_constraintTop_toBottomOf="@id/HeadBackground"
+
+
+                   />
+
+
+          </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+
+
+
+
+     </FrameLayout>
 
      <ImageView
          android:id="@+id/HeadBackground"
@@ -66,26 +98,7 @@
 
      </androidx.appcompat.widget.AppCompatImageView>
 
-     <TextView
-         android:id="@+id/textUserName"
-         android:layout_width="0dp"
-         android:layout_height="wrap_content"
-         android:layout_marginStart="8dp"
-         android:layout_marginEnd="8dp"
-         android:ellipsize="end"
-         android:gravity="center"
-         android:maxLength="1"
-         android:textColor="@color/elements"
-         android:textSize="14dp"
-         android:textStyle="bold"
-         app:layout_constraintBottom_toBottomOf="@id/imageBack"
-         app:layout_constraintEnd_toStartOf="@id/imageInfo"
-         app:layout_constraintTop_toTopOf="@id/imageBack"
 
-
-         >
-
-     </TextView>
 
 
 
@@ -127,11 +140,10 @@
 
 
 
-
      <EditText
          android:id="@+id/inputMessage"
          android:layout_width="0dp"
-         android:layout_height="40dp"
+         android:layout_height="wrap_content"
          android:layout_marginStart="16dp"
          android:layout_marginLeft="16dp"
          android:layout_marginEnd="8dp"
@@ -139,7 +151,6 @@
          android:layout_marginRight="8dp"
          android:layout_marginBottom="12dp"
          android:background="@drawable/textbox"
-
          android:fontFamily="@font/comfortaa"
          android:inputType="text"
          android:hint="Type a message"
@@ -149,11 +160,9 @@
          android:paddingStart="16dp"
          android:paddingEnd="16dp"
          android:textColor="@color/input_text"
-
          app:layout_constraintBottom_toBottomOf="parent"
          app:layout_constraintEnd_toStartOf="@id/layoutSend"
-         app:layout_constraintStart_toStartOf="parent"
-         />
+         app:layout_constraintStart_toStartOf="parent" />
 
 
      <View
@@ -182,32 +191,7 @@
          app:layout_constraintBottom_toBottomOf="parent"
          >
 
-     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-         android:id="@+id/refreshLayout"
-         android:layout_width="match_parent"
-         android:layout_height="match_parent"
-         app:layout_constraintBottom_toBottomOf="@id/viewSupport"
-         app:layout_constraintTop_toBottomOf="@+id/HeadBackground"
-         app:layout_constraintVertical_bias="0.083"
-         tools:layout_editor_absoluteX="0dp">
 
-          <androidx.recyclerview.widget.RecyclerView
-              android:id="@+id/lstMesseges"
-              android:layout_width="match_parent"
-              android:layout_height="0dp"
-              android:clipToPadding="false"
-              android:orientation="vertical"
-              android:overScrollMode="never"
-              android:paddingLeft="20dp"
-              android:paddingTop="70dp"
-              app:layout_constraintBottom_toBottomOf="@id/viewBackground"
-              app:layout_constraintTop_toBottomOf="@id/HeadBackground"
-
-
-              />
-
-
-     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
      </FrameLayout>
 
      <!--     <com.google.android.material.floatingactionbutton.FloatingActionButton-->
@@ -238,9 +222,81 @@
          android:layout_height="wrap_content"
          app:layout_constraintBottom_toBottomOf="parent"
          app:layout_constraintEnd_toEndOf="parent"
-         android:layout_margin="10pt"
-         android:src="@drawable/ic_add"
+         android:layout_margin="4pt"
+         android:src="@drawable/ic_send"
          android:contentDescription="Add Button"
          android:labelFor="@+id/btnAdd" />
+
+
+<!--     <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--         android:id="@+id/btnBack"-->
+<!--         android:layout_width="wrap_content"-->
+<!--         android:layout_height="wrap_content"-->
+<!--         app:layout_constraintTop_toTopOf="parent"-->
+<!--         app:layout_constraintStart_toStartOf="parent"-->
+<!--         android:src="@drawable/ic_back"-->
+<!--         android:contentDescription="Add Button"-->
+<!--         android:labelFor="@+id/btnAdd" />-->
+
+     <TextView
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         app:layout_constraintTop_toTopOf="parent"
+         app:layout_constraintStart_toEndOf="@id/btnBack"
+         android:layout_margin="6pt"
+         android:fontFamily="@font/comfortaa"
+         android:textSize="20dp"
+         android:text="user name is here">
+
+     </TextView>
+
+<!--     <TextView-->
+<!--         android:id="@+id/textUserName"-->
+<!--         android:layout_width="0dp"-->
+<!--         android:layout_height="wrap_content"-->
+<!--         android:layout_marginStart="8dp"-->
+<!--         android:layout_marginEnd="8dp"-->
+<!--         android:ellipsize="end"-->
+<!--         android:gravity="center"-->
+<!--         android:maxLength="1"-->
+<!--         android:textColor="@color/elements"-->
+<!--         android:textSize="14dp"-->
+<!--         android:textStyle="bold"-->
+<!--         app:layout_constraintBottom_toBottomOf="@id/imageBack"-->
+<!--         app:layout_constraintEnd_toStartOf="@id/imageInfo"-->
+<!--         app:layout_constraintTop_toTopOf="@id/imageBack"-->
+
+
+<!--         >-->
+
+<!--     </TextView>-->
+
+     <androidx.appcompat.widget.AppCompatImageView
+         android:id="@+id/imageSettings"
+         android:layout_height="40dp"
+         android:layout_width="40dp"
+         android:layout_marginStart="16dp"
+         android:layout_marginLeft="16dp"
+         android:layout_marginTop="12dp"
+         android:padding="5dp"
+         android:src="@drawable/ic_settings"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintTop_toTopOf="parent"
+         android:tint="@color/title"/>
+
+     <androidx.appcompat.widget.AppCompatImageView
+         android:id="@+id/btnBack"
+         android:layout_height="40dp"
+         android:layout_width="40dp"
+         android:layout_marginStart="16dp"
+         android:layout_marginLeft="16dp"
+         android:layout_marginTop="12dp"
+         android:padding="5dp"
+         android:src="@drawable/ic_back"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent"
+         android:tint="@color/title"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
