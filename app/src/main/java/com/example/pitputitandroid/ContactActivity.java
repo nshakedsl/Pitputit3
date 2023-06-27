@@ -21,8 +21,10 @@ import com.example.pitputitandroid.entities.Chat;
 import com.example.pitputitandroid.entities.LastMessage;
 import com.example.pitputitandroid.entities.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import androidx.lifecycle.Observer;
 
 import com.example.pitputitandroid.Daos.ChatDao;
@@ -31,6 +33,7 @@ import com.example.pitputitandroid.api.ChatAPI;
 import com.example.pitputitandroid.api.UserAPI;
 import com.example.pitputitandroid.entities.Chat;
 import com.example.pitputitandroid.entities.Contact;
+
 import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -50,17 +53,17 @@ public class ContactActivity extends AppCompatActivity {
         UserAPI userAPI = new UserAPI(getApplicationContext());
         chatAPI.getChats(userAPI.getToken());
         adapter = new ContactAdapterRV(this);
+        Activity context = this;
         chatAPI.getChatsResult().observe(this, new Observer<List<Chat>>() {
             @Override
             public void onChanged(List<Chat> chats) {
-               if(chats!=null){
-                   //TODO: ofir it ok take chats , enjoy:)
-                   Log.d("TAG","it succeed");
-               }
-               else {
-                   //TODO: ofir it is not OK go to login :(
-                   Log.d("TAG","error with token");
-               }
+                if (chats != null) {
+                    //TODO: ofir it ok take chats , enjoy:)
+                    Log.d("TAG", "it succeed");
+                } else {
+                    context.finish();
+                    Log.d("TAG", "error with token");
+                }
 
             }
         });
@@ -99,18 +102,19 @@ public class ContactActivity extends AppCompatActivity {
         contacts.add(c2);
         adapter.setContacts(contacts);
     }
-    private void addMsg(Editable usernameField){
+
+    private void addMsg(Editable usernameField) {
         //somehow define chat
 
-        Contact contact=new Contact(usernameField.toString());
+        Contact contact = new Contact(usernameField.toString());
         ChatAPI chatAPI = new ChatAPI(getApplicationContext());
         UserAPI userAPI = new UserAPI(getApplicationContext());
-        chatAPI.addChat(userAPI.getToken(),contact);
+        chatAPI.addChat(userAPI.getToken(), contact);
         Activity context = this;
         chatAPI.getAddChatResult().observe(this, new Observer<Map<Integer, Chat>>() {
             @Override
             public void onChanged(Map<Integer, Chat> res) {
-                int status=res.keySet().iterator().next();
+                int status = res.keySet().iterator().next();
                 switch (status) {
                     case 401:
                         Log.d("TAG", "401");
@@ -131,6 +135,7 @@ public class ContactActivity extends AppCompatActivity {
             }
         });
     }
+
     private void addChatToLocal(Chat chat) {
         Executor executor = Executors.newSingleThreadExecutor();
         executor.execute(new Runnable() {
