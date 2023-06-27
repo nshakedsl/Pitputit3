@@ -31,8 +31,8 @@ import com.example.pitputitandroid.adapters.MessegesListAdapter;
 import com.example.pitputitandroid.entities.Chat;
 import com.example.pitputitandroid.entities.Message;
 import com.example.pitputitandroid.entities.User;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -63,9 +63,9 @@ public class ChatsActivity extends AppCompatActivity {
 
 
         RecyclerView lstMesseges = findViewById(R.id.lstMesseges);
-        AppCompatImageView sendButton = findViewById(R.id.sendMessageButton);
+        FloatingActionButton sendButton = findViewById(R.id.btnSend);
         EditText editText = findViewById(R.id.inputMessage);
-        sendButton.setOnLongClickListener(v -> sendMessage(editText.getText()));
+        sendButton.setOnClickListener(v -> sendMessage(editText.getText()));
         this.adapter = new MessegesListAdapter(this);
         lstMesseges.setAdapter(adapter);
         lstMesseges.setLayoutManager(new LinearLayoutManager(this));
@@ -96,17 +96,7 @@ public class ChatsActivity extends AppCompatActivity {
         //addMsgToLocal(msg);
 
         adapter.setMesseges(messages);
-//        ImageView viewBackground = findViewById(R.id.viewBackground);
-//        ImageView viewBackground = findViewById(R.id.viewBackground);
-//        viewBackground.setImageBitmap(bitmap);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-//        viewBackground.setImageResource(R.drawable.chatbackground);
-//        viewBackground.setScaleType(ImageView.ScaleType.CENTER_CROP);
-//        ImageView viewBackground = findViewById(R.id.viewBackground);
-//        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-//        viewBackground.setLayoutParams(layoutParams);
-//        viewBackground.setImageResource(R.drawable.background);
-//        viewBackground.setScaleType(ImageView.ScaleType.CENTER_CROP);
     }
 
     private boolean sendMessage(Editable message) {
@@ -136,6 +126,7 @@ public class ChatsActivity extends AppCompatActivity {
         executor.execute(new Runnable() {
             @Override
             public void run() {
+                adapter.setMesseges(messageDao.indexMessage());
             }
         });
 
@@ -146,6 +137,7 @@ public class ChatsActivity extends AppCompatActivity {
         //todo: maybe update dataset from server
         super.onResume();
         //todo: maybe change?
+        //getMegssagesLocal();
         adapter.notifyDataSetChanged();
     }
 }
