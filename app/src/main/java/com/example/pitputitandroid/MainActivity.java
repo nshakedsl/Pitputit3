@@ -59,8 +59,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void loginClick(Editable username, Editable password) {
+<<<<<<< HEAD
+        Intent I = new Intent(this, ContactActivity.class);
+=======
         Intent I = new Intent(this, ChatsActivity.class);
         //Intent I = new Intent(this, ContactActivity.class);
+>>>>>>> cf7bbf353b70244a6445cb7ce36481a78c6b8e09
 
 
         UserAPI userAPI = new UserAPI(getApplicationContext());
