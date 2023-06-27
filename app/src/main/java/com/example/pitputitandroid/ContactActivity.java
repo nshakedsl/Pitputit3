@@ -8,7 +8,6 @@ import android.util.Pair;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
-<<<<<<< HEAD
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,7 +21,6 @@ import com.example.pitputitandroid.entities.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
-=======
 import androidx.lifecycle.Observer;
 
 import com.example.pitputitandroid.Daos.ChatDao;
@@ -36,7 +34,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 import java.util.Map;
->>>>>>> cf7bbf353b70244a6445cb7ce36481a78c6b8e09
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -50,8 +47,6 @@ public class ContactActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-<<<<<<< HEAD
-=======
         ChatAPI chatAPI = new ChatAPI(getApplicationContext());
         UserAPI userAPI = new UserAPI(getApplicationContext());
         chatAPI.getChats(userAPI.getToken());
@@ -69,7 +64,6 @@ public class ContactActivity extends AppCompatActivity {
 
             }
         });
->>>>>>> cf7bbf353b70244a6445cb7ce36481a78c6b8e09
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact);
