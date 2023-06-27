@@ -10,7 +10,7 @@
 
     >
 
-     <ImageView
+     <FrameLayout
          android:id="@+id/viewBackground"
          android:layout_width="match_parent"
          android:layout_height="0dp"
@@ -20,7 +20,39 @@
          app:layout_constraintTop_toTopOf="parent"
          >
 
-     </ImageView>
+          <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+              android:id="@+id/refreshLayout"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              app:layout_constraintBottom_toBottomOf="@id/viewSupport"
+              app:layout_constraintTop_toBottomOf="@+id/HeadBackground"
+              app:layout_constraintVertical_bias="0.083"
+              tools:layout_editor_absoluteX="0dp">
+
+               <androidx.recyclerview.widget.RecyclerView
+                   android:id="@+id/lstMesseges"
+                   android:layout_width="match_parent"
+                   android:layout_height="0dp"
+                   android:clipToPadding="false"
+                   android:orientation="vertical"
+                   android:overScrollMode="never"
+                   android:paddingLeft="20dp"
+                   android:paddingTop="70dp"
+                   app:layout_constraintBottom_toBottomOf="@id/viewBackground"
+                   app:layout_constraintTop_toBottomOf="@id/HeadBackground"
+
+
+                   />
+
+
+          </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+
+
+
+
+     </FrameLayout>
 
      <ImageView
          android:id="@+id/HeadBackground"
@@ -182,32 +214,7 @@
          app:layout_constraintBottom_toBottomOf="parent"
          >
 
-     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-         android:id="@+id/refreshLayout"
-         android:layout_width="match_parent"
-         android:layout_height="match_parent"
-         app:layout_constraintBottom_toBottomOf="@id/viewSupport"
-         app:layout_constraintTop_toBottomOf="@+id/HeadBackground"
-         app:layout_constraintVertical_bias="0.083"
-         tools:layout_editor_absoluteX="0dp">
 
-          <androidx.recyclerview.widget.RecyclerView
-              android:id="@+id/lstMesseges"
-              android:layout_width="match_parent"
-              android:layout_height="0dp"
-              android:clipToPadding="false"
-              android:orientation="vertical"
-              android:overScrollMode="never"
-              android:paddingLeft="20dp"
-              android:paddingTop="70dp"
-              app:layout_constraintBottom_toBottomOf="@id/viewBackground"
-              app:layout_constraintTop_toBottomOf="@id/HeadBackground"
-
-
-              />
-
-
-     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
      </FrameLayout>
 
      <!--     <com.google.android.material.floatingactionbutton.FloatingActionButton-->
@@ -238,8 +245,8 @@
          android:layout_height="wrap_content"
          app:layout_constraintBottom_toBottomOf="parent"
          app:layout_constraintEnd_toEndOf="parent"
-         android:layout_margin="10pt"
-         android:src="@drawable/ic_add"
+         android:layout_margin="4pt"
+         android:src="@drawable/ic_send"
          android:contentDescription="Add Button"
          android:labelFor="@+id/btnAdd" />
 
