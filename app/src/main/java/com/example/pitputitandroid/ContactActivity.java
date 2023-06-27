@@ -84,7 +84,6 @@ public class ContactActivity extends AppCompatActivity {
 
         List<Chat> contacts = new ArrayList<>();
         int resourceId = R.drawable.user;
-
         // Convert the drawable resource to a Bitmap
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resourceId);
         Chat c = new Chat();
