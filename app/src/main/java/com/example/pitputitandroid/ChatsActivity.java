@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,6 +28,8 @@ import com.example.pitputitandroid.Daos.ChatDao;
 import com.example.pitputitandroid.Daos.MessageDao;
 import com.example.pitputitandroid.DataBase.AppDB;
 import com.example.pitputitandroid.adapters.MessegesListAdapter;
+import com.example.pitputitandroid.api.ChatAPI;
+import com.example.pitputitandroid.api.UserAPI;
 import com.example.pitputitandroid.entities.Chat;
 import com.example.pitputitandroid.entities.Message;
 import com.example.pitputitandroid.entities.User;
@@ -111,7 +115,23 @@ public class ChatsActivity extends AppCompatActivity {
         //messageDao.insert(createdMessage);
         addMsgToLocal(createdMessage);
         boolean success = true;
-        //todo: talk with server shaked
+        ChatAPI chatAPI = new ChatAPI(getApplicationContext());
+        UserAPI userAPI = new UserAPI(getApplicationContext());
+        //TODO: change the hard_coded id
+        chatAPI.sendMessage(userAPI.getToken(),createdMessage,"hard_coded");
+
+        Activity context = this;
+        chatAPI.getSendMessageResult().observe(this, new Observer<List<Message>>() {
+            @Override
+            public void onChanged(List<Message> messages) {
+                if (messages != null) {
+                    Log.d("TAG", "messages success");
+                    // TODO: Ofir do something with messages
+                } else {
+                    // TODO: Ofir send message failed go back to login
+                }
+            }
+        });
         message.clear();
         return success;
     }
