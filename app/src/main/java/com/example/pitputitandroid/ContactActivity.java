@@ -39,6 +39,7 @@ public class ContactActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     private AppDB db;
     private ChatDao chatDao;
+    private ContactAdapterRV adapter;
 
     private User me;
     private List<Chat> contactList;
@@ -48,6 +49,7 @@ public class ContactActivity extends AppCompatActivity {
         ChatAPI chatAPI = new ChatAPI(getApplicationContext());
         UserAPI userAPI = new UserAPI(getApplicationContext());
         chatAPI.getChats(userAPI.getToken());
+        adapter = new ContactAdapterRV(this);
         chatAPI.getChatsResult().observe(this, new Observer<List<Chat>>() {
             @Override
             public void onChanged(List<Chat> chats) {
