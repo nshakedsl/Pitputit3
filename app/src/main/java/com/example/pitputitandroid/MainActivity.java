@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Editable;
 
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,7 +21,6 @@ import androidx.navigation.ui.AppBarConfiguration;
 
 public class MainActivity extends AppCompatActivity {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         EditText editText = findViewById(R.id.usernameInput);
         EditText passText = findViewById(R.id.passwordInput);
         ImageView imglogo = findViewById(R.id.imageView2);
+
 
 
         loginButton.setOnClickListener(v ->
@@ -45,9 +46,6 @@ public class MainActivity extends AppCompatActivity {
         settingButton.setOnClickListener(v -> {
             startActivity(new Intent(this, SettingsActivity.class));
         });
-
-
-
 
 
         TextView welcomeText = findViewById(R.id.textView);
