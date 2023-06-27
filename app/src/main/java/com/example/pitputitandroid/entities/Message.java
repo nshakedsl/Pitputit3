@@ -7,11 +7,14 @@ import androidx.annotation.NonNull;
 import androidx.room.PrimaryKey;
 
 import androidx.room.Entity;
+import androidx.room.TypeConverters;
 
 import java.io.ByteArrayOutputStream;
+
+import com.example.pitputitandroid.Converters.UserConverter;
 import com.example.pitputitandroid.Utils;
 
-
+@TypeConverters(UserConverter.class)
 @Entity
 public class Message {
     @PrimaryKey
@@ -66,6 +69,14 @@ public class Message {
 
     public String getDisplayName() {
         return sender.getDisplayName();
+    }
+
+    public boolean compare(Message message){
+        if(!message.getContent().equals(this.getContent()))
+            return false;
+        if(!message.getCreated().equals(this.getCreated()))
+            return false;
+        return message.sender.getUsername().equals(this.sender.getUsername());
     }
 
 }
