@@ -5,12 +5,17 @@ import android.content.Context;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.pitputitandroid.R;
+import com.example.pitputitandroid.entities.Chat;
+import com.example.pitputitandroid.entities.Contact;
 import com.example.pitputitandroid.entities.Message;
 import com.example.pitputitandroid.entities.Msg;
 import com.example.pitputitandroid.entities.UserFull;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -24,6 +29,8 @@ import retrofit2.Retrofit;
 public class ChatAPI {
     WebServiceAPI webServiceAPI;
     Retrofit retrofit;
+    private final MutableLiveData<Message> sendMessageResult;
+    private final MutableLiveData<Map<Integer, Chat>> addChatResult;
 
     public ChatAPI(Context context) {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -43,13 +50,18 @@ public class ChatAPI {
         webServiceAPI = retrofit.create(WebServiceAPI.class);
         sendMessageResult = new MutableLiveData<>();
 
+        addChatResult = new MutableLiveData<>();
+
+
 
     }
 
-    private final MutableLiveData<Message> sendMessageResult;
 
     public MutableLiveData<Message> getSendMessageResult() {
         return sendMessageResult;
+    }
+    public MutableLiveData<Map<Integer, Chat>> getAddChatResult() {
+        return addChatResult;
     }
     public void sendMessage(String token, Msg message, String id) {
 
@@ -70,6 +82,29 @@ public class ChatAPI {
 
                 // Set the register result as false on failure
                 sendMessageResult.postValue(null);
+            }
+        });
+
+    }
+
+
+
+    public void addChat(String token, Contact contact) {
+
+        Call<Chat> call = webServiceAPI.createChat(token,contact);
+        call.enqueue(new Callback<Chat>() {
+            @Override
+            public void onResponse(Call<Chat> call, Response<Chat> response) {
+                Map<Integer, Chat> tuple = new HashMap<>();
+                tuple.put(response.code(), response.body());
+                addChatResult.postValue(tuple);
+            }
+
+            @Override
+            public void onFailure(Call<Chat> call, Throwable t) {
+
+                // Set the register result as false on failure
+                addChatResult.postValue(null);
             }
         });
 
