@@ -18,6 +18,7 @@ import com.example.pitputitandroid.entities.Contact;
 import com.example.pitputitandroid.entities.Message;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -27,6 +28,24 @@ public class ContactActivity extends AppCompatActivity {
     private ChatDao chatDao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ChatAPI chatAPI = new ChatAPI(getApplicationContext());
+        UserAPI userAPI = new UserAPI(getApplicationContext());
+        chatAPI.getChats(userAPI.getToken());
+        chatAPI.getChatsResult().observe(this, new Observer<List<Chat>>() {
+            @Override
+            public void onChanged(List<Chat> chats) {
+               if(chats!=null){
+                   //TODO: ofir it ok take chats , enjoy:)
+                   Log.d("TAG","it succeed");
+               }
+               else {
+                   //TODO: ofir it is not OK go to login :(
+                   Log.d("TAG","error with token");
+               }
+
+            }
+        });
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact);
         EditText editText = findViewById(R.id.inputNickname);
