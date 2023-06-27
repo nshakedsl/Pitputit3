@@ -93,25 +93,23 @@ public class ChatsActivity extends AppCompatActivity {
         User moshe = new User(userAPI.getProfilePic(),userAPI.getUsername(),userAPI.getDisplayName());
         //todo: kill hardcoded user
         this.me = moshe;
-        messages.add(new Message("hello everyone!!", moshe, "12:00"));
-        //addMsgToLocal(msg);
+        Message msg = new Message("hello everyone!!", moshe, "12:00");
+        messages.add(msg);
+        addMsgToLocal(msg);
 
         adapter.setMesseges(messages);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
     }
 
     private boolean sendMessage(Editable message) {
-        User me = this.me;
-        Message createdMessage = new Message(message.toString(), me, Utils.getTime());
         Msg msg=new Msg(message.toString());
-        //messageDao.insert(createdMessage);
-        addMsgToLocal(createdMessage);
+        //addMsgToLocal(createdMessage);
         boolean success = true;
         ChatAPI chatAPI = new ChatAPI(getApplicationContext());
         UserAPI userAPI = new UserAPI(getApplicationContext());
         //TODO: change the hard_coded id
-        chatAPI.sendMessage(userAPI.getToken(),msg,"647e463f8a642addfacd205b");
-
+        chatAPI.sendMessage(userAPI.getToken(),msg,"649affa8d0dd5fa489ff6e35");
+        Activity context = this;
         chatAPI.getSendMessageResult().observe(this, new Observer<Message>() {
             @Override
             public void onChanged(Message sentMessage) {
@@ -147,7 +145,7 @@ public class ChatsActivity extends AppCompatActivity {
             public void run() {
                 List<Message> curMsgs = messageDao.indexMessage();
                 for (Message msg : curMsgs) {
-                    if(!curMsgs.contains(msg))
+                    if(!adapter.getMesseges().contains(msg))
                         adapter.getMesseges().add(msg);
                 }
             }
