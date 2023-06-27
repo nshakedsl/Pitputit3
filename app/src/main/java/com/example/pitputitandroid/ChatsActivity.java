@@ -50,13 +50,11 @@ public class ChatsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
 
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chats);
 
 
-        FrameLayout buttonFrame=findViewById(R.id.layoutSend);
+        FrameLayout buttonFrame = findViewById(R.id.layoutSend);
         buttonFrame.setOnClickListener(v -> {
             startActivity(new Intent(this, RegisterActivity.class));
         });
@@ -93,11 +91,11 @@ public class ChatsActivity extends AppCompatActivity {
         messages.add(new Message("hello world", moshe, "12:00"));
 
 
-        messages.add(new Message("hello everyone!!", "aa", "mosh_nick", bitmap, "12:00" ));
-        messages.add(new Message("hello this is ", "aa1", "mosh_nick", bitmap, "12:00" ));
-        messages.add(new Message("hello world", "moshe2", "mosh_nick", bitmap, "12:00" ));
-        messages.add(new Message("hello everyone!!", "moshe3", "mosh_nick", bitmap, "12:00" ));
-        messages.add(new Message("hello this is ", "aa4", "mosh_nick", bitmap, "12:00" ));
+        messages.add(new Message("hello everyone!!", "aa", "mosh_nick", bitmap, "12:00"));
+        messages.add(new Message("hello this is ", "aa1", "mosh_nick", bitmap, "12:00"));
+        messages.add(new Message("hello world", "moshe2", "mosh_nick", bitmap, "12:00"));
+        messages.add(new Message("hello everyone!!", "moshe3", "mosh_nick", bitmap, "12:00"));
+        messages.add(new Message("hello this is ", "aa4", "mosh_nick", bitmap, "12:00"));
         //addMsgToLocal(msg);
 
         adapter.setMesseges(messages);
@@ -107,7 +105,6 @@ public class ChatsActivity extends AppCompatActivity {
     private boolean sendMessage(Editable message) {
         User me = this.me;
         Message createdMessage = new Message(message.toString(), me, Utils.getTime());
-        //messageDao.insert(createdMessage);
         addMsgToLocal(createdMessage);
         boolean success = true;
         //todo: talk with server shaked
@@ -121,7 +118,7 @@ public class ChatsActivity extends AppCompatActivity {
             @Override
             public void run() {
                 messageDao.insertMessage(msg);
-            }
+                getMegssagesLocal();}
         });
     }
 
@@ -142,7 +139,7 @@ public class ChatsActivity extends AppCompatActivity {
         //todo: maybe update dataset from server
         super.onResume();
         //todo: maybe change?
-        //getMegssagesLocal();
+        getMegssagesLocal();
         adapter.notifyDataSetChanged();
     }
 }
