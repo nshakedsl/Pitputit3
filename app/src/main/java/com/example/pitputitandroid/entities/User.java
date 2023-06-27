@@ -2,8 +2,10 @@ package com.example.pitputitandroid.entities;
 
 import android.graphics.Bitmap;
 
-import com.example.pitputitandroid.Utils;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+import com.example.pitputitandroid.Utils;
 public class User {
     private String profilePic;
     private String username;

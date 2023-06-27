@@ -15,6 +15,7 @@ import com.google.gson.GsonBuilder;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.OkHttpClient;
@@ -31,6 +32,8 @@ public class ChatAPI {
     Retrofit retrofit;
     private final MutableLiveData<Message> sendMessageResult;
     private final MutableLiveData<Map<Integer, Chat>> addChatResult;
+
+    private final MutableLiveData<List<Chat>> chatsResult;
 
     public ChatAPI(Context context) {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -51,6 +54,7 @@ public class ChatAPI {
         sendMessageResult = new MutableLiveData<>();
 
         addChatResult = new MutableLiveData<>();
+        chatsResult = new MutableLiveData<>();
 
 
 
@@ -63,6 +67,11 @@ public class ChatAPI {
     public MutableLiveData<Map<Integer, Chat>> getAddChatResult() {
         return addChatResult;
     }
+
+    public MutableLiveData<List<Chat>> getChatsResult() {
+        return chatsResult;
+    }
+
     public void sendMessage(String token, Msg message, String id) {
 
         Call<Message> call = webServiceAPI.addChatMessage(token,message,id);
@@ -109,4 +118,32 @@ public class ChatAPI {
         });
 
     }
+
+
+
+    public void getChats(String token) {
+
+        Call<List<Chat>> call = webServiceAPI.getChats(token);
+        call.enqueue(new Callback<List<Chat>>() {
+            @Override
+            public void onResponse(Call<List<Chat>> call, Response<List<Chat>> response) {
+
+              if(response.code()==401)
+                  chatsResult.postValue(null);
+              else
+                chatsResult.postValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Chat>> call, Throwable t) {
+
+                // Set the register result as false on failure
+                chatsResult.postValue(null);
+            }
+        });
+
+    }
+
+
+
 }
