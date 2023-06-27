@@ -61,6 +61,11 @@ public class ChatsActivity extends AppCompatActivity {
             startActivity(new Intent(this, RegisterActivity.class));
         });
 
+        AppCompatImageView settingButton = findViewById(R.id.imageSettings);
+        settingButton.setOnClickListener(v -> {
+            startActivity(new Intent(this, SettingsActivity.class));
+        });
+
 
         RecyclerView lstMesseges = findViewById(R.id.lstMesseges);
         FloatingActionButton sendButton = findViewById(R.id.btnSend);
