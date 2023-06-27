@@ -71,4 +71,12 @@ public class Message {
         return sender.getDisplayName();
     }
 
+    public boolean compare(Message message){
+        if(!message.getContent().equals(this.getContent()))
+            return false;
+        if(!message.getCreated().equals(this.getCreated()))
+            return false;
+        return message.sender.getUsername().equals(this.sender.getUsername());
+    }
+
 }

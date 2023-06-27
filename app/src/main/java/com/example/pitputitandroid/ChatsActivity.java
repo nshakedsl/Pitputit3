@@ -40,7 +40,9 @@ import com.example.pitputitandroid.entities.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -51,6 +53,8 @@ public class ChatsActivity extends AppCompatActivity {
     private User me;
     private MessegesListAdapter adapter;
     private List<Message> messageList;
+    Queue<Message> insertQueue = new LinkedList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,8 +98,6 @@ public class ChatsActivity extends AppCompatActivity {
         //todo: kill hardcoded user
         this.me = moshe;
         Message msg = new Message("hello everyone!!", moshe, "12:00");
-        messages.add(msg);
-        addMsgToLocal(msg);
 
         adapter.setMesseges(messages);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -133,7 +135,9 @@ public class ChatsActivity extends AppCompatActivity {
             @Override
             public void run() {
                 messageDao.insertMessage(msg);
-                getMegssagesLocal();}
+                insertQueue.add(msg);
+                getMegssagesLocal();
+            }
         });
     }
 
@@ -143,10 +147,8 @@ public class ChatsActivity extends AppCompatActivity {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                List<Message> curMsgs = messageDao.indexMessage();
-                for (Message msg : curMsgs) {
-                    if(!adapter.getMesseges().contains(msg))
-                        adapter.getMesseges().add(msg);
+                while (!insertQueue.isEmpty()){
+                    adapter.getMesseges().add(insertQueue.remove());
                 }
             }
         });
@@ -155,9 +157,7 @@ public class ChatsActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        //todo: maybe update dataset from server
         super.onResume();
-        //todo: maybe change?
         getMegssagesLocal();
         adapter.notifyDataSetChanged();
     }
