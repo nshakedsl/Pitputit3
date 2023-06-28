@@ -122,8 +122,7 @@ public class ChatsActivity extends AppCompatActivity {
 
 
         ChatAPI chatAPI = new ChatAPI(getApplicationContext());
-        //TODO: change the hard_coded id!!!
-        chatAPI.getChatMessages(userAPI.getToken(), "647e463f8a642addfacd205b");
+        chatAPI.getChatMessages(userAPI.getToken(), chatId);
         Activity context = this;
         chatAPI.getChatsMessageResult().observe(this, new Observer<List<Message>>() {
             @Override
