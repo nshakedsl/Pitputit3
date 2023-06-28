@@ -162,7 +162,18 @@
 
     </LinearLayout>
 
-
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imageSettings"
+        android:layout_height="40dp"
+        android:layout_width="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="12dp"
+        android:padding="5dp"
+        android:src="@drawable/ic_settings"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:tint="@color/title"/>
 
 
 

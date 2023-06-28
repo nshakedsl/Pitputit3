@@ -1,4 +1,5 @@
 package com.example.pitputitandroid;
+import android.content.Intent;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -76,6 +78,21 @@ public class ContactActivity extends AppCompatActivity {
         FloatingActionButton addBtn = findViewById(R.id.btnAdd);
         addBtn.setOnClickListener(v -> addMsg(editText.getText()));
 
+<<<<<<< HEAD
+        AppCompatImageView settingButton = findViewById(R.id.imageSettings);
+        settingButton.setOnClickListener(v -> {
+            startActivity(new Intent(this, SettingsActivity.class));
+        });
+
+        AppCompatImageView imageBackPage = findViewById(R.id.imageBackPage);
+        imageBackPage.setOnClickListener(v -> {
+            startActivity(new Intent(this, MainActivity.class));
+        });
+
+
+
+=======
+>>>>>>> 47babf66916b12c1abe425aab882ba8b7cfb47b2
         RecyclerView rvContacts = findViewById(R.id.rvContacts);
         rvContacts.setHasFixedSize(true);
         final ContactAdapterRV adapter = new ContactAdapterRV(this);
@@ -100,6 +117,10 @@ public class ContactActivity extends AppCompatActivity {
         contacts.add(c1);
         contacts.add(c2);
         adapter.setContacts(contacts);
+
+
+
+
     }
 
     private void addMsg(Editable usernameField) {

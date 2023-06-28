@@ -9,6 +9,9 @@
     <color name="background">#140E20</color>
     <color name="background_wave">#30233C</color>
 
+    <!--    backgroundContact-->
+    <color name="backgroundContact">#3F3949</color>
+
     <!--    text-->
     <color name="title">#DADBE1</color>
     <color name="regular_text">#FFFFFF</color>
@@ -29,8 +32,8 @@
     <color name="message_text_date">#FFFFFF</color>
 
     <!--    chats-->
-    <color name="background_chat">#0B1119</color>
-    <color name="background_chat_page">#0B0A0A</color>
+    <color name="background_chat">#3F3949</color>
+    <color name="background_chat_page">#30233C</color>
 
 
     <!--    elements-->

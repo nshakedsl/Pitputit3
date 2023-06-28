@@ -24,6 +24,7 @@ import android.widget.Button;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.lifecycle.Observer;
 
 
@@ -58,6 +59,12 @@ public class RegisterActivity extends AppCompatActivity {
         addPhoto.setImageResource(R.drawable.user);
 
         alreadyRegistered.setOnClickListener(v -> this.finish());
+
+        AppCompatImageView settingButton = findViewById(R.id.imageSettings);
+        settingButton.setOnClickListener(v -> {
+            startActivity(new Intent(this, SettingsActivity.class));
+        });
+
 
 
 
