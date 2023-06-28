@@ -16,10 +16,11 @@ import com.example.pitputitandroid.Daos.ChatDao;
 import com.example.pitputitandroid.Daos.MarkedMessageDao;
 import com.example.pitputitandroid.Daos.MessageDao;
 import com.example.pitputitandroid.entities.Chat;
+import com.example.pitputitandroid.entities.MarkedMessage;
 import com.example.pitputitandroid.entities.Message;
 
 @TypeConverters({LastMessageConverter.class, UserConverter.class})
-@Database(entities = {Chat.class, Message.class}, version = 6)
+@Database(entities = {Chat.class, Message.class, MarkedMessage.class}, version = 9)
 public abstract class AppDB extends RoomDatabase{
     private static AppDB instance;
 

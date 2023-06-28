@@ -26,6 +26,12 @@ public class MarkedMessage{
         this.id = message.getId();
         this.originId = originId;
     }
+    public MarkedMessage(User sender,String created,String content, String originId) {
+        this.created = created;
+        this.content = content;
+        this.sender = sender;
+        this.originId = originId;
+    }
 
     public String getOriginId() {
         return originId;
