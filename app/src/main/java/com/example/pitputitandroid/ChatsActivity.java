@@ -23,6 +23,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,6 +38,8 @@ import com.example.pitputitandroid.entities.Chat;
 import com.example.pitputitandroid.entities.Message;
 import com.example.pitputitandroid.entities.Msg;
 import com.example.pitputitandroid.entities.User;
+import com.example.pitputitandroid.viewmodels.ChatViewModel;
+import com.example.pitputitandroid.viewmodels.MessegesViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -51,7 +54,8 @@ public class ChatsActivity extends AppCompatActivity {
     private MessageDao messageDao;
     //todo: get the current user/ delete
     private MessegesListAdapter adapter;
-    Queue<Message> insertQueue = new LinkedList<>();
+    private MessegesViewModel viewModel;
+    private final Queue<Message> insertQueue = new LinkedList<>();
 
 
     @Override
@@ -61,6 +65,10 @@ public class ChatsActivity extends AppCompatActivity {
         AppCompatImageView goBack = findViewById(R.id.btnBack);
         goBack.setOnClickListener(v -> {
             this.finish();
+        });
+        viewModel = new ViewModelProvider(this).get(MessegesViewModel.class);
+        viewModel.getMessages().observe(this, chats -> {
+            adapter.setMesseges(chats);
         });
         FrameLayout buttonFrame = findViewById(R.id.layoutSend);
         buttonFrame.setOnClickListener(v -> {
