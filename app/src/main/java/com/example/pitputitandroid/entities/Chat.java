@@ -17,6 +17,9 @@ public class Chat {
     public void setLastMessage(@NonNull LastMessage lastMessage) {
         this.lastMessage = lastMessage;
     }
+    public void setLastMessage(@NonNull Message message) {
+        this.lastMessage = new LastMessage(message);
+    }
     @PrimaryKey
     @NonNull
     private String id;
