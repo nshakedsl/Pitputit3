@@ -52,5 +52,5 @@
     <string name="loginButtonText">Login</string>
     <string name="choosePhotoText">choose photo 📷</string>
     <string name="registerText">Register</string>
-    <string name="BaseUrl">http://192.168.1.211:8080/api/</string>
+    <string name="BaseUrl">http://10.0.2.2:8080/api/</string>
 </resources>
