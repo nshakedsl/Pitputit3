@@ -166,7 +166,6 @@ public class ContactActivity extends AppCompatActivity {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                //chatDao.insertChat(chat);
                 viewModel.add(chat);
             }
         });

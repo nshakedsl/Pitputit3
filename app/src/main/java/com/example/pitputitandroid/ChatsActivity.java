@@ -18,7 +18,6 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -51,23 +50,12 @@ public class ChatsActivity extends AppCompatActivity {
     private AppDB db;
     private MessageDao messageDao;
     //todo: get the current user/ delete
-    private User me;
     private MessegesListAdapter adapter;
-    private List<Message> messageList;
     Queue<Message> insertQueue = new LinkedList<>();
-
-    private String chatId;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        Intent intent = getIntent();
-        chatId = intent.getStringExtra("chatId");
-        String userName = intent.getStringExtra("userName");
-
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chats);
         AppCompatImageView goBack = findViewById(R.id.btnBack);
@@ -89,9 +77,6 @@ public class ChatsActivity extends AppCompatActivity {
             startActivity(new Intent(this, ContactActivity.class));
         });
 
-        TextView textUserName = findViewById(R.id.textUserName);
-        textUserName.setText(userName);
-
         RecyclerView lstMesseges = findViewById(R.id.lstMesseges);
         FloatingActionButton sendButton = findViewById(R.id.btnSend);
         EditText editText = findViewById(R.id.inputMessage);
@@ -100,31 +85,17 @@ public class ChatsActivity extends AppCompatActivity {
         lstMesseges.setAdapter(adapter);
         lstMesseges.setLayoutManager(new LinearLayoutManager(this));
 
-        // Get the resource ID of the drawable
-        int resourceId = R.drawable.user;
-
-        // Convert the drawable resource to a Bitmap
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resourceId);
-
         List<Message> messages = new ArrayList<>();
 
         db = AppDB.getInstance(this);
         messageDao = db.messageDao();
         UserAPI userAPI = new UserAPI(getApplicationContext());
-        User moshe = new User(userAPI.getProfilePic(), userAPI.getUsername(), userAPI.getDisplayName());
-        //todo: kill hardcoded user
-        this.me = moshe;
-        Message msg = new Message("hello everyone!!", moshe, "12:00");
-
         adapter.setMesseges(messages);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-
-
 
         ChatAPI chatAPI = new ChatAPI(getApplicationContext());
         //TODO: change the hard_coded id!!!
+        Activity activity = this;
         chatAPI.getChatMessages(userAPI.getToken(), "647e463f8a642addfacd205b");
-        Activity context = this;
         chatAPI.getChatsMessageResult().observe(this, new Observer<List<Message>>() {
             @Override
             public void onChanged(List<Message> messages) {
@@ -133,7 +104,8 @@ public class ChatsActivity extends AppCompatActivity {
                     //TODO: ofir display messages of chat
                 } else {
                     Log.d("TAG", "error");
-                    //TODO: ofir problem with token go back to login
+                    //TODO: maybe clear messages?
+                    activity.finish();
                 }
             }
         });
@@ -141,7 +113,6 @@ public class ChatsActivity extends AppCompatActivity {
 
     private boolean sendMessage(Editable message) {
         Msg msg = new Msg(message.toString());
-        //addMsgToLocal(createdMessage);
         boolean success = true;
         ChatAPI chatAPI = new ChatAPI(getApplicationContext());
         UserAPI userAPI = new UserAPI(getApplicationContext());
@@ -167,25 +138,19 @@ public class ChatsActivity extends AppCompatActivity {
 
     private void addMsgToLocal(Message msg) {
         Executor executor = Executors.newSingleThreadExecutor();
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                messageDao.insertMessage(msg);
-                insertQueue.add(msg);
-                getMegssagesLocal();
-            }
+        executor.execute(() -> {
+            messageDao.insertMessage(msg);
+            insertQueue.add(msg);
+            getMegssagesLocal();
         });
     }
 
     private void getMegssagesLocal() {
         // Inside your activity or fragment
         Executor executor = Executors.newSingleThreadExecutor();
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                while (!insertQueue.isEmpty()) {
-                    adapter.getMesseges().add(insertQueue.remove());
-                }
+        executor.execute(() -> {
+            while (!insertQueue.isEmpty()) {
+                adapter.getMesseges().add(insertQueue.remove());
             }
         });
 

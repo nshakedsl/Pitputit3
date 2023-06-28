@@ -1,5 +1,7 @@
 package com.example.pitputitandroid.adapters;
 
+import static com.example.pitputitandroid.PitputitAndroid.context;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pitputitandroid.R;
+import com.example.pitputitandroid.api.UserAPI;
 import com.example.pitputitandroid.entities.Message;
 import com.example.pitputitandroid.entities.User;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -63,13 +66,20 @@ public class MessegesListAdapter extends RecyclerView.Adapter<MessegesListAdapte
             final Message current = messeges.get(position);
             holder.messegeContent.setText(current.getContent());
             holder.messegeTime.setText(current.getTime());
-            // holder.imgProfile.setImageBitmap(current.getImgProfile());
-            holder.imgProfile.setImageBitmap(current.getSender().getProfilePicBitmap());
-            // Bitmap bitmap = current.getImgProfile(); // Assuming current.getImgProfile() returns a Bitmap object
-            // holder.imgProfile.setImageBitmap(bitmap);
+            try {
+                holder.imgProfile.setImageBitmap(current.getSender().getProfilePicBitmap());
+            } catch (Exception e) {
+                //illegal image give, give default image
+                int width = 100; // desired width of the bitmap
+                int height = 100; // desired height of the bitmap
+                Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+                holder.imgProfile.setImageBitmap(bitmap);
+            }
             holder.messegeContent1.setText(current.getContent());
             holder.messegeTime1.setText(current.getTime());
-            if (current.getUserName().equals("aa")) {
+            UserAPI userAPI = new UserAPI(context);
+            String username = userAPI.getUsername();
+            if (current.getUserName().equals(username)) {
                 holder.messegeContent.setVisibility(View.GONE);
                 holder.messegeTime.setVisibility(View.GONE);
                 holder.imgProfile.setVisibility(View.GONE);
@@ -82,7 +92,7 @@ public class MessegesListAdapter extends RecyclerView.Adapter<MessegesListAdapte
                 holder.messegeTime1.setVisibility(View.GONE);
                 holder.messegeContent1.setVisibility(View.GONE);
             }
-            if (Objects.equals(current.getContent(), "aa")) {
+            if (Objects.equals(current.getContent(), username)) {
                 count = 0;
             } else count++;
         }
