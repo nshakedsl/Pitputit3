@@ -72,4 +72,15 @@ public class ChatsRepository {
         //todo: shaked
         //chatAPI.getChats();
     }
+    //clears old dataset, and fills it with the new values, then sets the vals to the new values
+    public void set(List<Chat> chats){
+        new Thread(() ->
+        {
+            dao.clearChats();
+            for (Chat chat: chats) {
+                dao.insertChat(chat);
+            }
+            chatListData.postValue(dao.indexChat());
+        }).start();
+    }
 }
