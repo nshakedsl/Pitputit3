@@ -153,9 +153,14 @@ public class ContactActivity extends AppCompatActivity {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                chatDao.insertChat(chat);
+                //chatDao.insertChat(chat);
+                viewModel.add(chat);
             }
         });
+    }
+    @Override
+    public void onResume(){
+        super.onResume();
     }
 }
 

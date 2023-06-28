@@ -58,6 +58,7 @@ public class ChatsRepository {
         new Thread(() ->
         {
             dao.insertChat(chat);
+            chatListData.postValue(dao.indexChat());
         }).start();
         //todo: shaked
         //chatAPI.addChat(chat);
