@@ -78,7 +78,7 @@ public class ContactActivity extends AppCompatActivity {
         FloatingActionButton addBtn = findViewById(R.id.btnAdd);
         addBtn.setOnClickListener(v -> addMsg(editText.getText()));
 
-<<<<<<< HEAD
+
         AppCompatImageView settingButton = findViewById(R.id.imageSettings);
         settingButton.setOnClickListener(v -> {
             startActivity(new Intent(this, SettingsActivity.class));
@@ -91,8 +91,6 @@ public class ContactActivity extends AppCompatActivity {
 
 
 
-=======
->>>>>>> 47babf66916b12c1abe425aab882ba8b7cfb47b2
         RecyclerView rvContacts = findViewById(R.id.rvContacts);
         rvContacts.setHasFixedSize(true);
         final ContactAdapterRV adapter = new ContactAdapterRV(this);
