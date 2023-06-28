@@ -100,7 +100,7 @@ public class MarkedMessageRepository {
         }).start();
     }
 
-    public List<Message> genMsgs(List<MarkedMessage> markedMessages) {
+    private List<Message> genMsgs(List<MarkedMessage> markedMessages) {
         List<Message> msgs = new ArrayList<>();
         for (MarkedMessage msg : markedMessages) {
             msgs.add(msg.createMessage());
