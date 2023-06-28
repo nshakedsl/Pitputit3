@@ -57,12 +57,17 @@ public class ChatsActivity extends AppCompatActivity {
     private MessegesViewModel viewModel;
     private final Queue<Message> insertQueue = new LinkedList<>();
     private String chatId;
+    private String userName;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chats);
+
+        Intent intent =getIntent();
+        chatId = intent.getStringExtra("chatId");
+        userName = intent.getStringExtra("userName");
         AppCompatImageView goBack = findViewById(R.id.btnBack);
         goBack.setOnClickListener(v -> {
             this.finish();
@@ -109,7 +114,7 @@ public class ChatsActivity extends AppCompatActivity {
             public void onChanged(List<Message> messages) {
                 if (messages != null) {
                     Log.d("TAG", "get chat messages success");
-                    //TODO: ofir display messages of chat
+                    viewModel.set(messages);
                 } else {
                     Log.d("TAG", "error");
                     //TODO: maybe clear messages?
@@ -124,8 +129,8 @@ public class ChatsActivity extends AppCompatActivity {
         boolean success = true;
         ChatAPI chatAPI = new ChatAPI(getApplicationContext());
         UserAPI userAPI = new UserAPI(getApplicationContext());
-        //TODO: change the hard_coded id
-        chatAPI.sendMessage(userAPI.getToken(), msg, "649affa8d0dd5fa489ff6e35");
+
+        chatAPI.sendMessage(userAPI.getToken(), msg, chatId);
         Activity context = this;
         chatAPI.getSendMessageResult().observe(this, new Observer<Message>() {
             @Override
