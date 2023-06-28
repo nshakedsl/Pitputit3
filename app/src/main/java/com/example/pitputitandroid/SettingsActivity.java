@@ -1,8 +1,10 @@
 package com.example.pitputitandroid;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -24,6 +26,10 @@ public class SettingsActivity extends AppCompatActivity {
 
      Switch darkModeSwitch;
 
+
+    private EditText editTextServerAddress;
+    private AppCompatButton buttonSave;
+    private SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +46,33 @@ public class SettingsActivity extends AppCompatActivity {
             startActivity(new Intent(this, MainActivity.class));
         });
 
+        //   update address
+
+        editTextServerAddress = findViewById(R.id.serverIpInput);
+        buttonSave = findViewById(R.id.updateButton);
+        sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        String currentAddress = sharedPreferences.getString("BaseUrl", "");
+        editTextServerAddress.setText(currentAddress);
+        buttonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String newAddress = editTextServerAddress.getText().toString();
+
+                // Save the new server address to SharedPreferences
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("BaseUrl", newAddress);
+                editor.apply();
+
+                // Finish the activity
+                finish();
+            }
+        });
+
+
+
+
+
+        // update dark-mode
 
         darkModeSwitch=findViewById(R.id.dark_mode_switch);
         darkModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()  {
