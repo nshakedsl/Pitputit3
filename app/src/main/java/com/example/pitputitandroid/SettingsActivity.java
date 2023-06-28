@@ -46,69 +46,33 @@ public class SettingsActivity extends AppCompatActivity {
     private AppCompatButton buttonSave;
     private SharedPreferences sharedPreferences;
 
+    private AppCompatButton darkModeButton;
+
+    private int light = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-//        ActionBar actionBar = getSupportActionBar();
-//        if (actionBar != null) {
-//            actionBar.hide();
-//        }
-
-        // update dark-mode
-
-//        darkModeSwitch = findViewById(R.id.dark_mode_switch);
-//        darkModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//                if (b) {
-//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-//                    //startActivity(new Intent(SettingsActivity.this, MainActivity.class));
-//
-//                } else {
-//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-//                    //startActivity(new Intent(SettingsActivity.this, MainActivity.class));
-//                }
-//
-//            }
-//        });
-
-
-        layout = findViewById(R.id.layoutCo);
-        sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-
-        // Set the initial state of the switch based on the saved preference
-        boolean darkModeEnabled = sharedPreferences.getBoolean(KEY_DARK_MODE, false);
-        Switch switchDarkMode = findViewById(R.id.dark_mode_switch);
-        switchDarkMode.setChecked(darkModeEnabled);
-
-        // Apply the saved theme
-        if (darkModeEnabled) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
         }
 
-        // Set a listener to handle switch state changes
-        switchDarkMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                // Save the current state of the switch
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean(KEY_DARK_MODE, isChecked);
-                editor.apply();
+        darkModeButton = findViewById(R.id.DarkButton);
 
-                // Apply the selected theme
-                if (isChecked) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                } else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                }
 
-                // Recreate the activity to reflect the theme change
-                recreate();
+        darkModeButton.setOnClickListener(v -> {
+            if(light == 1) {
+                light = 0;
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+            } else {
+                light = 1;
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
             }
         });
 
