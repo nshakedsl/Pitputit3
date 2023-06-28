@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -55,9 +56,18 @@ public class ChatsActivity extends AppCompatActivity {
     private List<Message> messageList;
     Queue<Message> insertQueue = new LinkedList<>();
 
+    private String chatId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Intent intent = getIntent();
+        chatId = intent.getStringExtra("chatId");
+        String userName = intent.getStringExtra("userName");
+
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chats);
         AppCompatImageView goBack = findViewById(R.id.btnBack);
@@ -78,6 +88,9 @@ public class ChatsActivity extends AppCompatActivity {
         backButton.setOnClickListener(v -> {
             startActivity(new Intent(this, ContactActivity.class));
         });
+
+        TextView textUserName = findViewById(R.id.textUserName);
+        textUserName.setText(userName);
 
         RecyclerView lstMesseges = findViewById(R.id.lstMesseges);
         FloatingActionButton sendButton = findViewById(R.id.btnSend);

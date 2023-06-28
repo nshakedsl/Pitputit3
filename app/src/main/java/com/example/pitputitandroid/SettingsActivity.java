@@ -43,7 +43,7 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        Button logoutButton = findViewById(R.id.logOut);
+        AppCompatImageView logoutButton = findViewById(R.id.logOut);
         logoutButton.setOnClickListener(v -> logOut());
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -76,10 +76,9 @@ public class SettingsActivity extends AppCompatActivity {
                 editor.apply();
 
                 // Finish the activity
-                finish();
+                logOut();
             }
         });
-
 
 
         // update dark-mode
@@ -90,9 +89,14 @@ public class SettingsActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    startActivity(new Intent(SettingsActivity.this, MainActivity.class));
+
                 } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    startActivity(new Intent(SettingsActivity.this, MainActivity.class));
                 }
+
+
             }
         });
 
