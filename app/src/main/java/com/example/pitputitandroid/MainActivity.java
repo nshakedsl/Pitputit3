@@ -25,6 +25,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 
 public class MainActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,10 +38,6 @@ public class MainActivity extends AppCompatActivity {
         ImageView imglogo = findViewById(R.id.imageView2);
 
 
-        sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("base_url", "http://10.0.2.2:8080/api/");
-        editor.apply();
 
         loginButton.setOnClickListener(v ->
                 loginClick(editText.getText(), passText.getText()));

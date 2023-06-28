@@ -63,7 +63,7 @@ public class ContactActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<Chat> chats) {
                 if (chats != null) {
-                    //TODO: ofir it ok take chats , enjoy:)
+                    viewModel.set(chats);
                     Log.d("TAG", "it succeed");
                 } else {
                     context.finish();

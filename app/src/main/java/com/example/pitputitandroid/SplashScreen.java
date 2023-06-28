@@ -1,6 +1,10 @@
 package com.example.pitputitandroid;
 
+import static com.example.pitputitandroid.PitputitAndroid.context;
+
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageView;
@@ -18,9 +22,15 @@ public class SplashScreen extends AppCompatActivity {
     TextView appname;
     LottieAnimationView lottie;
     ImageView imgLog;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("base_url", "http://10.0.2.2:8080/api/");
+        editor.apply();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 

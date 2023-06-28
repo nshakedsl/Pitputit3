@@ -56,6 +56,7 @@ public class ChatsActivity extends AppCompatActivity {
     private MessegesListAdapter adapter;
     private MessegesViewModel viewModel;
     private final Queue<Message> insertQueue = new LinkedList<>();
+    private String chatId;
 
 
     @Override
@@ -101,9 +102,8 @@ public class ChatsActivity extends AppCompatActivity {
         adapter.setMesseges(messages);
 
         ChatAPI chatAPI = new ChatAPI(getApplicationContext());
-        //TODO: change the hard_coded id!!!
-        Activity activity = this;
-        chatAPI.getChatMessages(userAPI.getToken(), "647e463f8a642addfacd205b");
+        chatAPI.getChatMessages(userAPI.getToken(), chatId);
+        Activity context = this;
         chatAPI.getChatsMessageResult().observe(this, new Observer<List<Message>>() {
             @Override
             public void onChanged(List<Message> messages) {
@@ -113,7 +113,7 @@ public class ChatsActivity extends AppCompatActivity {
                 } else {
                     Log.d("TAG", "error");
                     //TODO: maybe clear messages?
-                    activity.finish();
+                    context.finish();
                 }
             }
         });
