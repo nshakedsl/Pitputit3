@@ -9,16 +9,20 @@ import com.example.pitputitandroid.Utils;
 @Entity
 public class Chat {
 
-    public Chat() {
+    public Chat(@NonNull LastMessage lastMessage, @NonNull User user) {
         this.id  = Utils.uniqueIdGenerator();
+        this.lastMessage = lastMessage;
+        this.user = user;
     }
-    public void setLastMessage(LastMessage lastMessage) {
+    public void setLastMessage(@NonNull LastMessage lastMessage) {
         this.lastMessage = lastMessage;
     }
     @PrimaryKey
     @NonNull
     private String id;
+    @NonNull
     private LastMessage lastMessage;
+    @NonNull
     private User user;
 
     @NonNull
@@ -26,6 +30,7 @@ public class Chat {
         return id;
     }
 
+    @NonNull
     public LastMessage getLastMessage() {
         return lastMessage;
     }
@@ -34,11 +39,12 @@ public class Chat {
         this.id = id;
     }
 
+    @NonNull
     public User getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(@NonNull User user) {
         this.user = user;
     }
 }
