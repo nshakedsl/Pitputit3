@@ -105,6 +105,25 @@ public class ChatsActivity extends AppCompatActivity {
 
         adapter.setMesseges(messages);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+
+
+        ChatAPI chatAPI = new ChatAPI(getApplicationContext());
+        //TODO: change the hard_coded id!!!
+        chatAPI.getChatMessages(userAPI.getToken(), "647e463f8a642addfacd205b");
+        Activity context = this;
+        chatAPI.getChatsMessageResult().observe(this, new Observer<List<Message>>() {
+            @Override
+            public void onChanged(List<Message> messages) {
+                if (messages != null) {
+                    Log.d("TAG", "get chat messages success");
+                    //TODO: ofir display messages of chat
+                } else {
+                    Log.d("TAG", "error");
+                    //TODO: ofir problem with token go back to login
+                }
+            }
+        });
     }
 
     private boolean sendMessage(Editable message) {

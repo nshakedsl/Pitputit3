@@ -34,7 +34,7 @@ public class ChatAPI {
     private final MutableLiveData<Map<Integer, Chat>> addChatResult;
 
     private final MutableLiveData<List<Chat>> chatsResult;
-
+    private final MutableLiveData<List<Message>> chatMessagesResult;
     public ChatAPI(Context context) {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -55,6 +55,7 @@ public class ChatAPI {
 
         addChatResult = new MutableLiveData<>();
         chatsResult = new MutableLiveData<>();
+        chatMessagesResult= new MutableLiveData<>();
 
 
 
@@ -71,7 +72,9 @@ public class ChatAPI {
     public MutableLiveData<List<Chat>> getChatsResult() {
         return chatsResult;
     }
-
+    public MutableLiveData<List<Message>> getChatsMessageResult() {
+        return chatMessagesResult;
+    }
     public void sendMessage(String token, Msg message, String id) {
 
         Call<Message> call = webServiceAPI.addChatMessage(token,message,id);
@@ -144,6 +147,27 @@ public class ChatAPI {
 
     }
 
+    public void getChatMessages(String token,String id) {
 
+        Call<List<Message>> call = webServiceAPI.getChatMessages(token,id);
+        call.enqueue(new Callback<List<Message>>() {
+            @Override
+            public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
+
+                if(response.code()==401)
+                    chatMessagesResult.postValue(null);
+                else
+                    chatMessagesResult.postValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Message>> call, Throwable t) {
+
+                // Set the register result as false on failure
+                chatsResult.postValue(null);
+            }
+        });
+
+    }
 
 }
