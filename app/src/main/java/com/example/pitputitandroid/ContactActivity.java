@@ -21,18 +21,14 @@ import com.example.pitputitandroid.DataBase.AppDB;
 import com.example.pitputitandroid.adapters.ChatListAdapter;
 import com.example.pitputitandroid.databinding.ActivityMainBinding;
 import com.example.pitputitandroid.entities.Chat;
-import com.example.pitputitandroid.entities.LastMessage;
 import com.example.pitputitandroid.entities.User;
 import com.example.pitputitandroid.viewmodels.ChatViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.lifecycle.Observer;
 
-import com.example.pitputitandroid.Daos.ChatDao;
-import com.example.pitputitandroid.DataBase.AppDB;
 import com.example.pitputitandroid.api.ChatAPI;
 import com.example.pitputitandroid.api.UserAPI;
 import com.example.pitputitandroid.entities.Chat;
@@ -59,18 +55,17 @@ public class ContactActivity extends AppCompatActivity {
         chatAPI.getChats(userAPI.getToken());
         adapter = new ChatListAdapter(this);
         Activity context = this;
-        chatAPI.getChatsResult().observe(this, new Observer<List<Chat>>() {
-            @Override
-            public void onChanged(List<Chat> chats) {
-                if (chats != null) {
-                    viewModel.set(chats);
-                    Log.d("TAG", "it succeed");
-                } else {
-                    context.finish();
-                    Log.d("TAG", "error with token");
-                }
-
+        chatAPI.getChatsResult().observe(this, chats -> {
+            if (chats != null) {
+                viewModel.set(chats);
+                Log.d("TAG", "it succeed");
+            } else {
+                Log.d("TAG", "error with token");
+                Intent intent = new Intent(context, SettingsActivity.class);
+                intent.setAction("logout");
+                startActivity(intent);
             }
+
         });
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact);
@@ -99,28 +94,7 @@ public class ContactActivity extends AppCompatActivity {
         rvContacts.setAdapter(adapter);
         rvContacts.setLayoutManager(new LinearLayoutManager(this));
 
-        List<Chat> contacts = new ArrayList<>();
-        int resourceId = R.drawable.user;
         // Convert the drawable resource to a Bitmap
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resourceId);
-        /*
-        Chat c = new Chat();
-        c.setUser(new User(bitmap, "moshe", "moshi"));
-        c.setLastMessage(new LastMessage("12:00", "hello"));
-        Chat c1 = new Chat();
-        c1.setUser(new User(bitmap, "moshe1", "moshi1"));
-        c1.setLastMessage(new LastMessage("12:01", "hello1"));
-        Chat c2 = new Chat();
-        c2.setUser(new User(bitmap, "moshe2", "moshi2"));
-        c2.setLastMessage(new LastMessage("12:02", "hello2"));
-        /*
-         */
-        /*
-        contacts.add(c);
-        contacts.add(c1);
-        contacts.add(c2);
-        adapter.setContacts(contacts);
-        */
 
         viewModel = new ViewModelProvider(this).get(ChatViewModel.class);
         viewModel.getChats().observe(this, chats -> {
@@ -136,39 +110,33 @@ public class ContactActivity extends AppCompatActivity {
         UserAPI userAPI = new UserAPI(getApplicationContext());
         chatAPI.addChat(userAPI.getToken(), contact);
         Activity context = this;
-        chatAPI.getAddChatResult().observe(this, new Observer<Map<Integer, Chat>>() {
-            @Override
-            public void onChanged(Map<Integer, Chat> res) {
-                int status = res.keySet().iterator().next();
-                switch (status) {
-                    case 401:
-                        Log.d("TAG", "401");
-                        context.finish();
-                        break;
-                    case 400:
-                        Toast.makeText(getApplicationContext(), "User does not exist❗",
-                                Toast.LENGTH_SHORT).show();
-                        Log.d("TAG", "400");
-                        break;
-                    case 200:
-                        //TODO: Ofir everything is OK, take chat
-                        addChatToLocal(res.values().iterator().next());
-                        Log.d("TAG", "200");
-                        break;
-                }
-
+        chatAPI.getAddChatResult().observe(this, res -> {
+            int status = res.keySet().iterator().next();
+            switch (status) {
+                case 401:
+                    Log.d("TAG", "401");
+                    Intent intent = new Intent(context, SettingsActivity.class);
+                    intent.setAction("logout");
+                    startActivity(intent);
+                    break;
+                case 400:
+                    Toast.makeText(getApplicationContext(), "User does not exist❗",
+                            Toast.LENGTH_SHORT).show();
+                    Log.d("TAG", "400");
+                    break;
+                case 200:
+                    //TODO: Ofir everything is OK, take chat
+                    addChatToLocal(res.values().iterator().next());
+                    Log.d("TAG", "200");
+                    break;
             }
+
         });
     }
 
     private void addChatToLocal(Chat chat) {
         Executor executor = Executors.newSingleThreadExecutor();
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                viewModel.add(chat);
-            }
-        });
+        executor.execute(() -> viewModel.add(chat));
     }
     @Override
     public void onResume(){

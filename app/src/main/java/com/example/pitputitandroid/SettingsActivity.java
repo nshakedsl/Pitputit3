@@ -42,6 +42,12 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        if (intent != null ) {
+            if("logout".equals(intent.getAction())) {
+                logOut();
+            }
+        }
         setContentView(R.layout.activity_settings);
         AppCompatImageView logoutButton = findViewById(R.id.logOut);
         logoutButton.setOnClickListener(v -> logOut());
@@ -175,12 +181,9 @@ public class SettingsActivity extends AppCompatActivity {
         db.chatDao();
         //creates a thread that clears the messages
         Executor executor = Executors.newSingleThreadExecutor();
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                db.chatDao().clearChats();
-                db.messageDao().clearMessages();
-            }
+        executor.execute(() -> {
+            db.chatDao().clearChats();
+            db.messageDao().clearMessages();
         });
 
         Intent intent = new Intent(this, MainActivity.class);
