@@ -55,7 +55,6 @@ public class ChatsActivity extends AppCompatActivity {
     //todo: get the current user/ delete
     private MessegesListAdapter adapter;
     private MessegesViewModel viewModel;
-    private final Queue<Message> insertQueue = new LinkedList<>();
     private String chatId;
     private String userName;
 

@@ -1,36 +1,17 @@
 package com.example.pitputitandroid.entities;
 
-import androidx.annotation.NonNull;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-import androidx.room.TypeConverter;
-
-import com.example.pitputitandroid.Utils;
-
-@Entity
 public class LastMessage {
     public LastMessage(String created, String content) {
         this.created = created;
         this.content = content;
-        this.id = Utils.uniqueIdGenerator();
     }
-    public LastMessage(String created, String content, @NonNull String id) {
-        this.created = created;
-        this.content = content;
-        this.id = id;
+    public LastMessage(Message message) {
+        this.created = message.getCreated();
+        this.content = message.getContent();
     }
-
-    @NonNull
-    public String getId() {
-        return id;
-    }
-
-    @PrimaryKey
-    @NonNull
-    protected String id;
     protected String created;
     protected String content;
-
+    private String id;
     public String getCreated() {
         return created;
     }

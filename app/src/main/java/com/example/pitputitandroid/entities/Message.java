@@ -78,5 +78,4 @@ public class Message {
             return false;
         return message.sender.getUsername().equals(this.sender.getUsername());
     }
-
 }
