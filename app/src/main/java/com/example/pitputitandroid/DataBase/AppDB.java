@@ -18,7 +18,7 @@ import com.example.pitputitandroid.entities.Chat;
 import com.example.pitputitandroid.entities.Message;
 
 @TypeConverters({LastMessageConverter.class, UserConverter.class})
-@Database(entities = {Chat.class, Message.class}, version = 4)
+@Database(entities = {Chat.class, Message.class}, version = 5)
 public abstract class AppDB extends RoomDatabase{
     private static AppDB instance;
 

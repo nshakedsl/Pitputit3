@@ -22,6 +22,7 @@ public class ChatsRepository {
 
     public ChatsRepository() {
         AppDB db = AppDB.getInstance();
+        dao = db.chatDao();
         chatListData = new ChatListData();
     }
 

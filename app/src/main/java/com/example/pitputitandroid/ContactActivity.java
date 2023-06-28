@@ -82,7 +82,7 @@ public class ContactActivity extends AppCompatActivity {
 
         RecyclerView rvContacts = findViewById(R.id.rvContacts);
         rvContacts.setHasFixedSize(true);
-        final ContactAdapterRV adapter = new ContactAdapterRV(this);
+        final ChatListAdapter adapter = new ChatListAdapter(this);
         rvContacts.setAdapter(adapter);
         rvContacts.setLayoutManager(new LinearLayoutManager(this));
 
@@ -111,7 +111,7 @@ public class ContactActivity extends AppCompatActivity {
 
         viewModel = new ViewModelProvider(this).get(ChatViewModel.class);
         viewModel.getChats().observe(this, chats -> {
-            adapter.setContacts(chats);
+            adapter.setChats(chats);
         });
     }
 
