@@ -17,6 +17,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 
 
 
@@ -29,16 +31,26 @@ import java.util.concurrent.Executors;
 public class SettingsActivity extends AppCompatActivity {
 
     Switch darkModeSwitch;
-
+    private ConstraintLayout layout;
     private static final String KEY_BASE_URL = "base_url";
     private static final String KEY_TOKEN = "token";
     private static final String KEY_DISPLAY_NAME = "display_name";
     private static final String KEY_USERNAME = "username";
     private static final String KEY_PROFILE_PIC = "profile_pic";
 
+
+    private static final String PREFS_NAME = "prefs";
+    private static final String KEY_DARK_MODE = "darkMode";
+
     private EditText editTextServerAddress;
     private AppCompatButton buttonSave;
     private SharedPreferences sharedPreferences;
+
+    private AppCompatButton darkModeButton;
+
+    private int light = 0;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,13 +61,33 @@ public class SettingsActivity extends AppCompatActivity {
             }
         }
         setContentView(R.layout.activity_settings);
-        AppCompatImageView logoutButton = findViewById(R.id.logOut);
-        logoutButton.setOnClickListener(v -> logOut());
+
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
         }
 
+        darkModeButton = findViewById(R.id.DarkButton);
+
+
+        darkModeButton.setOnClickListener(v -> {
+            if(light == 1) {
+                light = 0;
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+            } else {
+                light = 1;
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
+            }
+        });
+
+
+        //log out
+        AppCompatImageView logoutButton = findViewById(R.id.logOut);
+        logoutButton.setOnClickListener(v -> logOut());
+
+        //back
         AppCompatImageView backButton = findViewById(R.id.imageBackPage);
         backButton.setOnClickListener(v -> {
             startActivity(new Intent(this, MainActivity.class));
@@ -87,24 +119,6 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
 
-        // update dark-mode
-
-        darkModeSwitch = findViewById(R.id.dark_mode_switch);
-        darkModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    startActivity(new Intent(SettingsActivity.this, MainActivity.class));
-
-                } else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    startActivity(new Intent(SettingsActivity.this, MainActivity.class));
-                }
-
-
-            }
-        });
 
     }
 
