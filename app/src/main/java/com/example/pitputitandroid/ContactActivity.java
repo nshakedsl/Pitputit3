@@ -1,4 +1,5 @@
 package com.example.pitputitandroid;
+import android.content.Intent;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -11,13 +12,13 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pitputitandroid.Daos.ChatDao;
 import com.example.pitputitandroid.DataBase.AppDB;
 import com.example.pitputitandroid.adapters.ChatListAdapter;
-import com.example.pitputitandroid.adapters.ContactAdapterRV;
 import com.example.pitputitandroid.databinding.ActivityMainBinding;
 import com.example.pitputitandroid.entities.Chat;
 import com.example.pitputitandroid.entities.LastMessage;
@@ -79,6 +80,18 @@ public class ContactActivity extends AppCompatActivity {
         chatDao = db.chatDao();
         FloatingActionButton addBtn = findViewById(R.id.btnAdd);
         addBtn.setOnClickListener(v -> addMsg(editText.getText()));
+
+        AppCompatImageView settingButton = findViewById(R.id.imageSettings);
+        settingButton.setOnClickListener(v -> {
+            startActivity(new Intent(this, SettingsActivity.class));
+        });
+
+        AppCompatImageView imageBackPage = findViewById(R.id.imageBackPage);
+        imageBackPage.setOnClickListener(v -> {
+            startActivity(new Intent(this, MainActivity.class));
+        });
+
+
 
         RecyclerView rvContacts = findViewById(R.id.rvContacts);
         rvContacts.setHasFixedSize(true);
