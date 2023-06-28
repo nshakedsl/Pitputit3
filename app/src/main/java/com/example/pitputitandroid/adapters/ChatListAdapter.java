@@ -1,6 +1,7 @@
 package com.example.pitputitandroid.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pitputitandroid.ChatsActivity;
 import com.example.pitputitandroid.R;
 import com.example.pitputitandroid.entities.Chat;
 
@@ -66,6 +68,20 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatVi
                     Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
                     holder.imageView.setImageBitmap(bitmap);
                 }
+                holder.itemView.setOnClickListener(v -> {
+                    // Get the clicked item position
+                    int clickedPosition = holder.getAdapterPosition();
+
+                    // Get the chat associated with the clicked item
+                    Chat clickedContact = chats.get(clickedPosition);
+                    Chat clickedChat = clickedContact;
+
+                    // Start the ChatActivity with the clicked chat
+                    Intent intent = new Intent(v.getContext(), ChatsActivity.class);
+                    intent.putExtra("chatId", clickedChat.getId()); // Pass any necessary data to the ChatActivity
+                    intent.putExtra("userName", clickedChat.getUser().getUsername());
+                    v.getContext().startActivity(intent);
+                });
             }
         }
     }
