@@ -23,5 +23,8 @@ public class ChatViewModel extends ViewModel {
         return chats;
     }
     public void add(Chat chat){ chatsRepository.add(chat);}
+    //clears local dataset, then fills it with all of the given values
+    public void set(List<Chat> chat){ chatsRepository.set(chat);}
+
     public void reload(){ chatsRepository.reload();}
 }
