@@ -86,10 +86,6 @@ public class ContactActivity extends AppCompatActivity {
             startActivity(new Intent(this, SettingsActivity.class));
         });
 
-        AppCompatImageView imageBackPage = findViewById(R.id.imageBackPage);
-        imageBackPage.setOnClickListener(v -> {
-            startActivity(new Intent(this, MainActivity.class));
-        });
 
 
 
