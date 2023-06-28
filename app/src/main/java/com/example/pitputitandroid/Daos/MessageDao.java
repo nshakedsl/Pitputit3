@@ -16,10 +16,10 @@ import java.util.List;
 public interface MessageDao {
 
     @Query("SELECT * FROM message")
-    LiveData<List<Message>> indexMessage();
+    List<Message> indexMessage();
 
     @Query("SELECT * FROM message WHERE sender= :sender")
-    LiveData<List<Message>> ofSender(String sender);
+    List<Message> ofSender(String sender);
 
     @Query("SELECT * FROM message WHERE id = :id")
     Message getMessage(String id);

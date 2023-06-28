@@ -28,7 +28,7 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("base_url", "http://10.2.2.0:8080/api/");
+        editor.putString("base_url", "http://10.0.2.2:8080/api/");
         editor.apply();
 
         super.onCreate(savedInstanceState);

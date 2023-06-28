@@ -18,12 +18,12 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,6 +38,8 @@ import com.example.pitputitandroid.entities.Chat;
 import com.example.pitputitandroid.entities.Message;
 import com.example.pitputitandroid.entities.Msg;
 import com.example.pitputitandroid.entities.User;
+import com.example.pitputitandroid.viewmodels.ChatViewModel;
+import com.example.pitputitandroid.viewmodels.MessegesViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -51,28 +53,23 @@ public class ChatsActivity extends AppCompatActivity {
     private AppDB db;
     private MessageDao messageDao;
     //todo: get the current user/ delete
-    private User me;
     private MessegesListAdapter adapter;
-    private List<Message> messageList;
-    Queue<Message> insertQueue = new LinkedList<>();
-
+    private MessegesViewModel viewModel;
+    private final Queue<Message> insertQueue = new LinkedList<>();
     private String chatId;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        Intent intent = getIntent();
-        chatId = intent.getStringExtra("chatId");
-        String userName = intent.getStringExtra("userName");
-
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chats);
         AppCompatImageView goBack = findViewById(R.id.btnBack);
         goBack.setOnClickListener(v -> {
             this.finish();
+        });
+        viewModel = new ViewModelProvider(this).get(MessegesViewModel.class);
+        viewModel.getMessages().observe(this, chats -> {
+            adapter.setMesseges(chats);
         });
         FrameLayout buttonFrame = findViewById(R.id.layoutSend);
         buttonFrame.setOnClickListener(v -> {
@@ -89,9 +86,6 @@ public class ChatsActivity extends AppCompatActivity {
             startActivity(new Intent(this, ContactActivity.class));
         });
 
-        TextView textUserName = findViewById(R.id.textUserName);
-        textUserName.setText(userName);
-
         RecyclerView lstMesseges = findViewById(R.id.lstMesseges);
         FloatingActionButton sendButton = findViewById(R.id.btnSend);
         EditText editText = findViewById(R.id.inputMessage);
@@ -100,26 +94,12 @@ public class ChatsActivity extends AppCompatActivity {
         lstMesseges.setAdapter(adapter);
         lstMesseges.setLayoutManager(new LinearLayoutManager(this));
 
-        // Get the resource ID of the drawable
-        int resourceId = R.drawable.user;
-
-        // Convert the drawable resource to a Bitmap
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resourceId);
-
         List<Message> messages = new ArrayList<>();
 
         db = AppDB.getInstance(this);
         messageDao = db.messageDao();
         UserAPI userAPI = new UserAPI(getApplicationContext());
-        User moshe = new User(userAPI.getProfilePic(), userAPI.getUsername(), userAPI.getDisplayName());
-        //todo: kill hardcoded user
-        this.me = moshe;
-        Message msg = new Message("hello everyone!!", moshe, "12:00");
-
         adapter.setMesseges(messages);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-
-
 
         ChatAPI chatAPI = new ChatAPI(getApplicationContext());
         chatAPI.getChatMessages(userAPI.getToken(), chatId);
@@ -132,7 +112,8 @@ public class ChatsActivity extends AppCompatActivity {
                     //TODO: ofir display messages of chat
                 } else {
                     Log.d("TAG", "error");
-                    //TODO: ofir problem with token go back to login
+                    //TODO: maybe clear messages?
+                    context.finish();
                 }
             }
         });
@@ -140,7 +121,6 @@ public class ChatsActivity extends AppCompatActivity {
 
     private boolean sendMessage(Editable message) {
         Msg msg = new Msg(message.toString());
-        //addMsgToLocal(createdMessage);
         boolean success = true;
         ChatAPI chatAPI = new ChatAPI(getApplicationContext());
         UserAPI userAPI = new UserAPI(getApplicationContext());
@@ -166,34 +146,15 @@ public class ChatsActivity extends AppCompatActivity {
 
     private void addMsgToLocal(Message msg) {
         Executor executor = Executors.newSingleThreadExecutor();
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                messageDao.insertMessage(msg);
-                insertQueue.add(msg);
-                getMegssagesLocal();
-            }
-        });
-    }
+        executor.execute(() -> {
+            viewModel.add(msg);
 
-    private void getMegssagesLocal() {
-        // Inside your activity or fragment
-        Executor executor = Executors.newSingleThreadExecutor();
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                while (!insertQueue.isEmpty()) {
-                    adapter.getMesseges().add(insertQueue.remove());
-                }
-            }
         });
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        getMegssagesLocal();
-        adapter.notifyDataSetChanged();
+        //adapter.notifyDataSetChanged();
     }
 }
