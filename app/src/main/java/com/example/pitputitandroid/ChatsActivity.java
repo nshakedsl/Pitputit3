@@ -72,7 +72,7 @@ public class ChatsActivity extends AppCompatActivity {
         goBack.setOnClickListener(v -> {
             this.finish();
         });
-        viewModel = new ViewModelProvider(this).get(MessegesViewModel.class);
+        viewModel = new MessegesViewModel(chatId);
         viewModel.getMessages().observe(this, chats -> {
             adapter.setMesseges(chats);
         });
