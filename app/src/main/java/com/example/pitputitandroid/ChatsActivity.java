@@ -136,7 +136,9 @@ public class ChatsActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(getApplicationContext(), "error sending message",
                             Toast.LENGTH_SHORT).show();
-                    context.finish();
+                    Intent intent = new Intent(context, SettingsActivity.class);
+                    intent.setAction("logout");
+                    startActivity(intent);
                 }
             }
         });
