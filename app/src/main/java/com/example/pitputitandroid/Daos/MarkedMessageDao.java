@@ -27,6 +27,9 @@ public interface MarkedMessageDao {
 
     @Query("DELETE FROM markedMessage")
     void clearMessages();
+
+    @Query("DELETE FROM markedMessage WHERE originId= :originId")
+    void clearMessagesOfOrigin(String originId);
     @Insert
     void insertMessage(MarkedMessage markedMessage);
 

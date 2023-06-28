@@ -92,7 +92,7 @@ public class MarkedMessageRepository {
     public void set(List<Message> messages) {
         new Thread(() ->
         {
-            dao.clearMessages();
+            dao.clearMessagesOfOrigin(senderId);
             for (Message message : messages) {
                 dao.insertMessage(new MarkedMessage(message, senderId));
             }
