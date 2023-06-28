@@ -1,5 +1,7 @@
 package com.example.pitputitandroid.DataBase;
 
+import static com.example.pitputitandroid.PitputitAndroid.context;
+
 import android.content.Context;
 
 
@@ -16,7 +18,7 @@ import com.example.pitputitandroid.entities.Chat;
 import com.example.pitputitandroid.entities.Message;
 
 @TypeConverters({LastMessageConverter.class, UserConverter.class})
-@Database(entities = {Chat.class, Message.class}, version = 4)
+@Database(entities = {Chat.class, Message.class}, version = 5)
 public abstract class AppDB extends RoomDatabase{
     private static AppDB instance;
 
@@ -24,6 +26,14 @@ public abstract class AppDB extends RoomDatabase{
     public abstract MessageDao messageDao();
 
     public static synchronized AppDB getInstance(Context context) {
+        if (instance == null) {
+            instance = Room.databaseBuilder(context.getApplicationContext(),
+                            AppDB.class, "app_database")
+                    .fallbackToDestructiveMigration().build();
+        }
+        return instance;
+    }
+    public static synchronized AppDB getInstance() {
         if (instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(),
                             AppDB.class, "app_database")

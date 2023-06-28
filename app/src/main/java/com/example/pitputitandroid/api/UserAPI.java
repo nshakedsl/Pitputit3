@@ -4,7 +4,6 @@ package com.example.pitputitandroid.api;
 import android.content.Context;
 import android.util.Log;
 
-import com.example.pitputitandroid.R;
 import com.example.pitputitandroid.entities.User;
 import com.example.pitputitandroid.entities.UserFull;
 import com.example.pitputitandroid.entities.UserLogin;
@@ -44,8 +43,9 @@ public class UserAPI {
                 .setLenient()
                 .create();
 
+        sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         retrofit = new Retrofit.Builder()
-                .baseUrl(context.getString(R.string.BaseUrl))
+                .baseUrl(getBaseUrl())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
                 .build();
@@ -53,8 +53,12 @@ public class UserAPI {
         loginResult = new MutableLiveData<>();
         registerResult = new MutableLiveData<>();
         userDetailsResult = new MutableLiveData<>();
-        sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
 
+
+    }
+
+    public String getBaseUrl() {
+        return sharedPreferences.getString("base_url", null);
     }
 
     public MutableLiveData<Boolean> getLoginResult() {
@@ -146,11 +150,11 @@ public class UserAPI {
 
     public void getUserDetails(String userName) {
 
-        Call<User> call = webServiceAPI.getUserDetails(getToken(),userName);
+        Call<User> call = webServiceAPI.getUserDetails(getToken(), userName);
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                if (response.code() == 401){
+                if (response.code() == 401) {
                     userDetailsResult.postValue(false);
                 } else if (response.code() == 200) {
                     User user = response.body();
@@ -167,6 +171,7 @@ public class UserAPI {
 
                 }
             }
+
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 userDetailsResult.postValue(false);

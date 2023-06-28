@@ -1,5 +1,8 @@
 package com.example.pitputitandroid;
 
+import static com.example.pitputitandroid.PitputitAndroid.context;
+
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,9 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Switch;
-import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,13 +18,10 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageView;
 
-import android.widget.CompoundButton.OnCheckedChangeListener;
 
 
 import com.example.pitputitandroid.DataBase.AppDB;
-import com.example.pitputitandroid.R;
-import com.example.pitputitandroid.RegisterActivity;
-import com.example.pitputitandroid.entities.Message;
+
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -32,6 +30,11 @@ public class SettingsActivity extends AppCompatActivity {
 
     Switch darkModeSwitch;
 
+    private static final String KEY_BASE_URL = "base_url";
+    private static final String KEY_TOKEN = "token";
+    private static final String KEY_DISPLAY_NAME = "display_name";
+    private static final String KEY_USERNAME = "username";
+    private static final String KEY_PROFILE_PIC = "profile_pic";
 
     private EditText editTextServerAddress;
     private AppCompatButton buttonSave;
@@ -56,17 +59,20 @@ public class SettingsActivity extends AppCompatActivity {
 
         editTextServerAddress = findViewById(R.id.serverIpInput);
         buttonSave = findViewById(R.id.updateButton);
-        sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        String currentAddress = sharedPreferences.getString("BaseUrl", "");
+        sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        String currentAddress = sharedPreferences.getString(KEY_BASE_URL, "");
         editTextServerAddress.setText(currentAddress);
+
         buttonSave.setOnClickListener(new View.OnClickListener() {
+            //TODO: Namma do validations of port and ip - from chatGPT
+            // If it is more convenient, you can separate IP and port
             @Override
             public void onClick(View v) {
                 String newAddress = editTextServerAddress.getText().toString();
 
                 // Save the new server address to SharedPreferences
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("BaseUrl", newAddress);
+                editor.putString(KEY_BASE_URL, newAddress);
                 editor.apply();
 
                 // Finish the activity
@@ -96,8 +102,76 @@ public class SettingsActivity extends AppCompatActivity {
 
     }
 
+
+    public boolean isAddressValid(String address) {
+        // Check if the address starts with "http://"
+        if (!address.startsWith("http://")) {
+            return false;
+        }
+
+        // Remove the "http://" prefix
+        String addressWithoutPrefix = address.substring(7);
+
+        // Split the address into IP and port
+        String[] parts = addressWithoutPrefix.split(":");
+        if (parts.length != 2) {
+            return false; // Invalid address format
+        }
+
+        String ip = parts[0];
+        String port = parts[1];
+
+        // Check if IP is valid
+        if (!isValidIP(ip)) {
+            return false;
+        }
+
+        // Check if port is valid
+        if (!isValidPort(port)) {
+            return false;
+        }
+
+        // Address is valid
+        return true;
+    }
+
+    private boolean isValidIP(String ip) {
+        // Regular expression pattern to validate IP address
+        String ipPattern = "^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+                "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+                "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+                "([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
+        return ip.matches(ipPattern);
+    }
+
+    private boolean isValidPort(String port) {
+        // Convert the port string to an integer
+        try {
+            int portNumber = Integer.parseInt(port);
+            // Check if the port number is within a valid range
+            return portNumber > 0 && portNumber <= 65535;
+        } catch (NumberFormatException e) {
+            return false; // Invalid port number format
+        }
+    }
+
+    public void clearSharedPreferences() {
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(KEY_BASE_URL);
+        editor.remove(KEY_TOKEN);
+        editor.remove(KEY_DISPLAY_NAME);
+        editor.remove(KEY_USERNAME);
+        editor.remove(KEY_PROFILE_PIC);
+
+        editor.apply();
+    }
+
+
+
+
     public void logOut() {
-        //todo shaked: clear prefrences
+        clearSharedPreferences();
         AppDB db = AppDB.getInstance(this);
         db.chatDao();
         //creates a thread that clears the messages
