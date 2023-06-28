@@ -11,6 +11,8 @@ import com.example.pitputitandroid.Daos.ChatDao;
 import com.example.pitputitandroid.DataBase.AppDB;
 import com.example.pitputitandroid.api.ChatAPI;
 import com.example.pitputitandroid.entities.Chat;
+import com.example.pitputitandroid.entities.LastMessage;
+import com.example.pitputitandroid.entities.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +33,7 @@ public class ChatsRepository {
             super();
             new Thread(() ->
             {
-                chatListData.postValue(dao.indexChat());
+                chatListData.postValue(new ArrayList<>());
             }).start();
         }
 
@@ -40,15 +42,19 @@ public class ChatsRepository {
             super.onActive();
             new Thread(() ->
             {
-                chatListData.postValue(dao.indexChat());
+                if (dao.indexChat() != null)
+                    chatListData.postValue(dao.indexChat());
+
             }).start();
         }
 
     }
-    public LiveData<List<Chat>> getAll(){
+
+    public LiveData<List<Chat>> getAll() {
         return chatListData;
     }
-    public void add (final Chat chat){
+
+    public void add(final Chat chat) {
         new Thread(() ->
         {
             dao.insertChat(chat);
@@ -56,7 +62,8 @@ public class ChatsRepository {
         //todo: shaked
         //chatAPI.addChat(chat);
     }
-    public void reload(){
+
+    public void reload() {
         //todo: shaked
         //chatAPI.getChats();
     }
