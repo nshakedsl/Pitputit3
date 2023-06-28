@@ -65,6 +65,10 @@ public class ChatsRepository {
     }
 
     public void reload() {
+        new Thread(() ->
+        {
+            chatListData.postValue(dao.indexChat());
+        }).start();
         //todo: shaked
         //chatAPI.getChats();
     }
