@@ -1,6 +1,7 @@
 package com.example.pitputitandroid.api;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -32,7 +33,7 @@ public class ChatAPI {
     Retrofit retrofit;
     private final MutableLiveData<Message> sendMessageResult;
     private final MutableLiveData<Map<Integer, Chat>> addChatResult;
-
+    private final SharedPreferences sharedPreferences;
     private final MutableLiveData<List<Chat>> chatsResult;
     private final MutableLiveData<List<Message>> chatMessagesResult;
     public ChatAPI(Context context) {
@@ -44,9 +45,9 @@ public class ChatAPI {
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
-
+        sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         retrofit = new Retrofit.Builder()
-                .baseUrl(context.getString(R.string.BaseUrl))
+                .baseUrl(getBaseUrl())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
                 .build();
@@ -58,10 +59,11 @@ public class ChatAPI {
         chatMessagesResult= new MutableLiveData<>();
 
 
-
     }
 
-
+    public String getBaseUrl() {
+        return sharedPreferences.getString("base_url", null);
+    }
     public MutableLiveData<Message> getSendMessageResult() {
         return sendMessageResult;
     }
