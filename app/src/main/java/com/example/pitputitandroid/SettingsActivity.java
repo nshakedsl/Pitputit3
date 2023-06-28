@@ -158,7 +158,6 @@ public class SettingsActivity extends AppCompatActivity {
     public void clearSharedPreferences() {
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.remove(KEY_BASE_URL);
         editor.remove(KEY_TOKEN);
         editor.remove(KEY_DISPLAY_NAME);
         editor.remove(KEY_USERNAME);
