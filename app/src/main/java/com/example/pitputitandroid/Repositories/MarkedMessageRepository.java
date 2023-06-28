@@ -1,4 +1,5 @@
 package com.example.pitputitandroid.Repositories;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -13,14 +14,16 @@ import java.util.List;
 public class MarkedMessageRepository {
     private MarkedMessageDao dao;
     private MarkedMessageListData messageListData;
+    private String senderId;
 
-    public MarkedMessageRepository() {
+    public MarkedMessageRepository(String senderId) {
         AppDB db = AppDB.getInstance();
         dao = db.markedMessageDao();
         messageListData = new MarkedMessageListData();
+        this.senderId = senderId;
     }
 
-    class MarkedMessageListData extends MutableLiveData<List<MarkedMessage>> {
+    class MarkedMessageListData extends MutableLiveData<List<Message>> {
         public MarkedMessageListData() {
             super();
             new Thread(() ->
@@ -34,15 +37,14 @@ public class MarkedMessageRepository {
             super.onActive();
             new Thread(() ->
             {
-                if (dao.indexMarkedMessage() != null)
-                    messageListData.postValue(dao.indexMarkedMessage());
-
+                if (dao.ofSender(senderId) != null)
+                    messageListData.postValue(genMsgs(dao.ofSender(senderId)));
             }).start();
         }
 
     }
 
-    public LiveData<List<MarkedMessage>> getAll() {
+    public LiveData<List<Message>> getAll() {
         return messageListData;
     }
 
@@ -50,7 +52,17 @@ public class MarkedMessageRepository {
         new Thread(() ->
         {
             dao.insertMessage(message);
-            messageListData.postValue(dao.indexMarkedMessage());
+            messageListData.postValue(genMsgs(dao.ofSender(senderId)));
+        }).start();
+        //todo: shaked
+        //chatAPI.addChat(chat);
+    }
+
+    public void add(final Message message) {
+        new Thread(() ->
+        {
+            dao.insertMessage(new MarkedMessage(message, senderId));
+            messageListData.postValue(genMsgs(dao.ofSender(senderId)));
         }).start();
         //todo: shaked
         //chatAPI.addChat(chat);
@@ -59,20 +71,40 @@ public class MarkedMessageRepository {
     public void reload() {
         new Thread(() ->
         {
-            messageListData.postValue(dao.indexMarkedMessage());
+            messageListData.postValue(genMsgs(dao.ofSender(senderId)));
         }).start();
         //todo: shaked
         //chatAPI.getChats();
     }
+
     //clears old dataset, and fills it with the new values, then sets the vals to the new values
-    public void set(List<MarkedMessage> messages){
+    public void setFromMarked(List<MarkedMessage> messages) {
         new Thread(() ->
         {
             dao.clearMessages();
-            for (MarkedMessage message: messages) {
+            for (MarkedMessage message : messages) {
                 dao.insertMessage(message);
             }
-            messageListData.postValue(dao.indexMarkedMessage());
+            messageListData.postValue(genMsgs(dao.ofSender(senderId)));
         }).start();
+    }
+
+    public void set(List<Message> messages) {
+        new Thread(() ->
+        {
+            dao.clearMessages();
+            for (Message message : messages) {
+                dao.insertMessage(new MarkedMessage(message, senderId));
+            }
+            messageListData.postValue(genMsgs(dao.ofSender(senderId)));
+        }).start();
+    }
+
+    public List<Message> genMsgs(List<MarkedMessage> markedMessages) {
+        List<Message> msgs = new ArrayList<>();
+        for (MarkedMessage msg : markedMessages) {
+            msgs.add(msg.createMessage());
+        }
+        return msgs;
     }
 }

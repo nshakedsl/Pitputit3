@@ -78,4 +78,8 @@ public class MarkedMessage{
         return message.sender.getUsername().equals(this.sender.getUsername());
     }
 
+    public Message createMessage(){
+        return new Message(content,sender,created);
+    }
+
 }
