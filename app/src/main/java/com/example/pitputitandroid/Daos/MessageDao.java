@@ -24,6 +24,8 @@ public interface MessageDao {
     @Query("SELECT * FROM message WHERE id = :id")
     Message getMessage(String id);
 
+    @Query("DELETE FROM message")
+    void clearMessages();
     @Insert
     void insertMessage(Message message);
 

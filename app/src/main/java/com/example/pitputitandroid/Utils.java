@@ -3,6 +3,7 @@ package com.example.pitputitandroid;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
+import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Calendar;
@@ -34,5 +35,4 @@ public class Utils {
         byte[] decodedBytes = Base64.decode(encodedString, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
     }
-
 }
