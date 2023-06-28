@@ -147,27 +147,14 @@ public class ChatsActivity extends AppCompatActivity {
     private void addMsgToLocal(Message msg) {
         Executor executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
-            messageDao.insertMessage(msg);
-            insertQueue.add(msg);
-            getMegssagesLocal();
-        });
-    }
+            viewModel.add(msg);
 
-    private void getMegssagesLocal() {
-        // Inside your activity or fragment
-        Executor executor = Executors.newSingleThreadExecutor();
-        executor.execute(() -> {
-            while (!insertQueue.isEmpty()) {
-                adapter.getMesseges().add(insertQueue.remove());
-            }
         });
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        getMegssagesLocal();
-        adapter.notifyDataSetChanged();
+        //adapter.notifyDataSetChanged();
     }
 }
