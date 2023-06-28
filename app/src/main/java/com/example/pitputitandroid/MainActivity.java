@@ -15,12 +15,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pitputitandroid.api.UserAPI;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.lifecycle.Observer;
 import androidx.navigation.ui.AppBarConfiguration;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+
+
 
 
 public class MainActivity extends AppCompatActivity {
@@ -30,6 +35,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //fireBase
+
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(MainActivity.this, new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                String newToken = instanceIdResult.getToken();
+                // Use the new token as needed
+            }
+        });
+
         AppCompatButton loginButton = findViewById(R.id.loginButton);
         AppCompatImageView settingButton = findViewById(R.id.imageSettings);
         //todo: check with database Before sending
