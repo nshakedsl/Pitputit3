@@ -29,16 +29,6 @@ public class ContactAdapterRV extends RecyclerView.Adapter<ContactAdapterRV.Cont
         private final TextView dateTextView;
 
 
-
-//        ImageView imageView = listItemView.findViewById(R.id.imageUser);
-//        TextView nameTextView = listItemView.findViewById(R.id.textViewContactName);
-//        TextView lastMessageTextView = listItemView.findViewById(R.id.textViewLastMessage);
-//        TextView dateTextView = listItemView.findViewById(R.id.textViewDate);
-//
-//        nameTextView.setText(currentContact.getUsername());
-//        lastMessageTextView.setText(currentContact.getLastMessageContent());
-//        dateTextView.setText(currentContact.getCreatedLastMessage());
-
         private ContactViewHolder(View itemView, int meOther) {
             super(itemView);
 
@@ -48,8 +38,6 @@ public class ContactAdapterRV extends RecyclerView.Adapter<ContactAdapterRV.Cont
             dateTextView = itemView.findViewById(R.id.textViewDate);
 
         }
-
-
     }
 
         private final LayoutInflater mInFlater;
@@ -63,9 +51,7 @@ public class ContactAdapterRV extends RecyclerView.Adapter<ContactAdapterRV.Cont
         @NonNull
         @Override
         public ContactAdapterRV.ContactViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
             View itemView;
-
             itemView = mInFlater.inflate(R.layout.list_item_contact, parent, false);
             return new ContactAdapterRV.ContactViewHolder(itemView, 0);
         }
@@ -73,12 +59,6 @@ public class ContactAdapterRV extends RecyclerView.Adapter<ContactAdapterRV.Cont
         @Override
         public void onBindViewHolder(@NonNull ContactAdapterRV.ContactViewHolder holder, int position) {
             if (contacts != null) {
-
-
-//        nameTextView.setText(currentContact.getUsername());
-//        lastMessageTextView.setText(currentContact.getLastMessageContent());
-//        dateTextView.setText(currentContact.getCreatedLastMessage());
-
 
                 final Chat current = contacts.get(position);
                 holder.nameTextView.setText(current.getUser().getUsername());

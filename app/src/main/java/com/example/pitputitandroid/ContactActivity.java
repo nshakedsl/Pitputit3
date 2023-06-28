@@ -10,16 +10,19 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pitputitandroid.Daos.ChatDao;
 import com.example.pitputitandroid.DataBase.AppDB;
+import com.example.pitputitandroid.adapters.ChatListAdapter;
 import com.example.pitputitandroid.adapters.ContactAdapterRV;
 import com.example.pitputitandroid.databinding.ActivityMainBinding;
 import com.example.pitputitandroid.entities.Chat;
 import com.example.pitputitandroid.entities.LastMessage;
 import com.example.pitputitandroid.entities.User;
+import com.example.pitputitandroid.viewmodels.ChatViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -42,17 +45,18 @@ public class ContactActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     private AppDB db;
     private ChatDao chatDao;
-    private ContactAdapterRV adapter;
+    private ChatListAdapter adapter;
 
     private User me;
     private List<Chat> contactList;
+    private ChatViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ChatAPI chatAPI = new ChatAPI(getApplicationContext());
         UserAPI userAPI = new UserAPI(getApplicationContext());
         chatAPI.getChats(userAPI.getToken());
-        adapter = new ContactAdapterRV(this);
+        adapter = new ChatListAdapter(this);
         Activity context = this;
         chatAPI.getChatsResult().observe(this, new Observer<List<Chat>>() {
             @Override
@@ -86,6 +90,7 @@ public class ContactActivity extends AppCompatActivity {
         int resourceId = R.drawable.user;
         // Convert the drawable resource to a Bitmap
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resourceId);
+        /*
         Chat c = new Chat();
         c.setUser(new User(bitmap, "moshe", "moshi"));
         c.setLastMessage(new LastMessage("12:00", "hello"));
@@ -95,11 +100,19 @@ public class ContactActivity extends AppCompatActivity {
         Chat c2 = new Chat();
         c2.setUser(new User(bitmap, "moshe2", "moshi2"));
         c2.setLastMessage(new LastMessage("12:02", "hello2"));
-
+        /*
+         */
+        /*
         contacts.add(c);
         contacts.add(c1);
         contacts.add(c2);
         adapter.setContacts(contacts);
+        */
+
+        viewModel = new ViewModelProvider(this).get(ChatViewModel.class);
+        viewModel.getChats().observe(this, chats -> {
+            adapter.setContacts(chats);
+        });
     }
 
     private void addMsg(Editable usernameField) {
