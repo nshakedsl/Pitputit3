@@ -10,7 +10,7 @@ import com.example.pitputitandroid.Converters.UserConverter;
 
 @TypeConverters(UserConverter.class)
 @Entity
-public class MarkedMessage {
+public class MarkedMessage{
     @PrimaryKey
     @NonNull
     private String id;
