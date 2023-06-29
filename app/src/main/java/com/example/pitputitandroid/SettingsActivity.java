@@ -212,7 +212,7 @@ public void clearDB(){
 
 
     public void loading() {
-        clearSharedPreferences();
+
         clearDB();
 
         Intent intent = new Intent(this, Loading.class);
