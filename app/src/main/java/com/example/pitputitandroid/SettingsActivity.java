@@ -48,7 +48,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private AppCompatButton darkModeButton;
 
-    private int light = 0;
+
 
 
     @Override
@@ -71,13 +71,15 @@ public class SettingsActivity extends AppCompatActivity {
 
 
         darkModeButton.setOnClickListener(v -> {
-            if(light == 1) {
-                light = 0;
+            logOut();
+            if(Utils.light == 1) {
+                Utils.light = 0;
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
             } else {
-                light = 1;
+                Utils.light = 1;
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
 
             }
         });
@@ -186,19 +188,21 @@ public class SettingsActivity extends AppCompatActivity {
         editor.apply();
     }
 
-
+public void clearDB(){
+    AppDB db = AppDB.getInstance(this);
+    db.chatDao();
+    //creates a thread that clears the messages
+    Executor executor = Executors.newSingleThreadExecutor();
+    executor.execute(() -> {
+        db.chatDao().clearChats();
+        db.messageDao().clearMessages();
+    });
+}
 
 
     public void logOut() {
         clearSharedPreferences();
-        AppDB db = AppDB.getInstance(this);
-        db.chatDao();
-        //creates a thread that clears the messages
-        Executor executor = Executors.newSingleThreadExecutor();
-        executor.execute(() -> {
-            db.chatDao().clearChats();
-            db.messageDao().clearMessages();
-        });
+        clearDB();
 
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
