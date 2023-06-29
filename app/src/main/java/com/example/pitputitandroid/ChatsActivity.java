@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Base64;
@@ -19,7 +20,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.lifecycle.Observer;
@@ -42,6 +42,8 @@ import com.example.pitputitandroid.viewmodels.ChatViewModel;
 import com.example.pitputitandroid.viewmodels.MessegesViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -73,6 +75,20 @@ public class ChatsActivity extends AppCompatActivity {
         });
         viewModel = new MessegesViewModel(chatId);
         viewModel.getMessages().observe(this, chats -> {
+
+            chats.sort((m1,m2)->{
+                LocalDateTime time1 = null;
+                LocalDateTime time2 = null;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+                    time1 = LocalDateTime.parse(m1.getCreated(), timeFormatter);
+                    time2 = LocalDateTime.parse(m2.getCreated(), timeFormatter);
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    return time1.compareTo(time2);
+                }
+                return 0;
+            });
             adapter.setMesseges(chats);
         });
         FrameLayout buttonFrame = findViewById(R.id.layoutSend);
@@ -163,4 +179,5 @@ public class ChatsActivity extends AppCompatActivity {
         super.onResume();
         //adapter.notifyDataSetChanged();
     }
+
 }
