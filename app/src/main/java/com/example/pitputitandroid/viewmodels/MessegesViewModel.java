@@ -6,11 +6,8 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.pitputitandroid.Daos.ChatDao;
 import com.example.pitputitandroid.DataBase.AppDB;
-import com.example.pitputitandroid.Repositories.ChatsRepository;
 import com.example.pitputitandroid.Repositories.MarkedMessageRepository;
-import com.example.pitputitandroid.Repositories.MessageRepository;
 import com.example.pitputitandroid.entities.Chat;
-import com.example.pitputitandroid.entities.MarkedMessage;
 import com.example.pitputitandroid.entities.Message;
 
 import java.util.List;
