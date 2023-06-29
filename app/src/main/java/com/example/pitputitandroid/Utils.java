@@ -10,6 +10,7 @@ import java.util.Calendar;
 import java.util.UUID;
 
 public class Utils {
+    public static int light=0;
     public static String uniqueIdGenerator() {
         UUID uuid = UUID.randomUUID();
         return uuid.toString();
