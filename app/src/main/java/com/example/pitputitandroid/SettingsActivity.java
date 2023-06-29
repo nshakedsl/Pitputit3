@@ -71,7 +71,7 @@ public class SettingsActivity extends AppCompatActivity {
 
 
         darkModeButton.setOnClickListener(v -> {
-            logOut();
+            loading();
             if(Utils.light == 1) {
                 Utils.light = 0;
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -205,6 +205,17 @@ public void clearDB(){
         clearDB();
 
         Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+    }
+
+
+    public void loading() {
+        clearSharedPreferences();
+        clearDB();
+
+        Intent intent = new Intent(this, Loading.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
