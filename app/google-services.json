@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "527709909722",
+    "project_id": "pitputitandroid",
+    "storage_bucket": "pitputitandroid.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:527709909722:android:09e5fcb784fa9bf49eebe3",
+        "android_client_info": {
+          "package_name": "com.example.pitputitandroid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "527709909722-o859napvushm2c7gsogl4vela7hoek0l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-6h-8OjnJTgqNVCQLj7qF-Z9R_M35gPU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "527709909722-o859napvushm2c7gsogl4vela7hoek0l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
