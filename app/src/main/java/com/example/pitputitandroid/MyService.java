@@ -18,3 +18,4 @@ public class MyService extends FirebaseMessagingService {
     int a = 1;
     }
 }
+
