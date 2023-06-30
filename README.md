@@ -6,7 +6,7 @@
 Targil 4 -
 In this exercise, we create an android for our chat system.
 
-####The others "Targilim" are in the following link repository:
+#### The others "Targilim" are in the following link repository:
 ```
  https://github.com/nshakedsl/Pitputit.git
  ```
@@ -25,7 +25,7 @@ This reposetory, is a web user interface using HTML and CSS.
 2. Ofir Gurvits
 3. Naama Matzliach
 
-This reposetory, is a React App.
+The reposetories, is a React App and android projects"
 There are 3 pages:
 1. SignUp page.
 2. Login page.
@@ -49,10 +49,9 @@ This project is created in Android and React App for chatting between different 
 
 Before running the client application, it is essential to set up and run the server. Please follow the server instructions `before` you run the current program:
 Go to the link below and follow the instructions found in the server's git code to run it
-
-    ```
+```
     https://github.com/nshakedsl/pitputitServer.git
-    ```
+```
 ### 2. To clone Andorid repository, follow these steps:
 
 In the terminal, navigate to the directory where you want to clone the repository.
