@@ -298,6 +298,19 @@
          app:layout_constraintTop_toTopOf="parent"
          android:tint="@color/title"/>
 
+     <com.makeramen.roundedimageview.RoundedImageView
+         android:id="@+id/imageUser"
+         android:layout_width="48sp"
+         android:layout_height="48sp"
+         android:layout_margin="3dp"
+         android:scaleType="centerCrop"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent"
+         app:riv_oval="true"
+         android:background="@drawable/image_profile"
+
+         />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
