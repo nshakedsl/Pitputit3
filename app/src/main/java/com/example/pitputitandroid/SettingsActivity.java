@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -104,19 +105,30 @@ public class SettingsActivity extends AppCompatActivity {
         editTextServerAddress.setText(currentAddress);
 
         buttonSave.setOnClickListener(new View.OnClickListener() {
+
+
+
             //TODO: Namma do validations of port and ip - from chatGPT
             // If it is more convenient, you can separate IP and port
             @Override
             public void onClick(View v) {
                 String newAddress = editTextServerAddress.getText().toString();
+                if(isAddressValid(newAddress)){
+                    // Save the new server address to SharedPreferences
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(KEY_BASE_URL, newAddress);
+                    editor.apply();
+                    String result = "Address updated✅";
+                    Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
 
-                // Save the new server address to SharedPreferences
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString(KEY_BASE_URL, newAddress);
-                editor.apply();
+                    // Finish the activity
+                    logOut();
+                } else {
+                    String result = "incorrect Address❗";
+                    Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                }
 
-                // Finish the activity
-                logOut();
+
             }
         });
 
@@ -141,12 +153,18 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
         String ip = parts[0];
-        String port = parts[1];
+        String addressWithoutSuffix = parts[1];
 
         // Check if IP is valid
         if (!isValidIP(ip)) {
             return false;
         }
+
+
+        if (!addressWithoutSuffix.endsWith("/api/")) {
+            return false;
+        }
+        String port = addressWithoutSuffix.substring(0, addressWithoutSuffix.length() - 5);
 
         // Check if port is valid
         if (!isValidPort(port)) {

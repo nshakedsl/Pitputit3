@@ -48,10 +48,6 @@
           </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
-
-
-
-
      </FrameLayout>
 
      <ImageView
@@ -243,7 +239,7 @@
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          app:layout_constraintTop_toTopOf="parent"
-         app:layout_constraintStart_toEndOf="@id/btnBack"
+         app:layout_constraintStart_toEndOf="@id/imageUser"
          android:layout_margin="6pt"
          android:fontFamily="@font/comfortaa"
          android:textSize="20dp"
@@ -302,9 +298,9 @@
          android:id="@+id/imageUser"
          android:layout_width="48sp"
          android:layout_height="48sp"
-         android:layout_margin="3dp"
+         app:layout_constraintStart_toEndOf="@id/btnBack"
          android:scaleType="centerCrop"
-         app:layout_constraintStart_toStartOf="parent"
+         android:layout_margin="3dp"
          app:layout_constraintTop_toTopOf="parent"
          app:riv_oval="true"
          android:background="@drawable/image_profile"
