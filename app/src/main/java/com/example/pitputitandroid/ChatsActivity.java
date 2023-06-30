@@ -38,6 +38,7 @@ import com.example.pitputitandroid.api.UserAPI;
 import com.example.pitputitandroid.entities.Message;
 import com.example.pitputitandroid.entities.Msg;
 import com.example.pitputitandroid.entities.User;
+import com.example.pitputitandroid.viewmodels.ChatViewModel;
 import com.example.pitputitandroid.viewmodels.MessegesViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -86,7 +87,9 @@ public class ChatsActivity extends AppCompatActivity {
         goBack.setOnClickListener(v -> {
             this.finish();
         });
-        viewModel = new MessegesViewModel(chatId);
+        //viewModel = new MessegesViewModel(chatId);
+        viewModel = new ViewModelProvider(this).get(MessegesViewModel.class);
+        viewModel.setOrigin(chatId);
         viewModel.getMessages().observe(this, chats -> {
 
             chats.sort((m1,m2)->{
@@ -125,13 +128,9 @@ public class ChatsActivity extends AppCompatActivity {
         this.adapter = new MessegesListAdapter(this);
         lstMesseges.setAdapter(adapter);
         lstMesseges.setLayoutManager(new LinearLayoutManager(this));
-
-        List<Message> messages = new ArrayList<>();
-
         db = AppDB.getInstance(this);
         messageDao = db.messageDao();
         UserAPI userAPI = new UserAPI(getApplicationContext());
-        adapter.setMesseges(messages);
 
         ChatAPI chatAPI = new ChatAPI(getApplicationContext());
         chatAPI.getChatMessages(userAPI.getToken(), chatId);
@@ -141,7 +140,10 @@ public class ChatsActivity extends AppCompatActivity {
             public void onChanged(List<Message> messages) {
                 if (messages != null) {
                     Log.d("TAG", "get chat messages success");
-                    viewModel.set(messages);
+                    Executor executor = Executors.newSingleThreadExecutor();
+                    executor.execute(() -> {
+                        viewModel.set(messages);
+                    });
                 } else {
                     Log.d("TAG", "error");
                     //TODO: maybe clear messages?
