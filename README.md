@@ -25,7 +25,7 @@ This reposetory, is a web user interface using HTML and CSS.
 2. Ofir Gurvits
 3. Naama Matzliach
 
-The reposetories, is a React App and android projects"
+The reposetories, is a React App and android projects
 There are 3 pages:
 1. SignUp page.
 2. Login page.
@@ -35,7 +35,7 @@ There are 2 more pages have been added in the Android project
 1. Settings page
 2. Contacts page
 
-##### Please upload low quality images otherwise the pictures will not upload properly
+##### Please upload low quality images otherwise the pictures will not upload properly!
 
 
 This project is created in Android and React App for chatting between different users. We called the website Pitputit, which is similar to the Hebrew word for "to chat" or "to talk".
