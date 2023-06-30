@@ -2,6 +2,7 @@ package com.example.pitputitandroid.api;
 
 import com.example.pitputitandroid.entities.Chat;
 import com.example.pitputitandroid.entities.Contact;
+import com.example.pitputitandroid.entities.Firebase;
 import com.example.pitputitandroid.entities.Message;
 import com.example.pitputitandroid.entities.Msg;
 import com.example.pitputitandroid.entities.User;
@@ -38,4 +39,8 @@ public interface WebServiceAPI {
 
     @POST("Users")
     Call<Void> register(@Body UserFull userFull);
+
+
+    @POST("Firebase")
+    Call<Void> saveToken(@Body Firebase firebase);
 }

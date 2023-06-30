@@ -4,6 +4,7 @@ package com.example.pitputitandroid.api;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.pitputitandroid.entities.Firebase;
 import com.example.pitputitandroid.entities.User;
 import com.example.pitputitandroid.entities.UserFull;
 import com.example.pitputitandroid.entities.UserLogin;
@@ -76,14 +77,13 @@ public class UserAPI {
     public String getToken() {
         return sharedPreferences.getString(PREF_TOKEN, null);
     }
-
-    public String getDisplayName() {
-        return sharedPreferences.getString("displayName", null);
-    }
-
-    public String getProfilePic() {
-        return sharedPreferences.getString("profilePic", null);
-    }
+//    public String getDisplayName() {
+//        return sharedPreferences.getString("displayName", null);
+//    }
+//
+//    public String getProfilePic() {
+//        return sharedPreferences.getString("profilePic", null);
+//    }
 
     public String getUsername() {
         return sharedPreferences.getString("username", null);
@@ -148,6 +148,24 @@ public class UserAPI {
 
     }
 
+
+    public void saveToken(String username, String token) {
+        Firebase firebase = new Firebase(username, token);
+        Call<Void> call =webServiceAPI.saveToken(firebase);
+        call.enqueue(new Callback<Void>() {
+
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+
+            }
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+            }
+        });
+
+
+    }
+
     public void getUserDetails(String userName) {
 
         Call<User> call = webServiceAPI.getUserDetails(getToken(), userName);
@@ -161,8 +179,8 @@ public class UserAPI {
                     if (user != null) {
                         // Save user details in SharedPreferences
                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("displayName", user.getDisplayName());
-                        editor.putString("profilePic", user.getProfilePic());
+//                        editor.putString("displayName", user.getDisplayName());
+//                        editor.putString("profilePic", user.getProfilePic());
                         editor.putString("username", user.getUsername());
                         editor.apply();
                     }
