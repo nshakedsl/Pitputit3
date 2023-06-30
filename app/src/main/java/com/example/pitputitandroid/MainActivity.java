@@ -63,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
         registerText.setOnClickListener(v -> {
             startActivity(new Intent(this, RegisterActivity.class));
         });
-
         settingButton.setOnClickListener(v -> {
             startActivity(new Intent(this, SettingsActivity.class));
         });

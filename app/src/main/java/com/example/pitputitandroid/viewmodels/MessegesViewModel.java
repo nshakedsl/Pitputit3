@@ -20,11 +20,14 @@ public class MessegesViewModel extends ViewModel {
     private LiveData<List<Message>> messages;
     private ChatDao chatDao;
     private String origin;
-    public MessegesViewModel(String origin) {
+    public MessegesViewModel() {
+        chatDao = AppDB.getInstance().chatDao();
+    }
+
+    public void setOrigin(String origin) {
         this.origin = origin;
         this.messageRepository = new MarkedMessageRepository(origin);
         messages = messageRepository.getAll();
-        chatDao = AppDB.getInstance().chatDao();
     }
 
     public LiveData<List<Message>> getMessages() {
@@ -40,7 +43,21 @@ public class MessegesViewModel extends ViewModel {
         });
     }
     //clears local dataset, then fills it with all of the given values
-    public void set(List<Message> messages){ messageRepository.set(messages);}
+    public void set(List<Message> messages){
+        if(messages == null || messages.size() == 0 ||
+                (this.messages.getValue() != null && messages.size() < this.messages.getValue().size()))
+            return;
+        messageRepository.set(messages);
+        if(messages!=null && messages.size()!=0)
+        {
+            Executor executor = Executors.newSingleThreadExecutor();
+            executor.execute(() -> {
+                Chat chat = chatDao.getChat(origin);
+                chat.setLastMessage(messages.get(0));
+                chatDao.updateChat(chat);
+            });
+        }
+    }
 
     public void reload(){ messageRepository.reload();}
 }
