@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.lifecycle.Observer;
@@ -65,7 +66,7 @@ public class ChatsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chats);
 
-        Intent intent =getIntent();
+        Intent intent = getIntent();
         chatId = intent.getStringExtra("chatId");
         userName = intent.getStringExtra("userName");
         AppCompatImageView goBack = findViewById(R.id.btnBack);
@@ -73,11 +74,10 @@ public class ChatsActivity extends AppCompatActivity {
         db = AppDB.getInstance();
         Executor executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
-            try{
+            try {
                 User other = db.chatDao().getChat(chatId).getUser();
                 userImg.setImageBitmap(other.getProfilePicBitmap());
-            }
-            catch (Exception e) { //illegal image
+            } catch (Exception e) { //illegal image
 
             }
         });
@@ -92,7 +92,7 @@ public class ChatsActivity extends AppCompatActivity {
         viewModel.setOrigin(chatId);
         viewModel.getMessages().observe(this, chats -> {
 
-            chats.sort((m1,m2)->{
+            chats.sort((m1, m2) -> {
                 LocalDateTime time1 = null;
                 LocalDateTime time2 = null;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -153,6 +153,7 @@ public class ChatsActivity extends AppCompatActivity {
         });
     }
 
+
     private boolean sendMessage(Editable message) {
         Msg msg = new Msg(message.toString());
         boolean success = true;
@@ -167,6 +168,9 @@ public class ChatsActivity extends AppCompatActivity {
                 if (sentMessage != null) {
                     Log.d("TAG", "messages success");
                     addMsgToLocal(sentMessage);
+
+                    UserAPI userAPI = new UserAPI(getApplicationContext());
+                    userAPI.sendNotification(sentMessage.getContent(), userName);
                 } else {
                     Toast.makeText(getApplicationContext(), "error sending message",
                             Toast.LENGTH_SHORT).show();
