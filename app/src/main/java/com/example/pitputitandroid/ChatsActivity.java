@@ -35,20 +35,17 @@ import com.example.pitputitandroid.DataBase.AppDB;
 import com.example.pitputitandroid.adapters.MessegesListAdapter;
 import com.example.pitputitandroid.api.ChatAPI;
 import com.example.pitputitandroid.api.UserAPI;
-import com.example.pitputitandroid.entities.Chat;
 import com.example.pitputitandroid.entities.Message;
 import com.example.pitputitandroid.entities.Msg;
 import com.example.pitputitandroid.entities.User;
-import com.example.pitputitandroid.viewmodels.ChatViewModel;
 import com.example.pitputitandroid.viewmodels.MessegesViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -71,6 +68,19 @@ public class ChatsActivity extends AppCompatActivity {
         chatId = intent.getStringExtra("chatId");
         userName = intent.getStringExtra("userName");
         AppCompatImageView goBack = findViewById(R.id.btnBack);
+        RoundedImageView userImg = findViewById(R.id.imageUser);
+        db = AppDB.getInstance();
+        Executor executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            try{
+                User other = db.chatDao().getChat(chatId).getUser();
+                userImg.setImageBitmap(other.getProfilePicBitmap());
+            }
+            catch (Exception e) { //illegal image
+
+            }
+        });
+
         TextView textUserName = findViewById(R.id.textUserName);
         textUserName.setText(userName);
         goBack.setOnClickListener(v -> {
@@ -104,8 +114,7 @@ public class ChatsActivity extends AppCompatActivity {
             startActivity(new Intent(this, SettingsActivity.class));
         });
 
-        AppCompatImageView backButton = findViewById(R.id.btnBack);
-        backButton.setOnClickListener(v -> {
+        goBack.setOnClickListener(v -> {
             startActivity(new Intent(this, ContactActivity.class));
         });
 
