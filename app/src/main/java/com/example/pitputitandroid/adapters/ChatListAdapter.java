@@ -18,6 +18,9 @@ import com.example.pitputitandroid.ChatsActivity;
 import com.example.pitputitandroid.R;
 import com.example.pitputitandroid.entities.Chat;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatViewHolder> {
@@ -52,9 +55,21 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatVi
             final Chat current = chats.get(position);
             if (current != null) {
                 holder.nameTextView.setText(current.getUser().getUsername());
+
                 if (current.getLastMessage() != null) {
                     holder.lastMessageTextView.setText(current.getLastMessage().getContent());
-                    holder.dateTextView.setText(current.getLastMessage().getCreated());
+
+                    SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+                    SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                    String formattedDate = "";
+                    try {
+                        Date date = inputFormat.parse(current.getLastMessage().getCreated());
+                        formattedDate = outputFormat.format(date);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    holder.dateTextView.setText(formattedDate);
+
                 } else {
                     holder.lastMessageTextView.setText("");
                     holder.dateTextView.setText("");

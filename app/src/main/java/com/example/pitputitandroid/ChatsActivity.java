@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
@@ -70,6 +71,8 @@ public class ChatsActivity extends AppCompatActivity {
         chatId = intent.getStringExtra("chatId");
         userName = intent.getStringExtra("userName");
         AppCompatImageView goBack = findViewById(R.id.btnBack);
+        TextView textUserName = findViewById(R.id.textUserName);
+        textUserName.setText(userName);
         goBack.setOnClickListener(v -> {
             this.finish();
         });

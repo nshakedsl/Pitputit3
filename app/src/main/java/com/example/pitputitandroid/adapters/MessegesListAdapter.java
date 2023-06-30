@@ -18,6 +18,9 @@ import com.example.pitputitandroid.entities.Message;
 import com.example.pitputitandroid.entities.User;
 import com.makeramen.roundedimageview.RoundedImageView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -62,10 +65,29 @@ public class MessegesListAdapter extends RecyclerView.Adapter<MessegesListAdapte
 
     @Override
     public void onBindViewHolder(@NonNull MessegeViewHolder holder, int position) {
+
+
+
         if (messeges != null) {
+            //holder.messegeTime = TextView.findViewById(R.id.DateTextView);
             final Message current = messeges.get(position);
             holder.messegeContent.setText(current.getContent());
-            holder.messegeTime.setText(current.getTime());
+
+            // Format the time string
+            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            SimpleDateFormat outputFormat = new SimpleDateFormat("HH:mm");
+            String formattedTime = "";
+            try {
+                Date date = inputFormat.parse(current.getTime());
+                formattedTime = outputFormat.format(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            holder.messegeTime.setText(formattedTime);
+
+            holder.messegeContent.setText(current.getContent());
+
             try {
                 holder.imgProfile.setImageBitmap(current.getSender().getProfilePicBitmap());
             } catch (Exception e) {
@@ -76,7 +98,7 @@ public class MessegesListAdapter extends RecyclerView.Adapter<MessegesListAdapte
                 holder.imgProfile.setImageBitmap(bitmap);
             }
             holder.messegeContent1.setText(current.getContent());
-            holder.messegeTime1.setText(current.getTime());
+            holder.messegeTime1.setText(formattedTime);
             UserAPI userAPI = new UserAPI(context);
             String username = userAPI.getUsername();
             if (current.getUserName().equals(username)) {
