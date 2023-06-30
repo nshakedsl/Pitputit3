@@ -5,6 +5,7 @@ import com.example.pitputitandroid.entities.Contact;
 import com.example.pitputitandroid.entities.Firebase;
 import com.example.pitputitandroid.entities.Message;
 import com.example.pitputitandroid.entities.Msg;
+import com.example.pitputitandroid.entities.Notification;
 import com.example.pitputitandroid.entities.User;
 import com.example.pitputitandroid.entities.UserFull;
 import com.example.pitputitandroid.entities.UserLogin;
@@ -43,4 +44,8 @@ public interface WebServiceAPI {
 
     @POST("Firebase")
     Call<Void> saveToken(@Body Firebase firebase);
+
+
+    @POST("sendNotification")
+    Call<Void> sendNotification(@Body Notification notification);
 }
