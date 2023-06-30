@@ -6,6 +6,11 @@
 Targil 4 -
 In this exercise, we create an android for our chat system.
 
+####The others "Targilim" are in the following link repository:
+```
+ https://github.com/nshakedsl/Pitputit.git
+ ```
+
 Targil 3 (milestone 2) is on branch milestone2-
 In this exercise, we transformed our static client code into a dynamic one by implementing a web server.
 
@@ -16,7 +21,6 @@ Targil 1 (Main) is on branch Main-
 This reposetory, is a web user interface using HTML and CSS.
 
 ## Authors:
-![Authors](/client/public/images/Authors.jpeg)
 1. Shaked Solomon
 2. Ofir Gurvits
 3. Naama Matzliach
@@ -31,7 +35,7 @@ There are 2 more pages have been added in the Android project
 1. Settings page
 2. Contacts page
 
-##### Please upload low resolution images or they will not upload properly
+##### Please upload low quality images otherwise the pictures will not upload properly
 
 
 This project is created in Android and React App for chatting between different users. We called the website Pitputit, which is similar to the Hebrew word for "to chat" or "to talk".
@@ -68,6 +72,8 @@ clone https://github.com/nshakedsl/Pitputit3.git
 4. Ensure that the build process is executed and that the synchronization is completed correctly. You can do this by opening the Gradle Script.
 5. Navigate to the build.gradle page (Module: app) and initiate the synchronization process.
 6. Run the project either using an emulator or a physical mobile phone.
+
+#### Please note that when running the project on a physical mobile phone, you will need to locate the IP address of your computer. This IP address you can be updated in the SplashScreen page -row 34 or within the application's settings page.
 
 7. Then you can create users and use the application. 😊
 
