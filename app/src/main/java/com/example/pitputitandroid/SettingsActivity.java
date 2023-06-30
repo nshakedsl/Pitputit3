@@ -194,6 +194,7 @@ public void clearDB(){
     //creates a thread that clears the messages
     Executor executor = Executors.newSingleThreadExecutor();
     executor.execute(() -> {
+        db.markedMessageDao().clearMessages();
         db.chatDao().clearChats();
         db.messageDao().clearMessages();
     });

@@ -7,6 +7,7 @@ import androidx.room.Entity;
 import androidx.room.TypeConverters;
 
 import com.example.pitputitandroid.Converters.UserConverter;
+import com.example.pitputitandroid.Utils;
 
 @TypeConverters(UserConverter.class)
 @Entity
@@ -23,7 +24,7 @@ public class MarkedMessage{
         this.created = message.getCreated();
         this.content = message.getContent();
         this.sender = message.getSender();
-        this.id = message.getId();
+        this.id = Utils.uniqueIdGenerator();
         this.originId = originId;
     }
     public MarkedMessage(User sender,String created,String content, String originId) {
@@ -31,6 +32,7 @@ public class MarkedMessage{
         this.content = content;
         this.sender = sender;
         this.originId = originId;
+        this.id = Utils.uniqueIdGenerator();
     }
 
     public String getOriginId() {
